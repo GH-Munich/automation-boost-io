@@ -8,6 +8,7 @@ import type {
   Ampel,
   BerichtstexteContent,
   PreislogikContent,
+  PriceInput,
   Preistyp,
   TcoContent,
 } from "@engine/types";
@@ -27,6 +28,7 @@ export function PreisCheck({
   vorlaeufig,
   defaults,
   onBack,
+  onBericht,
   tuer = "A",
 }: {
   preislogik: PreislogikContent;
@@ -36,6 +38,7 @@ export function PreisCheck({
   vorlaeufig: boolean;
   defaults: { volumenJahr: number; angebotJahr: number };
   onBack: () => void;
+  onBericht?: (input: PriceInput) => void;
   tuer?: string;
 }) {
   const [klasse, setKlasse] = useState(deliveredDefault);
@@ -338,6 +341,32 @@ export function PreisCheck({
       <p className="max-w-[70ch] text-[12px] leading-relaxed text-ink-3">
         {berichtstexte.bloecke.orientierungs_disclaimer}
       </p>
+
+      {onBericht && (
+        <div className="flex flex-wrap items-center gap-2.5">
+          <button
+            type="button"
+            onClick={() =>
+              onBericht({
+                gelieferteKlasse: klasse,
+                volumenJahr: volumen,
+                angebotspreisJahrEur: angebot,
+                betriebsfaktor: { min: faktorMin, max: faktorMax },
+                kursUsdEur: kurs,
+              })
+            }
+            className="inline-flex items-center gap-2 rounded-sm border border-accent bg-accent px-4 py-2.5 text-[14px] font-semibold text-accent-on transition-colors hover:bg-accent-2"
+          >
+            Prüfbericht erstellen
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+          <span className="text-[12.5px] text-ink-3">
+            Fasst Score, Preis und Begründung zu einem Prüfbericht zusammen.
+          </span>
+        </div>
+      )}
     </div>
   );
 }

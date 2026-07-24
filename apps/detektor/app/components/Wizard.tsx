@@ -39,7 +39,7 @@ export function Wizard({
 }: {
   achsen: AchsenContent;
   berichtstexte: BerichtstexteContent;
-  onContinue?: (result: ScoreResult) => void;
+  onContinue?: (input: ScoreInput, result: ScoreResult) => void;
   tuer?: string;
 }) {
   const axes = achsen.achsen;
@@ -98,7 +98,7 @@ export function Wizard({
         bandFor={bandFor}
         onBack={() => setShowResult(false)}
         onReset={reset}
-        onContinue={onContinue}
+        onContinue={onContinue ? () => onContinue(fullInput, result) : undefined}
       />
     );
   }
@@ -294,7 +294,7 @@ function ResultView({
   bandFor: (score: number) => Band | undefined;
   onBack: () => void;
   onReset: () => void;
-  onContinue?: (result: ScoreResult) => void;
+  onContinue?: () => void;
 }) {
   const axisName = (id: AchseId) => achsen.achsen.find((a) => a.id === id)?.name ?? id;
   const bandMin = bandFor(result.scoreMin);
@@ -386,7 +386,7 @@ function ResultView({
         {onContinue && (
           <button
             type="button"
-            onClick={() => onContinue(result)}
+            onClick={onContinue}
             className="inline-flex items-center gap-2 rounded-sm border border-accent bg-accent px-4 py-2.5 text-[14px] font-semibold text-accent-on transition-colors hover:bg-accent-2"
           >
             Weiter zum Preis-Check

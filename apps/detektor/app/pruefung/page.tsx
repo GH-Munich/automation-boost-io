@@ -24,6 +24,7 @@ export default function PruefungPage() {
         preislogik={content.preislogik}
         tco={content.tco}
         berichtstexte={content.berichtstexte}
+        standardVersion={content.standardVersion}
         defaults={defaults}
       />
     </div>

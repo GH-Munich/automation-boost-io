@@ -33,6 +33,7 @@ export default function BestandPage() {
         preislogik={content.preislogik}
         tco={content.tco}
         berichtstexte={content.berichtstexte}
+        standardVersion={content.standardVersion}
         defaults={defaults}
         tuer="B"
       />
