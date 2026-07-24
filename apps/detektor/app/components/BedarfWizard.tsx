@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 
 import { classifyBedarf } from "@engine/bedarf";
 import type { BedarfContent, BedarfInput, BedarfKlasse } from "@engine/types";
+import { usePersistentState } from "../lib/usePersistentState";
 
 type FrageOpt = { wert: string; text: string };
 type Frage = {
@@ -16,6 +17,7 @@ type Frage = {
   min?: number;
   max?: number;
   hinweis?: string;
+  hinweis_bei_weiss_nicht?: { titel: string; text: string };
 };
 type FaktorVisual = {
   titel: string;
@@ -45,7 +47,10 @@ export function BedarfWizard({
   const makeInitial = (): Record<string, string | number> =>
     f7?.default !== undefined ? { F7: f7.default } : {};
 
-  const [answers, setAnswers] = useState<Record<string, string | number>>(makeInitial);
+  const [answers, setAnswers] = usePersistentState<Record<string, string | number>>(
+    "awd-bedarf",
+    makeInitial(),
+  );
   const [idx, setIdx] = useState(0);
   const [showResult, setShowResult] = useState(false);
 
@@ -126,6 +131,7 @@ export function BedarfWizard({
                 type="number"
                 min={frage.min}
                 max={frage.max}
+                aria-label={frage.frage}
                 value={typeof current === "number" ? current : ""}
                 onChange={(e) => setZahl(Math.round(Number(e.target.value) || 0))}
                 className="w-40 rounded-sm border border-line-strong bg-surface px-3 py-2.5 text-center font-mono text-[18px] text-ink tnum"
@@ -172,6 +178,20 @@ export function BedarfWizard({
               </button>
             ))}
           </div>
+        )}
+
+        {frage.hinweis_bei_weiss_nicht && (
+          <details className="mt-4 border-t border-line pt-3.5">
+            <summary className="inline-flex cursor-pointer list-none items-center gap-1.5 text-[13px] font-medium text-accent [&::-webkit-details-marker]:hidden">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" />
+              </svg>
+              Mehr dazu · {frage.hinweis_bei_weiss_nicht.titel}
+            </summary>
+            <p className="mt-2.5 text-[13.5px] leading-relaxed text-ink-2">
+              {frage.hinweis_bei_weiss_nicht.text}
+            </p>
+          </details>
         )}
 
         <div className="mt-6 flex items-center gap-2.5">

@@ -46,7 +46,7 @@
           "border_strong": "#c6cdd8",
           "text": "#1a2431",
           "text_2": "#4b586a",
-          "text_3": "#808c9d",
+          "text_3": "#667283",
           "accent": "#3f5e78",
           "accent_2": "#557596",
           "accent_weak": "#e7eef5",
@@ -61,7 +61,7 @@
           "border_strong": "#3a4756",
           "text": "#e8edf3",
           "text_2": "#a7b2c1",
-          "text_3": "#6f7c8d",
+          "text_3": "#808c9d",
           "accent": "#7ea6cc",
           "accent_2": "#6b93ba",
           "accent_weak": "#1c2a39",
@@ -71,9 +71,9 @@
       "ampel": {
         "hinweis": "Semantische Signalebene, getrennt vom Marken-Akzent. Schlüssel entsprechen den Ampelstufen der Engine (gruen/gelb/rot).",
         "light": {
-          "gruen": "#3d7a5b",
+          "gruen": "#36704f",
           "gruen_weak": "#e6efe9",
-          "gelb": "#a9792a",
+          "gelb": "#87601f",
           "gelb_weak": "#f3ecdd",
           "rot": "#9e463f",
           "rot_weak": "#f2e2e0"

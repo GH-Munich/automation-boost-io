@@ -11,6 +11,7 @@ import type {
   ScoreInput,
   ScoreResult,
 } from "@engine/types";
+import { usePersistentState } from "../lib/usePersistentState";
 import { ComplianceNote, fuelleKlausel } from "./ComplianceNote";
 
 /**
@@ -45,7 +46,10 @@ export function Wizard({
   const baender = achsen.auswertung.baender;
   const maxScore = maxScoreOf(achsen);
 
-  const [answers, setAnswers] = useState<Partial<Record<AchseId, string>>>({});
+  const [answers, setAnswers] = usePersistentState<Partial<Record<AchseId, string>>>(
+    `awd-achsen-${tuer}`,
+    {},
+  );
   const [idx, setIdx] = useState(0);
   const [showResult, setShowResult] = useState(false);
 
@@ -130,6 +134,10 @@ export function Wizard({
           <span className="font-mono text-[12.5px] text-ink-2">
             Frage {idx + 1} von {axes.length}
           </span>
+          <span className="ml-auto inline-flex items-center gap-1.5 rounded-full border border-line-strong bg-surface-2 px-2.5 py-1 font-mono text-[12px] text-ink-2 lg:hidden">
+            Score <b className="tnum text-ink">{scoreLabel}</b>/{maxScore}
+            <span className="text-ink-3">· {result.band ?? `${bandFor(result.scoreMin)?.id}–${bandFor(result.scoreMax)?.id}`}</span>
+          </span>
         </div>
 
         <h1 className="balance mt-4 text-[clamp(18px,2.4vw,22px)] font-semibold leading-[1.35] tracking-[-.01em]">
@@ -189,22 +197,24 @@ export function Wizard({
       </section>
 
       {/* Live-Panel */}
-      <aside className="h-fit rounded-md border border-line bg-surface-2 p-6 shadow-sm">
+      <aside className="h-fit self-start rounded-md border border-line bg-surface-2 p-6 shadow-sm lg:sticky lg:top-20">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Live-Vorschau</p>
-        <div className="mt-3 flex items-baseline gap-2">
-          <b className="font-mono text-[44px] font-semibold leading-none tracking-[-.02em] tnum">{scoreLabel}</b>
-          <span className="font-mono text-[18px] text-ink-3">/ {maxScore}</span>
-        </div>
+        <div aria-live="polite">
+          <div className="mt-3 flex items-baseline gap-2">
+            <b className="font-mono text-[44px] font-semibold leading-none tracking-[-.02em] tnum">{scoreLabel}</b>
+            <span className="font-mono text-[18px] text-ink-3">/ {maxScore}</span>
+          </div>
 
-        {result.band ? (
-          <span className="mt-3 inline-flex items-center gap-2 self-start rounded-full border border-accent/30 bg-accent-weak px-3 py-1.5 text-[13px] font-semibold text-accent">
-            {result.band} · {result.einstufung}
-          </span>
-        ) : (
-          <span className="mt-3 inline-flex items-center gap-2 self-start rounded-full border border-line-strong bg-surface px-3 py-1.5 text-[13px] font-medium text-ink-2">
-            Vorläufig · {bandFor(result.scoreMin)?.id} bis {bandFor(result.scoreMax)?.id}
-          </span>
-        )}
+          {result.band ? (
+            <span className="mt-3 inline-flex items-center gap-2 self-start rounded-full border border-accent/30 bg-accent-weak px-3 py-1.5 text-[13px] font-semibold text-accent">
+              {result.band} · {result.einstufung}
+            </span>
+          ) : (
+            <span className="mt-3 inline-flex items-center gap-2 self-start rounded-full border border-line-strong bg-surface px-3 py-1.5 text-[13px] font-medium text-ink-2">
+              Vorläufig · {bandFor(result.scoreMin)?.id} bis {bandFor(result.scoreMax)?.id}
+            </span>
+          )}
+        </div>
 
         <div className="mt-4 h-2 overflow-hidden rounded-full bg-surface-3" aria-hidden="true">
           <span
