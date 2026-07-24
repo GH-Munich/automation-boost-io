@@ -248,10 +248,27 @@ function BedarfResult({
           </div>
         </div>
 
-        {istStopp && result.grundText ? (
-          <div className="mt-5 rounded-sm border border-warn/30 bg-warn-weak/50 p-4">
-            <p className="text-[14px] font-semibold text-ink">{result.grundText.titel}</p>
-            <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-2">{result.grundText.text}</p>
+        {result.klasseSpanne && (
+          <div className="mt-5 rounded-sm border border-line-strong bg-surface-2 p-4">
+            <p className="text-[14px] font-semibold text-ink">
+              Vorläufige Bandbreite: {result.klasseSpanne.von} bis {result.klasseSpanne.bis}
+            </p>
+            <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-2">
+              Eine Ihrer Angaben ist noch unklar. Je nach Klärung liegt die Einordnung
+              zwischen „{result.klasseSpanne.vonName}“ und „{result.klasseSpanne.bisName}“.
+              Erst nach Klärung im Gespräch steht die endgültige Klasse fest.
+            </p>
+          </div>
+        )}
+
+        {istStopp && result.gruende.length > 0 ? (
+          <div className="mt-5 grid gap-3">
+            {result.gruende.map((g) => (
+              <div key={g.grund} className="rounded-sm border border-warn/30 bg-warn-weak/50 p-4">
+                <p className="text-[14px] font-semibold text-ink">{g.titel}</p>
+                <p className="mt-1.5 text-[13.5px] leading-relaxed text-ink-2">{g.text}</p>
+              </div>
+            ))}
           </div>
         ) : (
           <div className="mt-5 grid gap-3 text-[13.5px] leading-relaxed text-ink-2">

@@ -135,6 +135,8 @@ export interface BedarfContent extends RawContentFile {
     regeln: BedarfRegel[];
     vorlaeufig_bei_weiss_nicht_in: BedarfFrageId[];
     zusatzbefunde: BedarfZusatzbefund[];
+    /** Datengetriebene Widerspruchs-Hinweise (B4); optional. */
+    widersprueche?: BedarfZusatzbefund[];
   };
   faktor_visual: unknown;
 }
@@ -335,14 +337,32 @@ export interface BedarfInput {
   F7?: number;
 }
 
+/** Ein einzelner N0-Stopp-Grund (mehrere können zugleich zutreffen, B2). */
+export interface BedarfGrundDetail {
+  grund: BedarfGrund;
+  titel: string;
+  text: string;
+}
+
+/** Klassen-Spanne, wenn Unwissen keine eindeutige Einstufung erlaubt (B3, G5). */
+export interface BedarfSpanne {
+  von: string; // Klassen-ID (niedrigste, z. B. "N1")
+  bis: string; // Klassen-ID (höchste, z. B. "N4")
+  vonName: string;
+  bisName: string;
+}
+
 export interface BedarfResult {
-  klasse: string; // N0..N5
+  klasse: string; // N0..N5 (Kopfklasse)
   name: string;
   kostenklasse: string | null;
-  grund: BedarfGrund | null;
-  grundText: { titel: string; text: string } | null;
-  regelId: string; // R01..R09
+  /** N0: alle zugleich zutreffenden Stopp-Gründe (B2); sonst leer. */
+  gruende: BedarfGrundDetail[];
+  /** Gesetzt, wenn „weiß nicht" eine Klassen-Spanne statt einer Einstufung ergibt (B3). */
+  klasseSpanne: BedarfSpanne | null;
+  regelId: string; // R01..R09 (erste greifende Regel)
   vorlaeufig: boolean;
+  /** Zusatz- und Widerspruchs-Hinweise (additiv, keine Klassenänderung). */
   zusatzbefunde: string[];
   begruendung: BegruendungsZeile[];
 }

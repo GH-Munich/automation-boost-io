@@ -345,6 +345,19 @@
         },
         "befund": "Stammdaten-Konsistenz unbekannt — Top-20-Kunden-Test als erste Maßnahme."
       }
+    ],
+    "widersprueche": [
+      {
+        "wenn": {
+          "F2": [
+            "immer"
+          ],
+          "F3": [
+            "unvorhersehbar"
+          ]
+        },
+        "befund": "Ihre Angaben wirken widersprüchlich: Der Vorgang soll immer gleich ablaufen, zugleich sind Ausnahmen häufig und unvorhersehbar. Bitte im Gespräch klären."
+      }
     ]
   },
   "faktor_visual": {
