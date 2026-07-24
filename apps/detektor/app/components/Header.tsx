@@ -21,8 +21,29 @@ export function Header() {
             <span className="font-mono text-[10.5px] uppercase tracking-[.1em] text-ink-3">Prüfstandard {standardVersion} · automation-boost.io</span>
           </span>
         </Link>
+
+        <nav aria-label="Bereiche" className="hidden items-center gap-1 md:flex">
+          {NAV.map((n) => (
+            <Link
+              key={n.href}
+              href={n.href}
+              className="rounded-sm px-2.5 py-1.5 text-[13px] font-medium text-ink-2 no-underline transition-colors hover:bg-surface-2 hover:text-ink"
+            >
+              {n.label}
+            </Link>
+          ))}
+        </nav>
+
         <ThemeToggle />
       </div>
     </header>
   );
 }
+
+const NAV = [
+  { href: "/pruefung", label: "Prüfung" },
+  { href: "/bedarf", label: "Bedarf" },
+  { href: "/muster", label: "Muster" },
+  { href: "/fragen", label: "12 Fragen" },
+  { href: "/schnelltest", label: "Schnelltest" },
+];
