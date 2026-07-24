@@ -3,7 +3,7 @@ import type { BerichtstexteContent } from "@engine/types";
 type Anbieter = {
   name: string;
   modell: string;
-  preis_usd: number;
+  preis_usd: number | null;
   einstieg: string | null;
   hinweis: string | null;
 };
@@ -110,7 +110,13 @@ export function SupportPreise({
                 <tr key={a.name} className="border-b border-line/60 align-top">
                   <td className="py-2.5 pr-4 font-medium text-ink">{a.name}</td>
                   <td className="py-2.5 pr-4 text-ink-2">{a.modell}</td>
-                  <td className="py-2.5 pr-4 font-mono tnum text-ink">{usd.format(a.preis_usd)}</td>
+                  <td className="py-2.5 pr-4 font-mono tnum text-ink">
+                    {typeof a.preis_usd === "number" && a.preis_usd > 0 ? (
+                      usd.format(a.preis_usd)
+                    ) : (
+                      <span className="text-ink-3">keine Stückpreise</span>
+                    )}
+                  </td>
                   <td className="py-2.5 text-ink-2">
                     {a.einstieg ?? "—"}
                     {a.hinweis && <span className="mt-0.5 block text-[11.5px] text-ink-3">{a.hinweis}</span>}
