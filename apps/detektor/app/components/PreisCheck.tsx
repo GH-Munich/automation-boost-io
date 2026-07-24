@@ -27,6 +27,7 @@ export function PreisCheck({
   deliveredDefault,
   vorlaeufig,
   defaults,
+  m3Klasse,
   onBack,
   onBericht,
   tuer = "A",
@@ -37,11 +38,13 @@ export function PreisCheck({
   deliveredDefault: string;
   vorlaeufig: boolean;
   defaults: { volumenJahr: number; angebotJahr: number };
+  m3Klasse?: string | null;
   onBack: () => void;
   onBericht?: (input: PriceInput) => void;
   tuer?: string;
 }) {
   const [klasse, setKlasse] = useState(deliveredDefault);
+  const [m3, setM3] = useState(false);
   const [volumen, setVolumen] = useState(defaults.volumenJahr);
   const [angebot, setAngebot] = useState(defaults.angebotJahr);
   const [preistyp, setPreistyp] = useState<Preistyp>("produktiv");
@@ -146,6 +149,23 @@ export function PreisCheck({
                   </option>
                 ))}
               </select>
+              {m3Klasse && (
+                <label className="mt-2.5 flex items-start gap-2.5 text-[12.5px] leading-relaxed text-ink-2">
+                  <input
+                    type="checkbox"
+                    checked={m3}
+                    onChange={(e) => {
+                      setM3(e.target.checked);
+                      if (e.target.checked) setKlasse(m3Klasse);
+                    }}
+                    className="mt-0.5"
+                  />
+                  <span>
+                    Angebot ist ein KI-Upgrade eines RPA-Bestandsanbieters (Muster M3). Nach dem
+                    Prüfstandard ist die Referenzklasse dann die konventionelle Lösung.
+                  </span>
+                </label>
+              )}
             </Field>
 
             <Field label="Jahresvolumen (Vorgänge)" hint="Vorgabe aus dem Bedarfs-Check (Monatsvolumen × 12) — änderbar">

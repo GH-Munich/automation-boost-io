@@ -86,6 +86,8 @@ export function Assessment({
     const fallbackKlasse =
       preislogik.kostenklassen[preislogik.kostenklassen.length - 1]?.id ?? "";
     const deliveredDefault = band?.kostenklasse ?? fallbackKlasse;
+    // M3-Sonderfall: für dieses Band ggf. die konventionelle Referenzklasse (achsen.json).
+    const m3Klasse = band?.kostenklasse_wenn_muster_M3 ?? null;
 
     return (
       <PreisCheck
@@ -95,6 +97,7 @@ export function Assessment({
         deliveredDefault={deliveredDefault}
         vorlaeufig={score.band === null}
         defaults={defaults}
+        m3Klasse={m3Klasse}
         tuer={tuer}
         onBack={() => setPhase("achsen")}
         onBericht={toBericht}

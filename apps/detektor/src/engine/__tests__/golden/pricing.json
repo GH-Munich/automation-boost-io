@@ -117,6 +117,23 @@
       }
     },
     {
+      "name": "M3-Sonderfall — Referenzklasse skript_rpa (statt chatbot_rag) schärft den Faktor",
+      "input": {
+        "gelieferteKlasse": "skript_rpa",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 60000
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 0.0, "max": 120.0 },
+        "korridorEur": { "min": 0.0, "max": 108.0 },
+        "washingFaktor": 555.6,
+        "ampel": "rot",
+        "ueberdimensionierung": false
+      }
+    },
+    {
       "name": "Vorgaben aus preislogik.json — betriebsfaktor & kurs weggelassen",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
