@@ -89,6 +89,17 @@ export default function StartPage() {
         })}
       </div>
 
+      <Link
+        href="/schnelltest"
+        className="mt-6 inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-medium text-ink no-underline transition-colors hover:border-line-strong"
+      >
+        <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+        Lieber erst schnell? Der Schnelltest — 5 Fragen, 2 Minuten
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </Link>
+
       <p className="mt-10 max-w-[62ch] text-[12.5px] leading-relaxed text-ink-3">
         Grundsatz: Der Detektor trifft keine eigenen Tatsachenbehauptungen über
         Anbieter. Bewertet werden ausschließlich Ihre bestätigten Eingaben — mit
