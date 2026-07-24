@@ -91,17 +91,18 @@
       {
         "stufe": "gruen",
         "bis": 2.0,
+        "label": "Verhandelbar",
         "text": "Verhandelbar — Preis im oder nahe am gerechtfertigten Korridor."
       },
       {
         "stufe": "gelb",
-        "von": 2.0,
         "bis": 10.0,
+        "label": "Deutlich überteuert",
         "text": "Deutlich überteuert — Preisverhandlung auf Basis der tatsächlichen Technologieklasse."
       },
       {
         "stufe": "rot",
-        "ab": 10.0,
+        "label": "Agent Washing",
         "text": "Klassisches Agent Washing — dokumentierte Aufschläge liegen beim Faktor 10 bis 50 (Gartner)."
       }
     ]
@@ -110,6 +111,10 @@
     "bedingung": "ordnung(benoetigte_klasse) < ordnung(gelieferte_klasse)",
     "befund": "Die benötigte Technologieklasse liegt unter der angebotenen. Auch ein echtes agentisches System kann damit der falsche Kauf sein: Für deterministische Vorgänge liegt der Kostenunterschied zur einfachen Lösung bei bis zu Faktor 1.000.",
     "quelle": "Buch 5, Kap. 1 und 6"
+  },
+  "anzeige": {
+    "faktor_nachkommastellen": 1,
+    "preis_nachkommastellen": 0
   },
   "beispiel_golden_test": {
     "beschreibung": "Referenzfall für die Regel-Engine (M2-nahe Konstellation ohne Marktanker).",

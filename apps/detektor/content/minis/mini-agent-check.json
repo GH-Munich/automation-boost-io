@@ -11,6 +11,7 @@
   },
   "id": "mini-agent-check",
   "titel": "Der 2-Minuten-Detektor: Ist das überhaupt ein Agent?",
+  "untertitel": "Sechs Fragen, eine je Achse — ohne technische Vorkenntnisse.",
   "zeitangabe_min": 2,
   "fragen": [
     {

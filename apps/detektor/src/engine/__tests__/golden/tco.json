@@ -1,0 +1,48 @@
+{
+  "beschreibung": "Golden-Fälle für calculateTco (Übergabe §2.3). Faktorwerte T1–T5 aus tco-faktoren.json (Vorgaben). Rechenweg A (Pilot) und B (Produktiv).",
+  "faelle": [
+    {
+      "name": "Rechenweg A — Pilotpreis 15.000 €, Laufzeit 6 Monate",
+      "input": { "angebotspreis": 15000, "preistyp": "pilot", "laufzeitMonate": 6 },
+      "erwartet": {
+        "rechenweg": "A_pilotpreis",
+        "endwert": 60000,
+        "stufen": [
+          { "nr": 1, "wert": 15000, "quelleId": null },
+          { "nr": 2, "wert": 60000, "quelleId": "T2" },
+          { "nr": 3, "wert": 30000, "quelleId": "T3" },
+          { "nr": 4, "wert": 12000, "quelleId": "T4" },
+          { "nr": 5, "wert": 7.5, "quelleId": "T5" }
+        ]
+      }
+    },
+    {
+      "name": "Rechenweg A ohne Laufzeit — Zeitpuffer-Stufe entfällt",
+      "input": { "angebotspreis": 15000, "preistyp": "pilot" },
+      "erwartet": {
+        "rechenweg": "A_pilotpreis",
+        "endwert": 60000,
+        "stufen": [
+          { "nr": 1, "wert": 15000, "quelleId": null },
+          { "nr": 2, "wert": 60000, "quelleId": "T2" },
+          { "nr": 3, "wert": 30000, "quelleId": "T3" },
+          { "nr": 4, "wert": 12000, "quelleId": "T4" }
+        ]
+      }
+    },
+    {
+      "name": "Rechenweg B — Produktivpreis 60.000 €",
+      "input": { "angebotspreis": 60000, "preistyp": "produktiv" },
+      "erwartet": {
+        "rechenweg": "B_produktivpreis",
+        "endwert": 81000,
+        "stufen": [
+          { "nr": 1, "wert": 60000, "quelleId": null },
+          { "nr": 2, "wert": 81000, "quelleId": "T1" },
+          { "nr": 3, "wert": 40500, "quelleId": "T3" },
+          { "nr": 4, "wert": 16200, "quelleId": "T4" }
+        ]
+      }
+    }
+  ]
+}

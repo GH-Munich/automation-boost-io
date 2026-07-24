@@ -1,0 +1,61 @@
+{
+  "beschreibung": "Golden-Fälle für calculateScore (Übergabe §2.3). Bänder aus achsen.json: B1 10–12, B2 7–9, B3 4–6, B4 0–3.",
+  "faelle": [
+    {
+      "name": "B1 — echter Agent (Score 12)",
+      "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.2", "A4": "A4.2", "A5": "A5.2", "A6": "A6.2" },
+      "erwartet": {
+        "scoreMin": 12, "scoreMax": 12, "band": "B1",
+        "einstufung": "Echter Agent", "vorlaeufig": false, "nichtBewertbar": []
+      }
+    },
+    {
+      "name": "B2 — agentischer Workflow (Score 8)",
+      "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.1", "A4": "A4.1", "A5": "A5.1", "A6": "A6.1" },
+      "erwartet": {
+        "scoreMin": 8, "scoreMax": 8, "band": "B2",
+        "einstufung": "Agentischer Workflow", "vorlaeufig": false, "nichtBewertbar": []
+      }
+    },
+    {
+      "name": "B3 — IPA (Score 5)",
+      "input": { "A1": "A1.1", "A2": "A2.1", "A3": "A3.1", "A4": "A4.1", "A5": "A5.1", "A6": "A6.0" },
+      "erwartet": {
+        "scoreMin": 5, "scoreMax": 5, "band": "B3",
+        "einstufung": "Intelligente Automatisierung (IPA)", "vorlaeufig": false, "nichtBewertbar": []
+      }
+    },
+    {
+      "name": "B4 — Chatbot/RPA mit neuem Etikett (Score 0)",
+      "input": { "A1": "A1.0", "A2": "A2.0", "A3": "A3.0", "A4": "A4.0", "A5": "A5.0", "A6": "A6.0" },
+      "erwartet": {
+        "scoreMin": 0, "scoreMax": 0, "band": "B4",
+        "einstufung": "Chatbot oder RPA mit neuem Etikett", "vorlaeufig": false, "nichtBewertbar": []
+      }
+    },
+    {
+      "name": "Eine .X-Antwort — Bandbreite bleibt im selben Band (B3)",
+      "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.0", "A4": "A4.0", "A5": "A5.0", "A6": "A6.X" },
+      "erwartet": {
+        "scoreMin": 4, "scoreMax": 6, "band": "B3",
+        "einstufung": "Intelligente Automatisierung (IPA)", "vorlaeufig": false, "nichtBewertbar": ["A6"]
+      }
+    },
+    {
+      "name": "Mehrere .X — Band wird null, vorläufig",
+      "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.2", "A4": "A4.X", "A5": "A5.X", "A6": "A6.X" },
+      "erwartet": {
+        "scoreMin": 6, "scoreMax": 12, "band": null,
+        "einstufung": null, "vorlaeufig": true, "nichtBewertbar": ["A4", "A5", "A6"]
+      }
+    },
+    {
+      "name": "Alle sechs .X — Score 0–12, kein Band",
+      "input": { "A1": "A1.X", "A2": "A2.X", "A3": "A3.X", "A4": "A4.X", "A5": "A5.X", "A6": "A6.X" },
+      "erwartet": {
+        "scoreMin": 0, "scoreMax": 12, "band": null,
+        "einstufung": null, "vorlaeufig": true, "nichtBewertbar": ["A1", "A2", "A3", "A4", "A5", "A6"]
+      }
+    }
+  ]
+}

@@ -27,6 +27,10 @@
         {
           "wert": "beides",
           "text": "Beides — erst Informationen, dann Aktionen"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht genau"
         }
       ]
     },
@@ -119,6 +123,10 @@
         {
           "wert": "nein",
           "text": "Nein — der Prozess lebt informell"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht"
         }
       ]
     },
@@ -138,6 +146,10 @@
         {
           "wert": "irreversibel",
           "text": "Kaum umkehrbar oder teuer — rechtliche, finanzielle oder Reputationsfolgen"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht"
         }
       ]
     },
@@ -316,9 +328,12 @@
       }
     ],
     "vorlaeufig_bei_weiss_nicht_in": [
+      "F1",
       "F2",
       "F3",
-      "F4"
+      "F4",
+      "F5",
+      "F6"
     ],
     "zusatzbefunde": [
       {
@@ -344,6 +359,19 @@
           ]
         },
         "befund": "Stammdaten-Konsistenz unbekannt — Top-20-Kunden-Test als erste Maßnahme."
+      }
+    ],
+    "widersprueche": [
+      {
+        "wenn": {
+          "F2": [
+            "immer"
+          ],
+          "F3": [
+            "unvorhersehbar"
+          ]
+        },
+        "befund": "Ihre Angaben wirken widersprüchlich: Der Vorgang soll immer gleich ablaufen, zugleich sind Ausnahmen häufig und unvorhersehbar. Bitte im Gespräch klären."
       }
     ]
   },

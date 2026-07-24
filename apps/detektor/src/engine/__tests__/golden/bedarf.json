@@ -1,0 +1,91 @@
+{
+  "beschreibung": "Golden-Fälle für classifyBedarf (Übergabe §2.3). Regeln R01–R09 aus bedarf.json. N1–N5 First-Match; N0 sammelt alle Stopp-Gründe (B2); Unwissen ergibt eine Klassen-Spanne (B3); Widersprüche sind additive Befunde (B4).",
+  "faelle": [
+    {
+      "name": "N0-daten — R01 (F4=nein), einziger Stopp-Grund",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "nein", "F5": "ja", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N0", "gruende": ["daten"], "regelId": "R01", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N0-prozess — R02 (F5=nein, F4≠nein)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "nein", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N0", "gruende": ["prozess"], "regelId": "R02", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N0-risiko — R03 (F6=irreversibel)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "irreversibel", "F7": 200 },
+      "erwartet": { "klasse": "N0", "gruende": ["risiko"], "regelId": "R03", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N2 — R04 (F1=auskunft)",
+      "input": { "F1": "auskunft", "F2": "meist", "F3": "regelmaessig", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 500 },
+      "erwartet": { "klasse": "N2", "gruende": [], "regelId": "R04", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N1 — R05 (F2=immer, F3=kaum)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 5000 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N3 — R06 (F2=immer, F3=regelmaessig)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "regelmaessig", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 800 },
+      "erwartet": { "klasse": "N3", "gruende": [], "regelId": "R06", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N4 — R07 (F2=meist, F3=kaum)",
+      "input": { "F1": "ausfuehrung", "F2": "meist", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 300 },
+      "erwartet": { "klasse": "N4", "gruende": [], "regelId": "R07", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "N5 — R08 (F2=selten)",
+      "input": { "F1": "ausfuehrung", "F2": "selten", "F3": "regelmaessig", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 120 },
+      "erwartet": { "klasse": "N5", "gruende": [], "regelId": "R08", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "Fallback — R09 (keine Regel trifft; F3=weiß nicht → vorläufig, Spanne N4–N5)",
+      "input": { "F1": "beides", "F2": "meist", "F3": "weiss_nicht", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 250 },
+      "erwartet": { "klasse": "N4", "gruende": [], "regelId": "R09", "vorlaeufig": true, "klasseSpanne": { "von": "N4", "bis": "N5" } }
+    },
+    {
+      "name": "First-Match-Beweis (Kopfregel) — R01 bleibt Kopfregel, obwohl R02/R03/R04 ebenfalls zuträfen",
+      "input": { "F1": "auskunft", "F2": "immer", "F3": "kaum", "F4": "nein", "F5": "nein", "F6": "irreversibel", "F7": 200 },
+      "erwartet": { "klasse": "N0", "gruende": ["daten", "prozess", "risiko"], "regelId": "R01", "vorlaeufig": false, "klasseSpanne": null },
+      "haetten_ebenfalls_getroffen": ["R02", "R03", "R04"]
+    },
+    {
+      "name": "B2 — mehrere Stopp-Gründe zugleich: Daten + Prozess + Risiko werden alle ausgewiesen",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "nein", "F5": "nein", "F6": "irreversibel", "F7": 200 },
+      "erwartet": { "klasse": "N0", "gruende": ["daten", "prozess", "risiko"], "regelId": "R01", "vorlaeufig": false, "klasseSpanne": null }
+    },
+    {
+      "name": "B3 — Unwissen auf F2 spannt die Klasse von N1 bis N5 (G5, keine Nullpunkte-Strafe)",
+      "input": { "F1": "ausfuehrung", "F2": "weiss_nicht", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N4", "gruende": [], "regelId": "R09", "vorlaeufig": true, "klasseSpanne": { "von": "N1", "bis": "N5" } }
+    },
+    {
+      "name": "B3-Ausnahme — F4=weiß nicht bleibt N0 (F5=nein erzwingt Stopp), keine Spanne trotz Unwissen",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "weiss_nicht", "F5": "nein", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N0", "gruende": ["prozess"], "regelId": "R02", "vorlaeufig": true, "klasseSpanne": null }
+    },
+    {
+      "name": "B4 — Widerspruch: „immer gleich“ und zugleich „häufig unvorhersehbar“ als additiver Hinweis",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "unvorhersehbar", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N5", "gruende": [], "regelId": "R08", "vorlaeufig": false, "klasseSpanne": null, "zusatzbefundeMin": 1 }
+    },
+    {
+      "name": "B6 — F1=weiß nicht (Prozessart) spannt N1–N2 (G5, keine Fehleinstufung durch Unwissen)",
+      "input": { "F1": "weiss_nicht", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": true, "klasseSpanne": { "von": "N1", "bis": "N2" } }
+    },
+    {
+      "name": "B6 — F5=weiß nicht (Dokumentation) spannt N0–N1: könnte ein Stopp sein, muss aber nicht",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "weiss_nicht", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": true, "klasseSpanne": { "von": "N0", "bis": "N1" } }
+    },
+    {
+      "name": "B6 — F6=weiß nicht (Fehlerfolgen) spannt N0–N1: irreversibel wäre Stopp, sonst nicht",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "weiss_nicht", "F7": 200 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": true, "klasseSpanne": { "von": "N0", "bis": "N1" } }
+    }
+  ]
+}

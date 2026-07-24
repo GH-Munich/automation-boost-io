@@ -1,0 +1,168 @@
+/**
+ * pricing.ts — Preiskorridor und Washing-Faktor (Engine-Funktion 4).
+ *
+ * Berechnet den fairen Jahreskorridor (P2), den Washing-Faktor (P3) und den
+ * Überdimensionierungs-Befund (P4). Reine Funktion (G1). Alle Werte
+ * (Vorgangskosten, Betriebsfaktor, Kurs, Ampel-Schwellen) stammen aus
+ * preislogik.json.
+ *
+ * Formel (Übergabe §2.2):
+ *   Untergrenze = vorgangskosten.min × volumen × betriebsfaktor.min
+ *   Obergrenze  = vorgangskosten.max × volumen × betriebsfaktor.max
+ *   Umrechnung  × kurs (USD → EUR)
+ *   Washing-Faktor = angebotspreis / korridorObergrenzeEur
+ *   Überdimensionierung, wenn ordnung(benoetigt) < ordnung(geliefert)
+ */
+
+import type {
+  Ampel,
+  BegruendungsZeile,
+  Kostenklasse,
+  PreislogikContent,
+  PriceInput,
+  PriceResult,
+} from "./types.js";
+
+/** Deterministisches Runden auf n Nachkommastellen. */
+function runde(x: number, n: number): number {
+  const faktor = 10 ** n;
+  return Math.round(x * faktor) / faktor;
+}
+
+/** Ordnet den Washing-Faktor einer Ampelstufe zu (Schwellen aus JSON). */
+function ampelFuer(
+  washingFaktor: number,
+  ampel: PreislogikContent["washing_faktor"]["ampel"],
+): { stufe: Ampel; text: string } {
+  const gruen = ampel.find((a) => a.stufe === "gruen");
+  const gelb = ampel.find((a) => a.stufe === "gelb");
+  const rot = ampel.find((a) => a.stufe === "rot");
+
+  if (!gruen || !gelb || !rot) {
+    throw new Error(
+      "AWD-Pricing: Ampel-Schwellen (gruen/gelb/rot) fehlen in preislogik.json.",
+    );
+  }
+
+  // grün: wf ≤ gruen.bis · gelb: gruen.bis < wf ≤ gelb.bis · rot: wf > gelb.bis
+  if (gruen.bis !== undefined && washingFaktor <= gruen.bis) {
+    return { stufe: "gruen", text: gruen.text };
+  }
+  if (gelb.bis !== undefined && washingFaktor <= gelb.bis) {
+    return { stufe: "gelb", text: gelb.text };
+  }
+  return { stufe: "rot", text: rot.text };
+}
+
+function findeKostenklasse(
+  preislogik: PreislogikContent,
+  id: string,
+): Kostenklasse {
+  const klasse = preislogik.kostenklassen.find((k) => k.id === id);
+  if (!klasse) {
+    throw new Error(
+      `AWD-Pricing: Unbekannte Kostenklasse "${id}". ` +
+        `Bekannt: ${preislogik.kostenklassen.map((k) => k.id).join(", ")}.`,
+    );
+  }
+  return klasse;
+}
+
+/**
+ * Berechnet Preiskorridor, Washing-Faktor und ggf. Überdimensionierung.
+ *
+ * @param input Gelieferte Klasse, Jahresvolumen, Angebotspreis; optional
+ *   Betriebsfaktor, Kurs und benötigte Klasse (Vorgaben aus preislogik.json).
+ * @param preislogik Inhalt aus preislogik.json.
+ */
+export function calculatePriceCorridor(
+  input: PriceInput,
+  preislogik: PreislogikContent,
+): PriceResult {
+  const geliefert = findeKostenklasse(preislogik, input.gelieferteKlasse);
+  const kosten = geliefert.vorgangskosten_usd;
+
+  const betriebsfaktor = input.betriebsfaktor ?? {
+    min: preislogik.betriebsfaktor.min,
+    max: preislogik.betriebsfaktor.max,
+  };
+  const kurs = input.kursUsdEur ?? preislogik.kurs.usd_eur;
+
+  // Korridor in USD, dann Umrechnung in EUR.
+  const usdMin = kosten.min * input.volumenJahr * betriebsfaktor.min;
+  const usdMax = kosten.max * input.volumenJahr * betriebsfaktor.max;
+  const eurMin = usdMin * kurs;
+  const eurMax = usdMax * kurs;
+
+  const korridorUsd = { min: runde(usdMin, 2), max: runde(usdMax, 2) };
+  const korridorEur = { min: runde(eurMin, 2), max: runde(eurMax, 2) };
+
+  // Washing-Faktor = Angebotspreis / Korridor-Obergrenze (EUR).
+  // Der Faktor wird aus dem ANGEZEIGTEN (auf 2 NK gerundeten) Korridorwert
+  // berechnet und die Ampel auf demselben gerundeten Faktor entschieden — so
+  // widersprechen gezeigte Zahl, Begründungsspur und Urteil nie an den Grenzen
+  // (A1). Grenzsemantik B1: grün ≤ 2,0 · gelb ≤ 10,0 · rot > 10,0.
+  const washingFaktor =
+    korridorEur.max > 0
+      ? runde(input.angebotspreisJahrEur / korridorEur.max, 1)
+      : Infinity;
+  const { stufe, text } = ampelFuer(
+    washingFaktor,
+    preislogik.washing_faktor.ampel,
+  );
+
+  // Überdimensionierung (P4): benötigte Klasse liegt unter der gelieferten.
+  let ueberdimensionierung: PriceResult["ueberdimensionierung"] = null;
+  if (input.benoetigteKlasse) {
+    const benoetigt = findeKostenklasse(preislogik, input.benoetigteKlasse);
+    if (benoetigt.ordnung < geliefert.ordnung) {
+      ueberdimensionierung = {
+        befund: preislogik.ueberdimensionierung.befund,
+        benoetigteKlasse: benoetigt.id,
+        gelieferteKlasse: geliefert.id,
+      };
+    }
+  }
+
+  const begruendung: BegruendungsZeile[] = [
+    {
+      regelId: "P1",
+      eingabe: `Referenzklasse: ${geliefert.id} (${geliefert.name})`,
+      hinweis: preislogik.regeln.P1,
+    },
+    {
+      regelId: "P2",
+      eingabe: `${geliefert.anzeige} × ${input.volumenJahr} Vorgänge × Faktor ${betriebsfaktor.min}–${betriebsfaktor.max}, Kurs ${kurs}`,
+      hinweis: `Korridor: ${korridorEur.min}–${korridorEur.max} EUR/Jahr`,
+    },
+    {
+      regelId: "P3",
+      eingabe: `${input.angebotspreisJahrEur} EUR ÷ ${korridorEur.max} EUR`,
+      punkte: washingFaktor,
+      hinweis: `Washing-Faktor ${washingFaktor} → ${stufe}`,
+    },
+  ];
+  if (ueberdimensionierung) {
+    begruendung.push({
+      regelId: "P4",
+      eingabe: `benötigt ${ueberdimensionierung.benoetigteKlasse} < geliefert ${ueberdimensionierung.gelieferteKlasse}`,
+      hinweis: preislogik.ueberdimensionierung.befund,
+    });
+  }
+
+  return {
+    gelieferteKlasse: geliefert.id,
+    korridorUsd,
+    korridorEur,
+    washingFaktor,
+    ampel: stufe,
+    ampelText: text,
+    ueberdimensionierung,
+    annahmen: {
+      vorgangskostenUsd: { min: kosten.min, max: kosten.max },
+      betriebsfaktor,
+      kursUsdEur: kurs,
+    },
+    begruendung,
+  };
+}

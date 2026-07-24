@@ -1,0 +1,20 @@
+{
+  "beschreibung": "Golden-Fälle für evaluateSchnelltest (Übergabe §2.3). Schwellen aus schnelltest.json: 0 → grün, 1–2 → gelb, 3–5 → rot.",
+  "faelle": [
+    {
+      "name": "Grün — keine problematische Antwort",
+      "input": { "S1": "abbruch", "S2": "ja", "S3": "gemessen", "S4": "ja", "S5": "bekannt" },
+      "erwartet": { "anzahlProblematisch": 0, "stufe": "gruen" }
+    },
+    {
+      "name": "Gelb — eine problematische Antwort",
+      "input": { "S1": "weiss_nicht", "S2": "ja", "S3": "gemessen", "S4": "ja", "S5": "bekannt" },
+      "erwartet": { "anzahlProblematisch": 1, "stufe": "gelb" }
+    },
+    {
+      "name": "Rot — drei problematische Antworten",
+      "input": { "S1": "weiss_nicht", "S2": "ja", "S3": "keine", "S4": "nein", "S5": "bekannt" },
+      "erwartet": { "anzahlProblematisch": 3, "stufe": "rot" }
+    }
+  ]
+}
