@@ -18,6 +18,7 @@ export { classifyBedarf, findeKlasse } from "./bedarf.js";
 export { calculatePriceCorridor } from "./pricing.js";
 export { calculateTco } from "./tco.js";
 export { detectMuster } from "./muster.js";
+export { evaluateFormel } from "./formel.js";
 export { evaluateSchnelltest } from "./schnelltest.js";
 export { buildProtokoll } from "./protokoll.js";
 

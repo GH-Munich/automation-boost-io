@@ -111,6 +111,16 @@ export default function StartPage() {
           </svg>
         </Link>
         <Link
+          href="/muster"
+          className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-medium text-ink no-underline transition-colors hover:border-line-strong"
+        >
+          <span className="h-2 w-2 rounded-full bg-accent" aria-hidden="true" />
+          Mustererkennung: Kenne ich diese Masche?
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
+        <Link
           href="/fragen"
           className="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface px-4 py-2 text-[13px] font-medium text-ink no-underline transition-colors hover:border-line-strong"
         >
