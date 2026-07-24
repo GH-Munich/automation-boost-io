@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { headers } from "next/headers";
 import type { ReactNode } from "react";
 
 import "./globals.css";
@@ -14,12 +15,13 @@ export const metadata: Metadata = {
 // Setzt das gespeicherte Theme vor dem ersten Paint (verhindert Flackern).
 const themeInit = `(function(){try{var t=localStorage.getItem('awd-theme');if(t==='dark'||t==='light'){document.documentElement.setAttribute('data-theme',t);}}catch(e){}})();`;
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
   return (
     <html lang="de" suppressHydrationWarning>
       <body className="min-h-screen bg-page font-sans text-ink antialiased">
         <style dangerouslySetInnerHTML={{ __html: themeStyle() }} />
-        <script dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeInit }} />
         <Header />
         <main>{children}</main>
       </body>

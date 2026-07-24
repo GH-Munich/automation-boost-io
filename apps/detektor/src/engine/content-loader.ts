@@ -134,8 +134,12 @@ export function loadContent(contentDir: string = DEFAULT_CONTENT_DIR): Content {
   let minis: GeladeneDatei[] = [];
   try {
     minis = leseJsonVerzeichnis(join(contentDir, "minis"), "minis/");
-  } catch {
-    // Der minis-Ordner ist optional; fehlt er, laden wir nur die Wurzeldateien.
+  } catch (fehler) {
+    // Der minis-Ordner ist optional: NUR ein fehlendes Verzeichnis (ENOENT)
+    // wird verschluckt. Andere Fehler (Rechte, defektes JSON) müssen sichtbar
+    // bleiben und dürfen nicht stillschweigend zu leerem Content führen.
+    const code = (fehler as NodeJS.ErrnoException).code;
+    if (code !== "ENOENT") throw fehler;
     minis = [];
   }
 

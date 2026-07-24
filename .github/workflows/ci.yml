@@ -32,3 +32,14 @@ jobs:
 
       - name: Golden-Test-Suite (vitest)
         run: npm test
+
+      - name: Production build (next build)
+        run: npm run build
+
+      # Informativ, kein Merge-Blocker: die aktuell gemeldeten High-Advisories
+      # betreffen ausschließlich von Next gebündelte Transitiv-Deps (postcss,
+      # sharp) und lassen sich nur mit einem Next-Sprung beheben. Sichtbar
+      # halten, aber CI nicht daran rot färben (Next-Bump ist eigene Aufgabe).
+      - name: Dependency audit (production, high+, informativ)
+        continue-on-error: true
+        run: npm audit --omit=dev --audit-level=high
