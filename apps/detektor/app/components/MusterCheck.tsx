@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useMemo, useState } from "react";
 
 import { detectMuster } from "@engine/muster";
@@ -268,6 +269,18 @@ function MusterDetail({
       )}
 
       {m.rechner && <RechnerBlock rechner={m.rechner} />}
+
+      {m.id === "M2" && (
+        <Link
+          href="/support-preise"
+          className="mt-4 inline-flex items-center gap-2 text-[13.5px] font-semibold text-accent no-underline hover:underline"
+        >
+          Was ein Support-Agent wirklich kostet — Marktreferenz &amp; versteckte Kosten
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </Link>
+      )}
 
       {m.praezedenzfall && (
         <div className="mt-5 rounded-sm border border-line bg-surface-2 p-4">
