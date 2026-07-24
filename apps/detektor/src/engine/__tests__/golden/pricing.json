@@ -35,7 +35,7 @@
       }
     },
     {
-      "name": "Gelb — deutlich überteuert (Washing-Faktor 3–10)",
+      "name": "Gelb — deutlich überteuert (Washing-Faktor > 2 bis 10)",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
         "volumenJahr": 24000,

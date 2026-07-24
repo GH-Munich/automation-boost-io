@@ -108,7 +108,7 @@ Bei „Weiß nicht"-Antworten (G5): Einstufung nur, wenn min- und max-Score im s
 |---|---|
 | **P1** | Referenzklasse = **tatsächlich gelieferte** Klasse (aus Score-Band bzw. Bestandsklassifikation), nicht die beworbene. |
 | **P2** | Fairer Jahreskorridor: (a) wo dokumentierte Marktpreise existieren (preise-support.json), diese als Anker; (b) sonst Vorgangskosten-Korridor × Jahresvolumen × Betriebs-/Margenfaktor **3–5** (Standard-Annahme AWD, sichtbar und editierbar). Vorgangskosten-Referenzen (Stand Mitte 2026, USD): Skript < 0,001 · Chatbot/1 Modellaufruf ~0,01 · IPA 0,01–0,30 (Standard-Annahme AWD) · Agent 0,30–8,00 (Buch 5). |
-| **P3** | **Washing-Faktor** = Angebotspreis p. a. ÷ Korridor-Obergrenze. Ampel: **≤ 2** verhandelbar · **3–10** deutlich überteuert · **> 10** klassisches Agent Washing (Gartner-Spanne 10–50). |
+| **P3** | **Washing-Faktor** = Angebotspreis p. a. ÷ Korridor-Obergrenze. Ampel: **≤ 2** verhandelbar · **> 2 bis 10** deutlich überteuert · **> 10** klassisches Agent Washing (Gartner-Spanne 10–50). *(Grenzwerte inklusiv zum niedrigeren Band, Audit-Entscheid B1 2026-07-24.)* |
 | **P4** | **Überdimensionierungs-Check:** Ist die benötigte Klasse (Tür C bzw. Prozessangaben) niedriger als die gelieferte, ergeht der Befund „Überdimensionierung" — auch ein echter Agent kann der falsche Kauf sein (Faktor-1.000-Hinweis). |
 
 ### 2.6 TCO-Faktoren (Regeln T1–T5, Quelle Buch 6 Kap. 2)

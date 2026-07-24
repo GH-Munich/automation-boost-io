@@ -95,13 +95,11 @@
       },
       {
         "stufe": "gelb",
-        "von": 2.0,
         "bis": 10.0,
         "text": "Deutlich überteuert — Preisverhandlung auf Basis der tatsächlichen Technologieklasse."
       },
       {
         "stufe": "rot",
-        "ab": 10.0,
         "text": "Klassisches Agent Washing — dokumentierte Aufschläge liegen beim Faktor 10 bis 50 (Gartner)."
       }
     ]

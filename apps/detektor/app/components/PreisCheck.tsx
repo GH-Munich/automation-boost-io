@@ -139,7 +139,7 @@ export function PreisCheck({
             </Field>
 
             <Field label="Jahresvolumen (Vorgänge)" hint="Vorgabe aus dem Bedarfs-Check (Monatsvolumen × 12) — änderbar">
-              <NumberInput value={volumen} onChange={setVolumen} step={100} />
+              <NumberInput value={volumen} onChange={setVolumen} step={100} min={1} />
             </Field>
 
             <Field label="Angebotspreis pro Jahr" hint="Vorgabe: typischer Plattformpreis pro Jahr — änderbar">
@@ -204,28 +204,35 @@ export function PreisCheck({
 
           <div className="mt-6 border-t border-line pt-5">
             <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Washing-Faktor</p>
-            <div className="mt-2 flex flex-wrap items-center gap-4">
-              <div className="flex items-baseline gap-1.5">
-                <b className="font-mono text-[46px] font-semibold leading-none tracking-[-.02em] tnum">
-                  {faktor(price.washingFaktor)}
-                </b>
-                <span className="font-mono text-[20px] text-ink-3">×</span>
-              </div>
-              <span
-                className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-[13px] font-semibold ${AMPEL[price.ampel]}`}
-              >
-                <span className="h-2.5 w-2.5 rounded-full bg-current" aria-hidden="true" />
-                {price.ampel === "gruen" ? "Verhandelbar" : price.ampel === "gelb" ? "Deutlich überteuert" : "Agent Washing"}
-              </span>
-            </div>
-            <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">{price.ampelText}</p>
+            {angebot > 0 && price.korridorEur.max > 0 ? (
+              <>
+                <div className="mt-2 flex flex-wrap items-center gap-4">
+                  <div className="flex items-baseline gap-1.5">
+                    <b className="font-mono text-[46px] font-semibold leading-none tracking-[-.02em] tnum">
+                      {faktor(price.washingFaktor)}
+                    </b>
+                    <span className="font-mono text-[20px] text-ink-3">×</span>
+                  </div>
+                  <span
+                    className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-[13px] font-semibold ${AMPEL[price.ampel]}`}
+                  >
+                    <span className="h-2.5 w-2.5 rounded-full bg-current" aria-hidden="true" />
+                    {price.ampel === "gruen" ? "Verhandelbar" : price.ampel === "gelb" ? "Deutlich überteuert" : "Agent Washing"}
+                  </span>
+                </div>
+                <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">{price.ampelText}</p>
+                <p className="mt-5 font-mono text-[11.5px] leading-relaxed text-ink-3">
+                  {eur.format(angebot)} ÷ {eur.format(price.korridorEur.max)} (Korridor-Obergrenze) = {faktor(price.washingFaktor)}×
+                </p>
+              </>
+            ) : (
+              <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">
+                {angebot > 0
+                  ? "Für den Washing-Faktor bitte ein Jahresvolumen ab 1 Vorgang angeben."
+                  : "Angebotspreis eingeben — dann erscheint der Washing-Faktor."}
+              </p>
+            )}
           </div>
-
-          <p className="mt-5 font-mono text-[11.5px] leading-relaxed text-ink-3">
-            {angebot > 0
-              ? `${eur.format(angebot)} ÷ ${eur.format(price.korridorEur.max)} (Korridor-Obergrenze) = ${faktor(price.washingFaktor)}×`
-              : "Angebotspreis eingeben für den Washing-Faktor."}
-          </p>
         </section>
       </div>
 
