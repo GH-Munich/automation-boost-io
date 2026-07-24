@@ -71,6 +71,7 @@ Daraus folgt zwingend:
 - **Kein LLM trifft eine Bewertungsentscheidung.** Der Dreischritt lautet: *Das LLM extrahiert, der Mensch bestätigt, die Regel-Engine bewertet.* LLM-Einsatz ist ausschließlich in der Claim-Extraktion aus hochgeladenen Dokumenten zulässig — und deren Ergebnis wird dem Nutzer zur Bestätigung vorgelegt, bevor es irgendetwas beeinflusst.
 - Jede Bewertung liefert eine **Begründungsspur** mit: bestätigter Eingabe im Wortlaut, angewandter Regel-ID, vergebenen Punkten, ggf. Belegstelle mit Seitenzahl. Ohne Begründungsspur kein Ergebnis.
 - Die **Golden-Test-Suite ist Release-Voraussetzung.** Jede Regel hat mindestens einen Referenzfall. Kein Release, wenn ein Golden Test rot ist. Erster verifizierter Referenzfall liegt in `preislogik.json` unter `beispiel_golden_test`.
+- Vor Umsetzung substantieller Änderungen und vor jedem Release gilt zusätzlich der **AWD-Review-Standard (Mehr-Augen-Prinzip), siehe §13** und `docs/AWD_REVIEW_STANDARD.md`. Er ist **additiv** zu den Golden-Tests, kein Ersatz.
 
 **„Weiß ich nicht" ist ein Befund, keine Null (G5).** Betroffene Achsen werden als „nicht bewertbar" markiert. Der Score wird als Bandbreite berechnet: Minimum rechnet die Achse mit 0, Maximum mit 2 Punkten. Eine Einstufung erfolgt nur, wenn Minimum und Maximum im selben Band liegen — sonst „vorläufig, Band X bis Y" plus Transparenzlücken-Befund. **Niemals eine Nullpunkte-Strafe für Unwissen.**
 
@@ -156,3 +157,18 @@ Offene Entscheidungen, die den Code betreffen (nicht eigenmächtig auflösen):
 - Extraktionsmodell: self-hosted Ollama auf gha-ops (Empfehlung) oder EU-API als Qualitäts-Fallback
 - Serverzuordnung für das Deployment (wird bei M6 gemeinsam entschieden)
 - Farbwerte des Designsystems
+
+---
+
+## 13. Der AWD-Review-Standard (Mehr-Augen-Prinzip) — verbindlich
+
+Vor der Umsetzung substantieller Änderungen und vor jedem Release wird ein **Mehr-Augen-Audit** durchgeführt: unabhängige, parallele, nur-lesende, adversariale Prüf-„Brillen" prüfen Engine, App, Content und Compliance gegen den Standard. Das ist der Master-Prozess für Qualität und Rechtssicherheit dieses Produkts.
+
+- **Volles Audit (6–8 Brillen)** bei: Release/Meilenstein-Abschluss; Änderungen an der Regel-Engine, den Prüfstandard-JSONs, `berichtstexte.json` oder sicherheitsrelevantem Code. **Leichte Prüfung (1–2 passende Brillen)** genügt bei Microcopy, Styling, Tooling, Doku. Im Zweifel die höhere Stufe.
+- Brillen: **Fachlogik · Determinismus (G1) · Compliance/Begründung · Hartkodierte Werte (Code↔Daten) · UI-Treue · Adversarial Red-Team · Usability · Security.** Für die anspruchsvollsten das stärkste verfügbare Modell.
+- **Befunde werden selbst verifiziert** (gegen Code/Standard reproduziert), nicht blind übernommen.
+- **Triage in drei Töpfe:** (A) Code-Fixes umsetzen · (B) Standard-/Konzept-Fragen **an Gottfried melden**, nicht eigenmächtig auflösen · (C) fehlende Daten/JSON-Felder **melden, nicht erfinden**. Nichts umsetzen, bevor die konsolidierte Liste vorgelegt wurde.
+- **Dokumentationspflicht:** jedes volle Audit als datiertes Protokoll unter `docs/audits/`.
+- **Additiv**, ersetzt nicht die Golden-Test-Release-Voraussetzung (§5) und die CI, und nicht das gemeinsame Schritt-für-Schritt bei Server/Datenbank/Deployment (§7).
+
+Vollständige Beschreibung: **`docs/AWD_REVIEW_STANDARD.md`**. Erstanwendung dokumentiert in `docs/audits/AWD_AUDIT_2026-07-24_M3.md`.
