@@ -57,18 +57,41 @@ export function PreisCheck({
   const [angebot, setAngebot] = useState(defaults.angebotJahr);
   const [preistyp, setPreistyp] = useState<Preistyp>("produktiv");
 
+  // Sichtbare, änderbare Annahmen (G6) — Vorgaben aus preislogik.json.
+  const [faktorMin, setFaktorMin] = useState(preislogik.betriebsfaktor.min);
+  const [faktorMax, setFaktorMax] = useState(preislogik.betriebsfaktor.max);
+  const [kurs, setKurs] = useState(preislogik.kurs.usd_eur);
+  // Projektlaufzeit in Monaten (nur Pilotpreis, Zeitpuffer-Stufe T5); 0 = offen.
+  const [laufzeit, setLaufzeit] = useState(0);
+
   const price = useMemo(
     () =>
       calculatePriceCorridor(
-        { gelieferteKlasse: klasse, volumenJahr: volumen, angebotspreisJahrEur: angebot },
+        {
+          gelieferteKlasse: klasse,
+          volumenJahr: volumen,
+          angebotspreisJahrEur: angebot,
+          betriebsfaktor: { min: faktorMin, max: faktorMax },
+          kursUsdEur: kurs,
+        },
         preislogik,
       ),
-    [klasse, volumen, angebot, preislogik],
+    [klasse, volumen, angebot, faktorMin, faktorMax, kurs, preislogik],
   );
 
   const tcoRes = useMemo(
-    () => calculateTco({ angebotspreis: angebot, preistyp }, tco),
-    [angebot, preistyp, tco],
+    () =>
+      calculateTco(
+        {
+          angebotspreis: angebot,
+          preistyp,
+          ...(preistyp === "pilot" && laufzeit > 0
+            ? { laufzeitMonate: laufzeit }
+            : {}),
+        },
+        tco,
+      ),
+    [angebot, preistyp, laufzeit, tco],
   );
 
   return (
@@ -124,23 +147,44 @@ export function PreisCheck({
             </Field>
           </div>
 
-          <div className="mt-5 border-t border-line pt-4 text-[12.5px] text-ink-2">
-            <div className="flex items-center justify-between py-0.5">
+          <div className="mt-5 flex flex-col gap-4 border-t border-line pt-4">
+            <div className="flex items-center justify-between py-0.5 text-[12.5px] text-ink-2">
               <span>Vorgangskosten {klasse}</span>
               <span className="font-mono text-ink">
                 {price.annahmen.vorgangskostenUsd.min}–{price.annahmen.vorgangskostenUsd.max} USD
               </span>
             </div>
-            <div className="flex items-center justify-between py-0.5">
-              <span>Betriebs-/Margenfaktor</span>
-              <span className="font-mono text-ink">
-                {price.annahmen.betriebsfaktor.min}–{price.annahmen.betriebsfaktor.max}
-              </span>
-            </div>
-            <div className="flex items-center justify-between py-0.5">
-              <span>Kurs USD → EUR</span>
-              <span className="font-mono text-ink">{price.annahmen.kursUsdEur}</span>
-            </div>
+
+            {preislogik.betriebsfaktor.editierbar ? (
+              <Field
+                label={preislogik.betriebsfaktor.label}
+                hint={preislogik.betriebsfaktor.erklaerung}
+              >
+                <span className="flex items-center gap-2">
+                  <NumberInput value={faktorMin} onChange={setFaktorMin} step={1} min={1} />
+                  <span className="font-mono text-[13px] text-ink-3">bis</span>
+                  <NumberInput value={faktorMax} onChange={setFaktorMax} step={1} min={1} />
+                </span>
+              </Field>
+            ) : (
+              <div className="flex items-center justify-between py-0.5 text-[12.5px] text-ink-2">
+                <span>{preislogik.betriebsfaktor.label}</span>
+                <span className="font-mono text-ink">
+                  {price.annahmen.betriebsfaktor.min}–{price.annahmen.betriebsfaktor.max}
+                </span>
+              </div>
+            )}
+
+            {preislogik.kurs.editierbar ? (
+              <Field label={preislogik.kurs.label} hint="USD → EUR — Standard-Annahme AWD, sichtbar und änderbar.">
+                <NumberInput value={kurs} onChange={setKurs} step={0.05} min={0} decimals />
+              </Field>
+            ) : (
+              <div className="flex items-center justify-between py-0.5 text-[12.5px] text-ink-2">
+                <span>{preislogik.kurs.label}</span>
+                <span className="font-mono text-ink">{price.annahmen.kursUsdEur}</span>
+              </div>
+            )}
           </div>
         </section>
 
@@ -210,6 +254,21 @@ export function PreisCheck({
             ))}
           </div>
         </div>
+
+        {preistyp === "pilot" && (
+          <div className="mt-4 flex flex-wrap items-center gap-3 rounded-sm border border-line bg-surface-2 px-4 py-3">
+            <label className="flex items-center gap-3">
+              <span className="text-[13px] font-medium text-ink">Projektlaufzeit</span>
+              <span className="w-28">
+                <NumberInput value={laufzeit} onChange={setLaufzeit} step={1} suffix="Mon." />
+              </span>
+            </label>
+            <span className="flex-1 text-[12px] leading-relaxed text-ink-3">
+              Für den Zeitpuffer (T5) auf die Projektlaufzeit. 0 = offen — dann bleibt die
+              Zeitpuffer-Stufe ausgeblendet.
+            </span>
+          </div>
+        )}
 
         <ol className="mt-5 flex flex-col gap-2">
           {tcoRes.stufen.map((s) => (
@@ -292,20 +351,28 @@ function NumberInput({
   onChange,
   step,
   suffix,
+  min = 0,
+  decimals = false,
 }: {
   value: number;
   onChange: (n: number) => void;
   step: number;
   suffix?: string;
+  min?: number;
+  decimals?: boolean;
 }) {
   return (
     <span className="relative flex items-center">
       <input
         type="number"
-        min={0}
+        min={min}
         step={step}
-        value={Number.isFinite(value) ? value : 0}
-        onChange={(e) => onChange(Math.max(0, Math.round(Number(e.target.value) || 0)))}
+        value={Number.isFinite(value) ? value : min}
+        onChange={(e) => {
+          const raw = Number(e.target.value);
+          const n = Number.isFinite(raw) ? raw : min;
+          onChange(Math.max(min, decimals ? n : Math.round(n)));
+        }}
         className="w-full rounded-sm border border-line-strong bg-surface px-3 py-2.5 font-mono text-[14px] text-ink tnum"
       />
       {suffix && <span className="pointer-events-none absolute right-3 font-mono text-[13px] text-ink-3">{suffix}</span>}

@@ -1,8 +1,10 @@
 import Link from "next/link";
 
+import { getContent } from "../lib/content";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
+  const standardVersion = getContent().standardVersion;
   return (
     <header className="sticky top-0 z-20 border-b border-line bg-surface/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-wrap items-center gap-4 px-4 py-3 sm:px-8">
@@ -16,7 +18,7 @@ export function Header() {
           </span>
           <span className="flex flex-col leading-tight">
             <span className="text-[15px] font-semibold tracking-[-.01em] text-ink">Der Agent-Washing-Detektor</span>
-            <span className="font-mono text-[10.5px] uppercase tracking-[.1em] text-ink-3">Prüfstandard 1.0 · automation-boost.io</span>
+            <span className="font-mono text-[10.5px] uppercase tracking-[.1em] text-ink-3">Prüfstandard {standardVersion} · automation-boost.io</span>
           </span>
         </Link>
         <ThemeToggle />

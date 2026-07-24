@@ -22,6 +22,14 @@ import { ComplianceNote, fuelleKlausel } from "./ComplianceNote";
  * „Weiß nicht" (.X) behandelt. So zeigt die Bandbreite (G5) von Anfang an eine
  * ehrliche Spanne, die sich mit jeder Antwort verengt.
  */
+/** Höchstmöglicher Score = Summe der je Achse maximal erreichbaren Punkte. */
+function maxScoreOf(achsen: AchsenContent): number {
+  return achsen.achsen.reduce(
+    (sum, a) => sum + Math.max(...a.stufen.map((s) => s.punkte)),
+    0,
+  );
+}
+
 export function Wizard({
   achsen,
   berichtstexte,
@@ -35,6 +43,7 @@ export function Wizard({
 }) {
   const axes = achsen.achsen;
   const baender = achsen.auswertung.baender;
+  const maxScore = maxScoreOf(achsen);
 
   const [answers, setAnswers] = useState<Partial<Record<AchseId, string>>>({});
   const [idx, setIdx] = useState(0);
@@ -184,7 +193,7 @@ export function Wizard({
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Live-Vorschau</p>
         <div className="mt-3 flex items-baseline gap-2">
           <b className="font-mono text-[44px] font-semibold leading-none tracking-[-.02em] tnum">{scoreLabel}</b>
-          <span className="font-mono text-[18px] text-ink-3">/ 12</span>
+          <span className="font-mono text-[18px] text-ink-3">/ {maxScore}</span>
         </div>
 
         {result.band ? (
@@ -293,7 +302,7 @@ function ResultView({
             <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Agentik-Score</p>
             <div className="mt-1 flex items-baseline gap-2">
               <b className="font-mono text-[48px] font-semibold leading-none tracking-[-.02em] tnum">{scoreLabel}</b>
-              <span className="font-mono text-[20px] text-ink-3">/ 12</span>
+              <span className="font-mono text-[20px] text-ink-3">/ {maxScoreOf(achsen)}</span>
             </div>
           </div>
           <div className="flex-1">
