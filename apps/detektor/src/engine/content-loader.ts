@@ -14,6 +14,7 @@ import { fileURLToPath } from "node:url";
 import type {
   AchsenContent,
   BedarfContent,
+  BerichtstexteContent,
   Content,
   MusterContent,
   PreislogikContent,
@@ -154,6 +155,7 @@ export function loadContent(contentDir: string = DEFAULT_CONTENT_DIR): Content {
     tco: pflicht<TcoContent>(index, "tco-faktoren.json"),
     schnelltest: pflicht<SchnelltestContent>(index, "schnelltest.json"),
     muster: pflicht<MusterContent>(index, "muster.json"),
+    berichtstexte: pflicht<BerichtstexteContent>(index, "berichtstexte.json"),
     raw: index,
   };
 }

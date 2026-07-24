@@ -23,6 +23,7 @@ export default function PruefungPage() {
         achsen={content.achsen}
         preislogik={content.preislogik}
         tco={content.tco}
+        berichtstexte={content.berichtstexte}
         defaults={defaults}
       />
     </div>

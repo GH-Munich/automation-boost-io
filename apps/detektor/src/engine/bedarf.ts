@@ -33,7 +33,9 @@ import type {
 
 interface BedarfFrageRaw {
   id: string;
-  optionen?: { wert: string }[];
+  kurz?: string;
+  frage?: string;
+  optionen?: { wert: string; text?: string }[];
 }
 
 /** Prüft eine einzelne Bedingungsgruppe: jede genannte Frage muss passen (UND). */
@@ -91,9 +93,24 @@ function kombinationen(listen: string[][]): string[][] {
   );
 }
 
+/**
+ * Löst die bestätigte Antwort in ihren Wortlaut auf (G2): statt „F4 = nein"
+ * die Frage-Kurzbezeichnung und den Optionstext aus bedarf.json.
+ */
+function wortlaut(
+  frageId: string,
+  antwort: string,
+  fragen: BedarfFrageRaw[],
+): string {
+  const frage = fragen.find((q) => q.id === frageId);
+  const text = frage?.optionen?.find((o) => o.wert === antwort)?.text ?? antwort;
+  return frage?.kurz ? `${frage.kurz}: ${text}` : text;
+}
+
 function begruendungFuerRegel(
   regel: BedarfRegel,
   input: BedarfInput,
+  fragen: BedarfFrageRaw[],
 ): BegruendungsZeile[] {
   if (regel.fallback === true) {
     return [
@@ -107,14 +124,19 @@ function begruendungFuerRegel(
     ? [regel.wenn]
     : (regel.wenn_oder ?? []);
   const zeilen: BegruendungsZeile[] = [];
+  const gesehen = new Set<string>();
   for (const gruppe of gruppen) {
     for (const [frageId, erlaubte] of Object.entries(gruppe)) {
       const antwort = input[frageId as BedarfFrageId];
-      if (typeof antwort === "string" && erlaubte!.includes(antwort)) {
+      if (
+        typeof antwort === "string" &&
+        erlaubte!.includes(antwort) &&
+        !gesehen.has(frageId)
+      ) {
+        gesehen.add(frageId);
         zeilen.push({
           regelId: regel.id,
-          eingabe: `${frageId} = ${antwort}`,
-          hinweis: regel.grund ? `Grund: ${regel.grund}` : undefined,
+          eingabe: wortlaut(frageId, antwort, fragen),
         });
       }
     }
@@ -196,10 +218,11 @@ export function classifyBedarf(
 
   const begruendung: BegruendungsZeile[] =
     match.n0Regeln.length > 0
-      ? match.n0Regeln.flatMap((r) => begruendungFuerRegel(r, input))
+      ? match.n0Regeln.flatMap((r) => begruendungFuerRegel(r, input, fragen))
       : begruendungFuerRegel(
           regeln.find((r) => r.id === match.regelId)!,
           input,
+          fragen,
         );
 
   return {

@@ -12,15 +12,13 @@ export default function AgentCheckMiniPage() {
     cta: { label: string };
     consent_checkbox: string;
   };
-  const disc = (
-    c.raw["berichtstexte.json"] as unknown as { bloecke: { fairness_klausel: string } }
-  ).bloecke.fairness_klausel;
+  const disc = c.berichtstexte.bloecke.fairness_klausel;
 
   return (
     <div className="mx-auto max-w-wrap px-4 py-10 sm:px-8">
       <MiniHead titel={cfg.titel} hinweis="Sechs Fragen, eine je Achse — ohne technische Vorkenntnisse." />
       <div className="mt-8">
-        <Wizard achsen={c.achsen} />
+        <Wizard achsen={c.achsen} berichtstexte={c.berichtstexte} />
       </div>
       <MiniOutro ctaLabel={cfg.cta.label} ctaHref="/pruefung" consent={cfg.consent_checkbox} disclaimer={disc} />
     </div>

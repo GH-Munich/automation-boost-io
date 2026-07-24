@@ -278,6 +278,37 @@ export interface MusterContent extends RawContentFile {
 }
 
 /* ---------------------------------------------------------------------------
+ * berichtstexte.json — kanzleireviewpflichtige Standardklauseln (G1–G6)
+ * ------------------------------------------------------------------------- */
+
+/**
+ * Die Klauselblöcke aus berichtstexte.json. Diese Texte sind
+ * kanzleireviewpflichtig und werden im UI ausschließlich WÖRTLICH ausgegeben
+ * (CLAUDE.md §10). Platzhalter wie {n}/{m} werden nur ersetzt, nicht umformuliert.
+ */
+export interface BerichtstexteBloecke {
+  fairness_klausel: string;
+  orientierungs_disclaimer: string;
+  eingabebasiertheit: string;
+  weiss_nicht_befund: string;
+  q_verweigert: string;
+  reihenfolge_governance: string;
+  ueberdimensionierung: string;
+  bafa_vermerk: { text: string; gueltig_bis: string };
+  beratungszitat: string;
+  argumentationskette: string;
+  hash_fusszeile: string;
+  beanstandung: string;
+  ai_act_label: string;
+}
+
+export interface BerichtstexteContent extends RawContentFile {
+  bloecke: BerichtstexteBloecke;
+  /** Bandbezogene Handlungsempfehlungen B1–B4. */
+  handlungsempfehlungen: Record<string, string>;
+}
+
+/* ---------------------------------------------------------------------------
  * Aggregat aller geladenen Inhalte
  * ------------------------------------------------------------------------- */
 
@@ -290,6 +321,7 @@ export interface Content {
   tco: TcoContent;
   schnelltest: SchnelltestContent;
   muster: MusterContent;
+  berichtstexte: BerichtstexteContent;
   /** Alle geladenen Rohdateien nach Basisname (inkl. "minis/…"). */
   raw: Record<string, RawContentFile>;
 }

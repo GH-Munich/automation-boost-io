@@ -32,6 +32,7 @@ export default function BestandPage() {
         achsen={content.achsen}
         preislogik={content.preislogik}
         tco={content.tco}
+        berichtstexte={content.berichtstexte}
         defaults={defaults}
         tuer="B"
       />

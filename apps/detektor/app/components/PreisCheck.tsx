@@ -4,7 +4,14 @@ import { useMemo, useState } from "react";
 
 import { calculatePriceCorridor } from "@engine/pricing";
 import { calculateTco } from "@engine/tco";
-import type { Ampel, PreislogikContent, Preistyp, TcoContent } from "@engine/types";
+import type {
+  Ampel,
+  BerichtstexteContent,
+  PreislogikContent,
+  Preistyp,
+  TcoContent,
+} from "@engine/types";
+import { ComplianceNote } from "./ComplianceNote";
 
 const eur = new Intl.NumberFormat("de-DE", {
   style: "currency",
@@ -29,6 +36,7 @@ const AMPEL: Record<Ampel, string> = {
 export function PreisCheck({
   preislogik,
   tco,
+  berichtstexte,
   deliveredDefault,
   vorlaeufig,
   defaults,
@@ -37,6 +45,7 @@ export function PreisCheck({
 }: {
   preislogik: PreislogikContent;
   tco: TcoContent;
+  berichtstexte: BerichtstexteContent;
   deliveredDefault: string;
   vorlaeufig: boolean;
   defaults: { volumenJahr: number; angebotJahr: number };
@@ -231,7 +240,31 @@ export function PreisCheck({
         </p>
       </section>
 
-      <p className="max-w-[70ch] text-[12px] leading-relaxed text-ink-3">{preislogik.disclaimer}</p>
+      {/* Begründungsspur Preislogik (G2, Regeln P1–P4) */}
+      <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
+        <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
+          Begründung · Preislogik
+        </p>
+        <ul className="mt-3 divide-y divide-line">
+          {price.begruendung.map((b, i) => (
+            <li key={i} className="flex items-start gap-4 py-3">
+              <span className="w-10 flex-none font-mono text-[11px] text-ink-3">{b.regelId}</span>
+              <span className="flex-1 text-[13px] leading-snug text-ink-2">
+                {b.eingabe}
+                {b.hinweis && (
+                  <span className="mt-0.5 block text-[12px] text-ink-3">{b.hinweis}</span>
+                )}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <ComplianceNote berichtstexte={berichtstexte} />
+
+      <p className="max-w-[70ch] text-[12px] leading-relaxed text-ink-3">
+        {berichtstexte.bloecke.orientierungs_disclaimer}
+      </p>
     </div>
   );
 }

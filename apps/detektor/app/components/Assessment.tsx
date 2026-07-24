@@ -4,6 +4,7 @@ import { useState } from "react";
 
 import type {
   AchsenContent,
+  BerichtstexteContent,
   PreislogikContent,
   ScoreResult,
   TcoContent,
@@ -20,12 +21,14 @@ export function Assessment({
   achsen,
   preislogik,
   tco,
+  berichtstexte,
   defaults,
   tuer = "A",
 }: {
   achsen: AchsenContent;
   preislogik: PreislogikContent;
   tco: TcoContent;
+  berichtstexte: BerichtstexteContent;
   defaults: { volumenJahr: number; angebotJahr: number };
   tuer?: string;
 }) {
@@ -53,6 +56,7 @@ export function Assessment({
       <PreisCheck
         preislogik={preislogik}
         tco={tco}
+        berichtstexte={berichtstexte}
         deliveredDefault={deliveredDefault}
         vorlaeufig={score.band === null}
         defaults={defaults}
@@ -62,5 +66,12 @@ export function Assessment({
     );
   }
 
-  return <Wizard achsen={achsen} onContinue={toPreis} tuer={tuer} />;
+  return (
+    <Wizard
+      achsen={achsen}
+      berichtstexte={berichtstexte}
+      onContinue={toPreis}
+      tuer={tuer}
+    />
+  );
 }

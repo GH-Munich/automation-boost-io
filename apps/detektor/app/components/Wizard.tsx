@@ -3,7 +3,15 @@
 import { useMemo, useState } from "react";
 
 import { calculateScore } from "@engine/scoring";
-import type { AchseId, AchsenContent, Band, ScoreInput, ScoreResult } from "@engine/types";
+import type {
+  AchseId,
+  AchsenContent,
+  Band,
+  BerichtstexteContent,
+  ScoreInput,
+  ScoreResult,
+} from "@engine/types";
+import { ComplianceNote, fuelleKlausel } from "./ComplianceNote";
 
 /**
  * Achsen-Wizard (Tür A, Kernpfad). Eine Frage pro Karte, Antippen, „Weiß ich
@@ -16,10 +24,12 @@ import type { AchseId, AchsenContent, Band, ScoreInput, ScoreResult } from "@eng
  */
 export function Wizard({
   achsen,
+  berichtstexte,
   onContinue,
   tuer = "A",
 }: {
   achsen: AchsenContent;
+  berichtstexte: BerichtstexteContent;
   onContinue?: (result: ScoreResult) => void;
   tuer?: string;
 }) {
@@ -69,6 +79,7 @@ export function Wizard({
     return (
       <ResultView
         achsen={achsen}
+        berichtstexte={berichtstexte}
         result={result}
         scoreLabel={scoreLabel}
         bandFor={bandFor}
@@ -249,6 +260,7 @@ function Option({
 
 function ResultView({
   achsen,
+  berichtstexte,
   result,
   scoreLabel,
   bandFor,
@@ -257,6 +269,7 @@ function ResultView({
   onContinue,
 }: {
   achsen: AchsenContent;
+  berichtstexte: BerichtstexteContent;
   result: ScoreResult;
   scoreLabel: string;
   bandFor: (score: number) => Band | undefined;
@@ -307,12 +320,17 @@ function ResultView({
         </div>
 
         {result.nichtBewertbar.length > 0 && (
-          <p className="mt-6 rounded-sm border border-line bg-surface-2 px-4 py-3 text-[13px] leading-relaxed text-ink-2">
-            <b className="text-ink">Transparenzlücke.</b>{" "}
-            {result.nichtBewertbar.length} von {achsen.achsen.length} Kernangaben sind nicht
-            bekannt oder wurden nicht gezeigt ({result.nichtBewertbar.map(axisName).join(", ")}).
-            Das ist ein Befund, keine Null.
-          </p>
+          <div className="mt-6 rounded-sm border border-line bg-surface-2 px-4 py-3 text-[13px] leading-relaxed text-ink-2">
+            <p>
+              {fuelleKlausel(berichtstexte.bloecke.weiss_nicht_befund, {
+                n: result.nichtBewertbar.length,
+                m: achsen.achsen.length,
+              })}
+            </p>
+            <p className="mt-1.5 text-ink-3">
+              Betroffen: {result.nichtBewertbar.map(axisName).join(", ")}.
+            </p>
+          </div>
         )}
       </section>
 
@@ -342,6 +360,8 @@ function ResultView({
           ))}
         </ul>
       </section>
+
+      <ComplianceNote berichtstexte={berichtstexte} />
 
       <div className="flex flex-wrap items-center gap-2.5">
         {onContinue && (
