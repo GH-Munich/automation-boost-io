@@ -19,11 +19,11 @@ const tueren = [
   },
   {
     id: "C",
-    href: "#",
-    aktiv: false,
+    href: "/bedarf",
+    aktiv: true,
     titel: "Noch kein Anbieter",
     text: "Klären, ob dieser Prozess überhaupt agentische Automatisierung braucht — Skript, Workflow oder Agent?",
-    cta: "In Kürze",
+    cta: "Bedarf klären",
   },
 ];
 
