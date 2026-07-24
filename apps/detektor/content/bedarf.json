@@ -27,6 +27,10 @@
         {
           "wert": "beides",
           "text": "Beides — erst Informationen, dann Aktionen"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht genau"
         }
       ]
     },
@@ -119,6 +123,10 @@
         {
           "wert": "nein",
           "text": "Nein — der Prozess lebt informell"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht"
         }
       ]
     },
@@ -138,6 +146,10 @@
         {
           "wert": "irreversibel",
           "text": "Kaum umkehrbar oder teuer — rechtliche, finanzielle oder Reputationsfolgen"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht"
         }
       ]
     },
@@ -316,9 +328,12 @@
       }
     ],
     "vorlaeufig_bei_weiss_nicht_in": [
+      "F1",
       "F2",
       "F3",
-      "F4"
+      "F4",
+      "F5",
+      "F6"
     ],
     "zusatzbefunde": [
       {

@@ -71,6 +71,21 @@
       "name": "B4 — Widerspruch: „immer gleich“ und zugleich „häufig unvorhersehbar“ als additiver Hinweis",
       "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "unvorhersehbar", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 200 },
       "erwartet": { "klasse": "N5", "gruende": [], "regelId": "R08", "vorlaeufig": false, "klasseSpanne": null, "zusatzbefundeMin": 1 }
+    },
+    {
+      "name": "B6 — F1=weiß nicht (Prozessart) spannt N1–N2 (G5, keine Fehleinstufung durch Unwissen)",
+      "input": { "F1": "weiss_nicht", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": true, "klasseSpanne": { "von": "N1", "bis": "N2" } }
+    },
+    {
+      "name": "B6 — F5=weiß nicht (Dokumentation) spannt N0–N1: könnte ein Stopp sein, muss aber nicht",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "weiss_nicht", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": true, "klasseSpanne": { "von": "N0", "bis": "N1" } }
+    },
+    {
+      "name": "B6 — F6=weiß nicht (Fehlerfolgen) spannt N0–N1: irreversibel wäre Stopp, sonst nicht",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "weiss_nicht", "F7": 200 },
+      "erwartet": { "klasse": "N1", "gruende": [], "regelId": "R05", "vorlaeufig": true, "klasseSpanne": { "von": "N0", "bis": "N1" } }
     }
   ]
 }
