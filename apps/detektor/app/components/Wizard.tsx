@@ -17,9 +17,11 @@ import type { AchseId, AchsenContent, Band, ScoreInput, ScoreResult } from "@eng
 export function Wizard({
   achsen,
   onContinue,
+  tuer = "A",
 }: {
   achsen: AchsenContent;
   onContinue?: (result: ScoreResult) => void;
+  tuer?: string;
 }) {
   const axes = achsen.achsen;
   const baender = achsen.auswertung.baender;
@@ -85,7 +87,7 @@ export function Wizard({
       <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
         <div className="flex items-center justify-between gap-3">
           <span className="rounded-xs bg-accent-weak px-2.5 py-1 font-mono text-[11px] uppercase tracking-[.1em] text-accent">
-            Tür A · Achsen-Prüfung
+            Tür {tuer} · Achsen-Prüfung
           </span>
           <span className="font-mono text-[12px] text-ink-3">≈ 12–15 Min.</span>
         </div>

@@ -21,11 +21,13 @@ export function Assessment({
   preislogik,
   tco,
   defaults,
+  tuer = "A",
 }: {
   achsen: AchsenContent;
   preislogik: PreislogikContent;
   tco: TcoContent;
   defaults: { volumenJahr: number; angebotJahr: number };
+  tuer?: string;
 }) {
   const [phase, setPhase] = useState<"achsen" | "preis">("achsen");
   const [score, setScore] = useState<ScoreResult | null>(null);
@@ -54,10 +56,11 @@ export function Assessment({
         deliveredDefault={deliveredDefault}
         vorlaeufig={score.band === null}
         defaults={defaults}
+        tuer={tuer}
         onBack={() => setPhase("achsen")}
       />
     );
   }
 
-  return <Wizard achsen={achsen} onContinue={toPreis} />;
+  return <Wizard achsen={achsen} onContinue={toPreis} tuer={tuer} />;
 }

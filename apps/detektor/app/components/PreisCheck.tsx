@@ -33,6 +33,7 @@ export function PreisCheck({
   vorlaeufig,
   defaults,
   onBack,
+  tuer = "A",
 }: {
   preislogik: PreislogikContent;
   tco: TcoContent;
@@ -40,6 +41,7 @@ export function PreisCheck({
   vorlaeufig: boolean;
   defaults: { volumenJahr: number; angebotJahr: number };
   onBack: () => void;
+  tuer?: string;
 }) {
   const [klasse, setKlasse] = useState(deliveredDefault);
   const [volumen, setVolumen] = useState(defaults.volumenJahr);
@@ -64,7 +66,7 @@ export function PreisCheck({
     <div className="grid gap-5">
       <div className="flex items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Tür A · Preis-Check
+          Tür {tuer} · Preis-Check
         </p>
         <button
           type="button"

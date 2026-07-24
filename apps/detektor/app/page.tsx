@@ -11,11 +11,11 @@ const tueren = [
   },
   {
     id: "B",
-    href: "#",
-    aktiv: false,
+    href: "/bestand",
+    aktiv: true,
     titel: "Wir haben schon gekauft",
     text: "Ein Bestandssystem rückblickend einordnen und dem, was Sie zahlen, gegenüberstellen.",
-    cta: "In Kürze",
+    cta: "Bestand prüfen",
   },
   {
     id: "C",
