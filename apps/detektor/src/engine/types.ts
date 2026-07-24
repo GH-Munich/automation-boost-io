@@ -159,6 +159,8 @@ export interface AmpelSchwelle {
   bis?: number;
   von?: number;
   ab?: number;
+  /** Kurzlabel für die Ampel-Plakette (aus JSON, nicht im Code erfinden). */
+  label?: string;
   text: string;
 }
 
@@ -176,6 +178,8 @@ export interface PreislogikContent extends RawContentFile {
   kurs: { usd_eur: number; editierbar: boolean; label: string };
   washing_faktor: { formel: string; ampel: AmpelSchwelle[] };
   ueberdimensionierung: { bedingung: string; befund: string; quelle: string };
+  /** Anzeige-Präzision (datengetrieben statt im Code fixiert). */
+  anzeige?: { faktor_nachkommastellen: number; preis_nachkommastellen: number };
   beispiel_golden_test: unknown;
   disclaimer: string;
 }

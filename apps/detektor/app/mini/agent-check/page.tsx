@@ -9,6 +9,7 @@ export default function AgentCheckMiniPage() {
   const c = getContent();
   const cfg = c.raw["minis/mini-agent-check.json"] as unknown as {
     titel: string;
+    untertitel?: string;
     cta: { label: string };
     consent_checkbox: string;
   };
@@ -16,7 +17,7 @@ export default function AgentCheckMiniPage() {
 
   return (
     <div className="mx-auto max-w-wrap px-4 py-10 sm:px-8">
-      <MiniHead titel={cfg.titel} hinweis="Sechs Fragen, eine je Achse — ohne technische Vorkenntnisse." />
+      <MiniHead titel={cfg.titel} hinweis={cfg.untertitel} />
       <div className="mt-8">
         <Wizard achsen={c.achsen} berichtstexte={c.berichtstexte} />
       </div>

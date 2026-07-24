@@ -13,20 +13,6 @@ import type {
 } from "@engine/types";
 import { ComplianceNote } from "./ComplianceNote";
 
-const eur = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "EUR",
-  maximumFractionDigits: 0,
-});
-const usd = new Intl.NumberFormat("de-DE", {
-  style: "currency",
-  currency: "USD",
-  maximumFractionDigits: 0,
-});
-function faktor(n: number): string {
-  return n.toLocaleString("de-DE", { minimumFractionDigits: 1, maximumFractionDigits: 1 });
-}
-
 const AMPEL: Record<Ampel, string> = {
   gruen: "bg-ok-weak text-ok",
   gelb: "bg-warn-weak text-warn",
@@ -63,6 +49,27 @@ export function PreisCheck({
   const [kurs, setKurs] = useState(preislogik.kurs.usd_eur);
   // Projektlaufzeit in Monaten (nur Pilotpreis, Zeitpuffer-Stufe T5); 0 = offen.
   const [laufzeit, setLaufzeit] = useState(0);
+
+  // Anzeige-Präzision aus den Daten (preislogik.anzeige), mit sicheren Vorgaben.
+  const faktorNk = preislogik.anzeige?.faktor_nachkommastellen ?? 1;
+  const preisNk = preislogik.anzeige?.preis_nachkommastellen ?? 0;
+  const eur = new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+    maximumFractionDigits: preisNk,
+  });
+  const usd = new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "USD",
+    maximumFractionDigits: preisNk,
+  });
+  const faktor = (n: number): string =>
+    n.toLocaleString("de-DE", {
+      minimumFractionDigits: faktorNk,
+      maximumFractionDigits: faktorNk,
+    });
+  const ampelLabel = (stufe: Ampel): string =>
+    preislogik.washing_faktor.ampel.find((a) => a.stufe === stufe)?.label ?? "";
 
   const price = useMemo(
     () =>
@@ -217,7 +224,7 @@ export function PreisCheck({
                     className={`inline-flex items-center gap-2 rounded-md px-3 py-2 text-[13px] font-semibold ${AMPEL[price.ampel]}`}
                   >
                     <span className="h-2.5 w-2.5 rounded-full bg-current" aria-hidden="true" />
-                    {price.ampel === "gruen" ? "Verhandelbar" : price.ampel === "gelb" ? "Deutlich überteuert" : "Agent Washing"}
+                    {ampelLabel(price.ampel)}
                   </span>
                 </div>
                 <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">{price.ampelText}</p>
