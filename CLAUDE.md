@@ -150,13 +150,18 @@ Kein Leaderboard. Kein Preisvergleichsportal. Kein Anbieterverzeichnis mit Listi
 
 ## 12. Aktueller Stand
 
-**Abgeschlossen:** M0 (Konzept), M1 (16 Content-JSONs, validiert).
-**Als Nächstes:** M2 — Regel-Engine mit Golden-Test-Suite. Auftrag siehe `docs/UEBERGABE_AWD_M2.md`.
+**Abgeschlossen:** M0 (Konzept), M1 (16 Content-JSONs, validiert), M2 (Regel-Engine + Golden-Test-Suite), M3 (Frontend). Audit + Welle 1/2 umgesetzt (Protokoll unter `docs/audits/`).
+
+Das Frontend deckt alle Prüfstandard-Teile datengetrieben ab: Türen A/B/C, Schnelltest, Mustererkennung, die 12 Fragen, der Phrasen-Decoder, das AI-Act-Mini, die fünf Lead-Minis und der zusammengeführte **Prüfbericht** (Score + Preis + Begründungsspur + wörtliche Compliance-Klauseln + Protokoll). Alle acht Engine-Funktionen sind in der App sichtbar; kein fachlicher Wert ist hartkodiert.
+
+**Als Nächstes:** M4–M6 (Upload/Claim-Extraktion, Directus/DB, n8n, Deployment) — **gemeinsam Schritt für Schritt** (§7), nicht solo.
 
 Offene Entscheidungen, die den Code betreffen (nicht eigenmächtig auflösen):
 - Extraktionsmodell: self-hosted Ollama auf gha-ops (Empfehlung) oder EU-API als Qualitäts-Fallback
+- **B7-Scope:** Marktanker P2(a) aus `preise-support.json` und der M3-Sonderfall (`achsen.json` `kostenklasse_wenn_muster_M3`) sind bewusst noch nicht angebunden — Methodik-/Scope-Entscheidung.
+- **B8:** `mini-ai-act`-Formulierungen kanzleireviewpflichtig vor Launch.
 - Serverzuordnung für das Deployment (wird bei M6 gemeinsam entschieden)
-- Farbwerte des Designsystems
+- Dependency-Bump gegen die informativen `npm audit`-Advisories (Next-gebündeltes postcss/sharp)
 
 ---
 
