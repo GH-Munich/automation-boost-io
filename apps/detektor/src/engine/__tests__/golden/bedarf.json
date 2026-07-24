@@ -1,0 +1,56 @@
+{
+  "beschreibung": "Golden-Fälle für classifyBedarf (Übergabe §2.3). Regeln R01–R09 aus bedarf.json, First-Match.",
+  "faelle": [
+    {
+      "name": "N0-daten — R01 (F4=nein)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "nein", "F5": "ja", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N0", "grund": "daten", "regelId": "R01", "vorlaeufig": false }
+    },
+    {
+      "name": "N0-prozess — R02 (F5=nein, F4≠nein)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "nein", "F6": "leicht", "F7": 200 },
+      "erwartet": { "klasse": "N0", "grund": "prozess", "regelId": "R02", "vorlaeufig": false }
+    },
+    {
+      "name": "N0-risiko — R03 (F6=irreversibel)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "irreversibel", "F7": 200 },
+      "erwartet": { "klasse": "N0", "grund": "risiko", "regelId": "R03", "vorlaeufig": false }
+    },
+    {
+      "name": "N2 — R04 (F1=auskunft)",
+      "input": { "F1": "auskunft", "F2": "meist", "F3": "regelmaessig", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 500 },
+      "erwartet": { "klasse": "N2", "grund": null, "regelId": "R04", "vorlaeufig": false }
+    },
+    {
+      "name": "N1 — R05 (F2=immer, F3=kaum)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 5000 },
+      "erwartet": { "klasse": "N1", "grund": null, "regelId": "R05", "vorlaeufig": false }
+    },
+    {
+      "name": "N3 — R06 (F2=immer, F3=regelmaessig)",
+      "input": { "F1": "ausfuehrung", "F2": "immer", "F3": "regelmaessig", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 800 },
+      "erwartet": { "klasse": "N3", "grund": null, "regelId": "R06", "vorlaeufig": false }
+    },
+    {
+      "name": "N4 — R07 (F2=meist, F3=kaum)",
+      "input": { "F1": "ausfuehrung", "F2": "meist", "F3": "kaum", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 300 },
+      "erwartet": { "klasse": "N4", "grund": null, "regelId": "R07", "vorlaeufig": false }
+    },
+    {
+      "name": "N5 — R08 (F2=selten)",
+      "input": { "F1": "ausfuehrung", "F2": "selten", "F3": "regelmaessig", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 120 },
+      "erwartet": { "klasse": "N5", "grund": null, "regelId": "R08", "vorlaeufig": false }
+    },
+    {
+      "name": "Fallback — R09 (keine Regel trifft; F2=meist, F3=weiss_nicht → vorläufig)",
+      "input": { "F1": "beides", "F2": "meist", "F3": "weiss_nicht", "F4": "ja", "F5": "ja", "F6": "leicht", "F7": 250 },
+      "erwartet": { "klasse": "N4", "grund": null, "regelId": "R09", "vorlaeufig": true }
+    },
+    {
+      "name": "First-Match-Beweis — R01 gewinnt, obwohl R02/R03/R04 ebenfalls zuträfen",
+      "input": { "F1": "auskunft", "F2": "immer", "F3": "kaum", "F4": "nein", "F5": "nein", "F6": "irreversibel", "F7": 200 },
+      "erwartet": { "klasse": "N0", "grund": "daten", "regelId": "R01", "vorlaeufig": false },
+      "haetten_ebenfalls_getroffen": ["R02", "R03", "R04"]
+    }
+  ]
+}

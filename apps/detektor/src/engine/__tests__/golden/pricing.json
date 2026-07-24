@@ -1,0 +1,87 @@
+{
+  "beschreibung": "Golden-Fälle für calculatePriceCorridor (Übergabe §2.3). Erster Fall ist der verifizierte Referenzfall aus preislogik.json (beispiel_golden_test).",
+  "faelle": [
+    {
+      "name": "Referenzfall aus preislogik.json — chatbot_rag, 24.000 Vorgänge, Faktor 3–5, Kurs 0,90, Angebot 60.000 € → 11,1 → rot",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 60000
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 360.0, "max": 6000.0 },
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 11.1,
+        "ampel": "rot",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Grün — Angebot nahe am Korridor (Washing-Faktor ≤ 2)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 9000
+      },
+      "erwartet": {
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 1.7,
+        "ampel": "gruen",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Gelb — deutlich überteuert (Washing-Faktor 3–10)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 27000
+      },
+      "erwartet": {
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 5.0,
+        "ampel": "gelb",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Überdimensionierung — echter Agent geliefert, aber IPA benötigt (P4)",
+      "input": {
+        "gelieferteKlasse": "agent",
+        "volumenJahr": 1000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 50000,
+        "benoetigteKlasse": "ipa"
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 900.0, "max": 40000.0 },
+        "korridorEur": { "min": 810.0, "max": 36000.0 },
+        "washingFaktor": 1.4,
+        "ampel": "gruen",
+        "ueberdimensionierung": true
+      }
+    },
+    {
+      "name": "Vorgaben aus preislogik.json — betriebsfaktor & kurs weggelassen",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "angebotspreisJahrEur": 60000
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 360.0, "max": 6000.0 },
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 11.1,
+        "ampel": "rot",
+        "ueberdimensionierung": false
+      }
+    }
+  ]
+}

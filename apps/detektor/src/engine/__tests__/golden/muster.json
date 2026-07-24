@@ -1,0 +1,40 @@
+{
+  "beschreibung": "Golden-Fälle für detectMuster (Übergabe §2.3). Signalwortsuche gegen muster.json, MVP-Tracks M1, M2, M4.",
+  "faelle": [
+    {
+      "name": "M1 Voice-Agent — Treffer",
+      "input": { "freitext": "Wir suchen einen Voicebot für die Anrufannahme in der Telefonie." },
+      "erwartet": { "generisch": false, "topMuster": "M1", "mindestensTreffer": 3 }
+    },
+    {
+      "name": "M2 Support-Agent — Treffer",
+      "input": { "freitext": "Support-Agent mit hoher Automatisierungsquote, Deflection und Preis pro Resolution." },
+      "erwartet": { "generisch": false, "topMuster": "M2", "mindestensTreffer": 3 }
+    },
+    {
+      "name": "M4 RAG im Agentenmantel — Treffer",
+      "input": { "freitext": "Ein Wissensassistent auf unserer Wissensdatenbank mit semantischer Suche über Dokumente." },
+      "erwartet": { "generisch": false, "topMuster": "M4", "mindestensTreffer": 3 }
+    },
+    {
+      "name": "Mehrfachtreffer — Voice (3) vor Support (2), nach Trefferzahl sortiert",
+      "input": { "freitext": "Voicebot Anrufannahme Telefonie für Support Tickets" },
+      "erwartet": { "generisch": false, "topMuster": "M1", "zweitMuster": "M2" }
+    },
+    {
+      "name": "Umlaut-Toleranz — 'aufgeruestet' matcht 'aufgerüstet' (M3)",
+      "input": { "freitext": "Unser Bestandssystem wurde intelligent aufgeruestet." },
+      "erwartet": { "generisch": false, "topMuster": "M3", "mindestensTreffer": 2 }
+    },
+    {
+      "name": "Kein Treffer — generisch",
+      "input": { "freitext": "Wir möchten unsere Buchhaltung digitalisieren." },
+      "erwartet": { "generisch": true }
+    },
+    {
+      "name": "Direktwahl (Klassifikation) — M2",
+      "input": { "klassifikation": "M2" },
+      "erwartet": { "generisch": false, "topMuster": "M2", "quelle": "klassifikation" }
+    }
+  ]
+}
