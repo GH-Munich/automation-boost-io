@@ -1,0 +1,27 @@
+# AWD-Detektor — Deployment auf gha-live, hinter dem bestehenden Traefik.
+# Eigenes Compose im AWD-Repo (separates Portal), haengt sich an das externe
+# Traefik-Netzwerk. Die statischen Security-Header liefert die vorhandene
+# Traefik-Middleware security-headers@docker; die App liefert nur die CSP.
+services:
+  awd:
+    build:
+      context: ./apps/detektor
+      dockerfile: Dockerfile
+    image: awd-detektor:latest
+    container_name: awd-detektor
+    restart: unless-stopped
+    networks:
+      - traefik
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.awd.rule=Host(`awd.automation-boost.io`)"
+      - "traefik.http.routers.awd.entrypoints=websecure"
+      - "traefik.http.routers.awd.tls.certresolver=letsencrypt"
+      - "traefik.http.routers.awd.middlewares=security-headers@docker"
+      - "traefik.http.services.awd.loadbalancer.server.port=3000"
+
+networks:
+  traefik:
+    external: true
+    # TODO: exakter Netzwerkname aus Befehl 2 (docker network von ki-boost-io).
+    name: PLATZHALTER_TRAEFIK_NETZWERK

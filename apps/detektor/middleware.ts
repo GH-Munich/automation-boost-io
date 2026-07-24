@@ -37,14 +37,11 @@ export function middleware(request: NextRequest): NextResponse {
   requestHeaders.set("content-security-policy", csp);
 
   const response = NextResponse.next({ request: { headers: requestHeaders } });
+  // Nur die CSP kommt aus der App (nonce muss pro Request hier erzeugt werden).
+  // Die statischen Schutz-Header (X-Frame-Options, X-Content-Type-Options,
+  // Referrer-Policy, Permissions-Policy, HSTS) setzt der Traefik-Middleware
+  // security-headers@docker davor — hier NICHT duplizieren (sonst Doppel-Header).
   response.headers.set("content-security-policy", csp);
-  response.headers.set("x-content-type-options", "nosniff");
-  response.headers.set("referrer-policy", "strict-origin-when-cross-origin");
-  response.headers.set("x-frame-options", "DENY");
-  response.headers.set(
-    "permissions-policy",
-    "camera=(), microphone=(), geolocation=(), interest-cohort=()",
-  );
   return response;
 }
 
