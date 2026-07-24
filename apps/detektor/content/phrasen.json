@@ -1,0 +1,76 @@
+{
+  "meta": {
+    "datei": "phrasen.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 6, Kap. 3 (Die Sprache der Verkaufsgespräche)"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "titel": "Die 10 Sätze — und was sie bedeuten",
+  "phrasen": [
+    {
+      "id": "P01",
+      "satz": "Bis zu 90 % Automatisierung",
+      "bedeutung": "Bestwert eines einzelnen Kunden in einem Teilsegment.",
+      "gegenfrage": "Was ist der Median über alle Bestandskunden?"
+    },
+    {
+      "id": "P02",
+      "satz": "Der Agent löst das selbstständig",
+      "bedeutung": "'Gelöst' heißt oft nur: Der Kunde hat nicht nachgefragt.",
+      "gegenfrage": "Wie ist 'gelöst' im Vertrag definiert?"
+    },
+    {
+      "id": "P03",
+      "satz": "Autonom",
+      "bedeutung": "Ohne Bestätigung je Einzelschritt — aber mit Endfreigabe durch einen Menschen.",
+      "gegenfrage": "Wie viele Vorgänge laufen ohne jeden Eingriff durch?"
+    },
+    {
+      "id": "P04",
+      "satz": "KI-gestützt",
+      "bedeutung": "Ein Modellaufruf in einem festen Ablauf.",
+      "gegenfrage": "Entscheidet das Modell den Ablauf — oder füllt es Felder?"
+    },
+    {
+      "id": "P05",
+      "satz": "Lernt aus Ihren Daten",
+      "bedeutung": "RAG-Retrieval, kein Training — das Modell ändert sich nicht.",
+      "gegenfrage": "Ändert sich das Modell oder nur der Kontext?"
+    },
+    {
+      "id": "P06",
+      "satz": "Nahtlose Integration",
+      "bedeutung": "Ein Konnektor ist vorhanden — das Feldmapping nicht.",
+      "gegenfrage": "Wer erstellt das Feldmapping, und zu welchem Preis?"
+    },
+    {
+      "id": "P07",
+      "satz": "Enterprise-ready",
+      "bedeutung": "Es gibt SSO.",
+      "gegenfrage": "Zeigen Sie Audit-Trail, Rollback und Rollenmodell."
+    },
+    {
+      "id": "P08",
+      "satz": "Keine Halluzinationen",
+      "bedeutung": "Eine nicht messbar belegte Behauptung.",
+      "gegenfrage": "Wie messen Sie das? Legen Sie die Methodik vor."
+    },
+    {
+      "id": "P09",
+      "satz": "Sofort einsatzbereit",
+      "bedeutung": "Die Demo läuft — die Produktion nicht.",
+      "gegenfrage": "Wie lange bis zum ersten Produktivvorgang bei vergleichbaren Kunden?"
+    },
+    {
+      "id": "P10",
+      "satz": "Individuelles Angebot",
+      "bedeutung": "Keine öffentlichen Preise.",
+      "gegenfrage": "Nennen Sie den Mindestpreis. Jeder Anbieter hat einen."
+    }
+  ],
+  "protokoll_aktion": "Beim Antippen einer Phrase wird die Gegenfrage automatisch in das Prüfprotokoll des laufenden Assessments übernommen.",
+  "praxishinweis": "Werkzeuge mit öffentlichen Preisen (u. a. Botpress, Lindy, Voiceflow, Dify, Flowise, n8n, Intercom Fin) sind schneller zu bewerten und leichter zu budgetieren. Bei 'Contact Sales'-Anbietern vor dem Termin ein schriftliches Angebot je Einheit und den Mindestpreis einfordern."
+}

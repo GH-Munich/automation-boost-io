@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "datei": "minis/mini-bafa.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 4, Kap. 2 (Fördermittelhebel)",
+      "AWD_KONZEPT v1.0, Kap. 5"
+    ],
+    "pflegehinweis": "Richtlinie endet 31.12.2026 — Mini danach deaktivieren oder auf Nachfolgeprogramm umstellen."
+  },
+  "id": "mini-bafa",
+  "titel": "Der 2-Minuten-Detektor: Zahlt der Staat Ihre Beratung mit?",
+  "zeitangabe_min": 2,
+  "fragen": [
+    {
+      "id": "BF1",
+      "frage": "Hat Ihr Unternehmen seinen Sitz in Deutschland?",
+      "optionen": [
+        "ja",
+        "nein"
+      ],
+      "ko_bei": "nein"
+    },
+    {
+      "id": "BF2",
+      "frage": "Ist Ihr Unternehmen seit mindestens einem Jahr am Markt?",
+      "optionen": [
+        "ja",
+        "nein"
+      ],
+      "ko_bei": "nein"
+    },
+    {
+      "id": "BF3",
+      "frage": "Beschäftigen Sie weniger als 250 Mitarbeitende?",
+      "optionen": [
+        "ja",
+        "nein"
+      ],
+      "ko_bei": "nein"
+    },
+    {
+      "id": "BF4",
+      "frage": "Wo liegt Ihr Standort?",
+      "optionen": [
+        {
+          "wert": "alte_laender",
+          "text": "Alte Bundesländer"
+        },
+        {
+          "wert": "neue_laender",
+          "text": "Neue Bundesländer"
+        }
+      ]
+    }
+  ],
+  "ergebnis": {
+    "typ": "foerderrechnung",
+    "faelle": {
+      "alte_laender": {
+        "foerdersatz": 0.5,
+        "zuschuss_max_eur": 1750,
+        "anzeige": "Ein Assessment für 3.500 € netto kostet Sie effektiv 1.750 €."
+      },
+      "neue_laender": {
+        "foerdersatz": 0.8,
+        "zuschuss_max_eur": 2800,
+        "anzeige": "Ein Assessment für 3.500 € netto kostet Sie effektiv 700 €."
+      }
+    },
+    "ko_anzeige": "Nach diesen Angaben ist die BAFA-Beratungsförderung nicht einschlägig — ein Assessment ist auch ungefördert bewusst unterhalb typischer Freigabeschwellen kalkuliert."
+  },
+  "hinweise": [
+    "Antragstellung zwingend vor Beratungsbeginn — der häufigste Fehler.",
+    "Der Berater muss in der BAFA-Beraterbörse gelistet sein.",
+    "Förderfähig ist Konzeptberatung, nicht die Umsetzung.",
+    "Bearbeitungsdauer typisch 4–6 Wochen.",
+    "Mit zwei geförderten Beratungen: Zuschuss bis 3.500 € bzw. 5.600 €.",
+    "Die Richtlinie endet am 31.12.2026."
+  ],
+  "cta": {
+    "label": "Assessment anfragen",
+    "ziel_tuer": null,
+    "prefill": null
+  },
+  "mail": {
+    "pdf_report": true,
+    "double_opt_in": true
+  },
+  "consent_checkbox": "Anonymisierte Nutzung meiner Angaben für Marktauswertungen (jederzeit widerrufbar).",
+  "disclaimer_refs": []
+}

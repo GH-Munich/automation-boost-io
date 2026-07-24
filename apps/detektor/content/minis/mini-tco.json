@@ -1,0 +1,51 @@
+{
+  "meta": {
+    "datei": "minis/mini-tco.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "tco-faktoren.json",
+      "AWD_KONZEPT v1.0, Kap. 5"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "id": "mini-tco",
+  "titel": "Der 2-Minuten-Detektor: Ihr Pilot kostet 15.000 € — was kostet die Produktion?",
+  "zeitangabe_min": 2,
+  "eingaben": [
+    {
+      "id": "angebot_eur",
+      "label": "Angebotspreis",
+      "typ": "zahl",
+      "default": 15000
+    },
+    {
+      "ref": "tco-faktoren.frage_preistyp"
+    },
+    {
+      "id": "laufzeit_monate",
+      "label": "Geplante Projektlaufzeit (Monate)",
+      "typ": "zahl",
+      "default": 6,
+      "optional": true
+    }
+  ],
+  "ergebnis": {
+    "typ": "wasserfall",
+    "quelle": "tco-faktoren.rechenwege",
+    "abschluss_zitat": "tco-faktoren.faustregel"
+  },
+  "cta": {
+    "label": "Preis-Check mit Angebot durchführen",
+    "ziel_tuer": "A",
+    "prefill": "Angebotspreis wird in den Preis-Check übernommen."
+  },
+  "mail": {
+    "pdf_report": true,
+    "double_opt_in": true
+  },
+  "consent_checkbox": "Anonymisierte Nutzung meiner Angaben für Marktauswertungen (jederzeit widerrufbar).",
+  "disclaimer_refs": [
+    "berichtstexte.orientierungs_disclaimer"
+  ]
+}

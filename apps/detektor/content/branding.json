@@ -1,0 +1,39 @@
+{
+  "meta": {
+    "datei": "branding.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "AWD_KONZEPT v1.0, Kap. 9.2 (White-Label, Stufe 2)"
+    ],
+    "pflegehinweis": "Strukturdefinition ab MVP; Mandantenpflege ab Stufe 2."
+  },
+  "hinweis": "MVP nutzt ausschließlich den Default-Mandanten. Farbwerte sind Platzhalter bis zur Definition des automation-boost-Designsystems.",
+  "default": {
+    "mandant_id": "awd",
+    "name": "Der Agent-Washing-Detektor",
+    "portal": "automation-boost.io",
+    "url": "https://detektor.automation-boost.io",
+    "logo_url": null,
+    "farben": {
+      "primaer": "TODO",
+      "sekundaer": "TODO",
+      "akzent": "TODO"
+    },
+    "fusszeile": "Der Agent-Washing-Detektor · ein Angebot von automation-boost.io",
+    "white_label": false
+  },
+  "mandanten_schema": {
+    "mandant_id": "string",
+    "name": "string",
+    "logo_url": "string|null",
+    "farben": {
+      "primaer": "hex",
+      "sekundaer": "hex",
+      "akzent": "hex"
+    },
+    "fusszeile": "string",
+    "white_label": "bool",
+    "kontakt_beanstandung": "string"
+  }
+}

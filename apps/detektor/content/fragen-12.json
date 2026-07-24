@@ -1,0 +1,120 @@
+{
+  "meta": {
+    "datei": "fragen-12.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 5, Kap. 5 (Beschaffungsleitfaden)"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "titel": "Die 12 Fragen vor der Unterschrift",
+  "hinweis": "So formuliert, dass sie ohne technische Vorkenntnisse gestellt werden können.",
+  "reihenfolgehinweis": "Governance-Anforderungen (Q10–Q12) gehören in die Ausschreibung — vor die erste Produktvorführung. Die meisten agentischen Fehlschläge gehen auf schwache Governance zurück, nicht auf schwache Modelle.",
+  "status_optionen": [
+    {
+      "wert": "beantwortet",
+      "text": "Beantwortet"
+    },
+    {
+      "wert": "offen",
+      "text": "Offen"
+    },
+    {
+      "wert": "verweigert",
+      "text": "Nicht beantwortet / verweigert"
+    }
+  ],
+  "befund_bei_verweigert": "Eine unbeantwortete Nachweisfrage ist ein eigenständiger Befund und geht als solcher in die Bewertung ein.",
+  "gruppen": [
+    {
+      "name": "Zur Autonomie",
+      "fragen": [
+        {
+          "id": "Q1",
+          "text": "Wie hoch ist die Nicht-Interventionsrate bei Ihren Bestandskunden — und wie wird sie gemessen?",
+          "tag": "Die Presto-Kennzahl"
+        },
+        {
+          "id": "Q2",
+          "text": "Wie viele Bestellungen/Vorgänge laufen vollständig ohne menschlichen Eingriff durch?",
+          "tag": null
+        },
+        {
+          "id": "Q3",
+          "text": "Zeigen Sie mir einen Vorgang, bei dem das System einen Fehler bemerkt und selbst korrigiert hat.",
+          "tag": null
+        }
+      ]
+    },
+    {
+      "name": "Zur Technologie",
+      "fragen": [
+        {
+          "id": "Q4",
+          "text": "Welche Komponenten Ihres Systems stammen von Dritten? Wer betreibt sie?",
+          "tag": "Die Presto-Frage"
+        },
+        {
+          "id": "Q5",
+          "text": "Welches Modell setzen Sie ein — und können wir es wechseln?",
+          "tag": null
+        },
+        {
+          "id": "Q6",
+          "text": "Wählt das System Werkzeuge zur Laufzeit oder ist die Zuordnung programmiert?",
+          "tag": null
+        }
+      ]
+    },
+    {
+      "name": "Zum Nachweis",
+      "fragen": [
+        {
+          "id": "Q7",
+          "text": "Legen Sie das vollständige Ausführungsprotokoll eines Vorgangs vor — mit Werkzeugaufrufen, Zwischenschritten und Modellversionen.",
+          "tag": null
+        },
+        {
+          "id": "Q8",
+          "text": "Führen Sie die Demo mit unseren Daten durch, einschließlich absichtlich unvollständiger Fälle.",
+          "tag": null
+        },
+        {
+          "id": "Q9",
+          "text": "Welche Belege haben Sie für Ihre Autonomiebehauptungen?",
+          "tag": "Die DoNotPay-Frage"
+        }
+      ]
+    },
+    {
+      "name": "Zur Governance",
+      "fragen": [
+        {
+          "id": "Q10",
+          "text": "Wie sieht der Audit-Trail aus? Welche Entscheidungen sind rekonstruierbar?",
+          "tag": null
+        },
+        {
+          "id": "Q11",
+          "text": "Welches Berechtigungsmodell und welcher Rollback-Mechanismus existieren?",
+          "tag": null
+        },
+        {
+          "id": "Q12",
+          "text": "Was kostet ein Vorgang tatsächlich — inklusive aller internen Modellaufrufe?",
+          "tag": null
+        }
+      ]
+    }
+  ],
+  "mail_vorlage": {
+    "betreff": "Prüffragen vor der Produktvorführung — Bitte um schriftliche Beantwortung bis {frist}",
+    "text": "Sehr geehrte Damen und Herren,\n\nzur strukturierten Vorbereitung unserer Entscheidung bitten wir Sie um schriftliche Beantwortung der zwölf beigefügten Fragen bis zum {frist}. Die Fragen sind Bestandteil eines standardisierten Prüfverfahrens (AWD-Prüfstandard, Version {standard_version}).\n\nWir bitten um Beantwortung vor der Produktvorführung; die Governance-Fragen (10–12) sind für uns Voraussetzung, nicht Nachtrag. Unbeantwortete Fragen fließen als solche in die Bewertung ein.\n\nMit freundlichen Grüßen\n{absender}",
+    "platzhalter": [
+      "frist",
+      "standard_version",
+      "absender"
+    ]
+  }
+}

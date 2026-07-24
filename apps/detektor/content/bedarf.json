@@ -1,0 +1,357 @@
+{
+  "meta": {
+    "datei": "bedarf.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 5, Kap. 1 und 6",
+      "Buch 3, Stufe 1",
+      "AWD_KONZEPT v1.0, Kap. 2.4 und 3.1 (Tür C)"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "fragen": [
+    {
+      "id": "F1",
+      "kurz": "Prozessart",
+      "frage": "Worum geht es bei diesem Prozess im Kern?",
+      "optionen": [
+        {
+          "wert": "auskunft",
+          "text": "Fragen beantworten, Wissen finden, Informationen zusammenstellen"
+        },
+        {
+          "wert": "ausfuehrung",
+          "text": "Vorgänge bearbeiten, Aktionen in Systemen auslösen"
+        },
+        {
+          "wert": "beides",
+          "text": "Beides — erst Informationen, dann Aktionen"
+        }
+      ]
+    },
+    {
+      "id": "F2",
+      "kurz": "Determinismus",
+      "frage": "Läuft der Vorgang immer nach demselben Schema ab?",
+      "optionen": [
+        {
+          "wert": "immer",
+          "text": "Ja — immer gleiche Schritte, gleiche Reihenfolge"
+        },
+        {
+          "wert": "meist",
+          "text": "Meistens — mit gelegentlichen Abweichungen"
+        },
+        {
+          "wert": "selten",
+          "text": "Nein — jeder Fall ist anders"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht genau"
+        }
+      ]
+    },
+    {
+      "id": "F3",
+      "kurz": "Ausnahmequote",
+      "frage": "Wie oft kommen Sonderfälle vor, die vom Standard abweichen?",
+      "optionen": [
+        {
+          "wert": "kaum",
+          "text": "Kaum — deutlich unter 5 % der Fälle"
+        },
+        {
+          "wert": "regelmaessig",
+          "text": "Regelmäßig — aber die Ausnahmetypen sind bekannt"
+        },
+        {
+          "wert": "unvorhersehbar",
+          "text": "Häufig — und oft unvorhersehbar"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht genau"
+        }
+      ]
+    },
+    {
+      "id": "F4",
+      "kurz": "Stammdaten",
+      "frage": "Sind Ihre Stammdaten (Kunden, Artikel, Lieferanten) über alle Systeme hinweg konsistent?",
+      "optionen": [
+        {
+          "wert": "ja",
+          "text": "Ja — eindeutige Datensätze, gepflegter Prozess"
+        },
+        {
+          "wert": "teilweise",
+          "text": "Teilweise — es gibt bekannte Baustellen"
+        },
+        {
+          "wert": "nein",
+          "text": "Nein — Dubletten und Schreibvarianten sind Alltag"
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht"
+        }
+      ],
+      "hinweis_bei_weiss_nicht": {
+        "titel": "Der Top-20-Kunden-Test",
+        "text": "Nehmen Sie Ihre Top-20-Kunden und zählen Sie die Schreibvarianten in ERP, CRM und Ticketsystem. Wer drei Varianten desselben Kunden findet, bekommt von einem Agenten drei verschiedene Kunden zurück."
+      }
+    },
+    {
+      "id": "F5",
+      "kurz": "Dokumentation",
+      "frage": "Ist der Prozess so dokumentiert, dass ein neuer Mitarbeiter ihn danach ausführen könnte?",
+      "optionen": [
+        {
+          "wert": "ja",
+          "text": "Ja — aktuell und vollständig"
+        },
+        {
+          "wert": "teilweise",
+          "text": "Teilweise — vieles steckt in Köpfen"
+        },
+        {
+          "wert": "nein",
+          "text": "Nein — der Prozess lebt informell"
+        }
+      ]
+    },
+    {
+      "id": "F6",
+      "kurz": "Fehlerfolgen",
+      "frage": "Was passiert, wenn ein Vorgang falsch bearbeitet wird?",
+      "optionen": [
+        {
+          "wert": "leicht",
+          "text": "Leicht korrigierbar — ärgerlich, aber harmlos"
+        },
+        {
+          "wert": "aufwaendig",
+          "text": "Aufwändig korrigierbar — kostet Zeit und Nerven"
+        },
+        {
+          "wert": "irreversibel",
+          "text": "Kaum umkehrbar oder teuer — rechtliche, finanzielle oder Reputationsfolgen"
+        }
+      ]
+    },
+    {
+      "id": "F7",
+      "kurz": "Volumen",
+      "frage": "Wie viele solcher Vorgänge fallen pro Monat an?",
+      "typ": "zahl",
+      "default": 200,
+      "min": 1,
+      "max": 100000,
+      "hinweis": "Grobe Schätzung genügt — es geht um Größenordnungen."
+    }
+  ],
+  "klassen": [
+    {
+      "id": "N0",
+      "name": "Stopp: Vorarbeit nötig",
+      "kostenklasse": null,
+      "gruende": {
+        "daten": {
+          "titel": "Erst Datenprojekt",
+          "text": "Die Stammdaten sind inkonsistent. Ein Agent reproduziert die Inkonsistenz — nur teurer und schneller. Erst Stammdaten konsolidieren, dann automatisieren."
+        },
+        "prozess": {
+          "titel": "Erst Prozessarbeit",
+          "text": "Der Prozess ist nicht dokumentiert. Ein Agent lernt die informellen Regeln nicht. Erst dokumentieren, dann automatisieren."
+        },
+        "risiko": {
+          "titel": "Mensch mit Assistenz",
+          "text": "Fehler sind kaum umkehrbar oder teuer. Die Autonomiestufe wäre zu hoch für das Risikoprofil. Empfehlung: Mensch entscheidet und handelt, KI bereitet vor (Autonomiestufe 0–1)."
+        }
+      }
+    },
+    {
+      "id": "N1",
+      "name": "Skript / RPA",
+      "kostenklasse": "skript_rpa",
+      "beschreibung": "Deterministisch, regelkonform, hohes Volumen — Determinismus ist hier ein Vorteil, kein Mangel.",
+      "loesung": "50-Zeilen-Skript oder klassische RPA.",
+      "beispiel": "Rechnungsdaten aus einem festen Format ins ERP übertragen."
+    },
+    {
+      "id": "N2",
+      "name": "RAG-Assistent",
+      "kostenklasse": "chatbot_rag",
+      "beschreibung": "Wissensauskunft ohne Ausführung — eine agentische Schicht brächte keinen Nutzen.",
+      "loesung": "Retrieval + Sprachmodell auf dem eigenen Wissensbestand.",
+      "beispiel": "Fragen aus 15 Jahren Projektdokumentation beantworten, Onboarding beschleunigen."
+    },
+    {
+      "id": "N3",
+      "name": "Intelligente Automatisierung (IPA)",
+      "kostenklasse": "ipa",
+      "beschreibung": "Fester Ablauf, KI informiert Entscheidungen (Klassifikation, Extraktion) — der Mensch oder die Regel entscheidet.",
+      "loesung": "RPA plus KI-Baustein (z. B. OCR, Klassifikation).",
+      "beispiel": "Eingehende Dokumente erkennen, auslesen und in den richtigen Workflow einsortieren."
+    },
+    {
+      "id": "N4",
+      "name": "Agentischer Workflow",
+      "kostenklasse": "workflow",
+      "beschreibung": "Überwiegend strukturiert mit bekannten Ausnahmetypen — deterministische Schritte plus Agenten-Knoten für die Ausnahmen.",
+      "loesung": "Workflow-Plattform (z. B. n8n) mit Agenten-Knoten und Freigabepunkten.",
+      "beispiel": "Angebotsanfragen vorqualifizieren; Standardfälle automatisch, Sonderfälle mit KI-Vorschlag zur Freigabe."
+    },
+    {
+      "id": "N5",
+      "name": "Echter Agent",
+      "kostenklasse": "agent",
+      "beschreibung": "Ausnahmebehaftet, mehrstufig, Fehler reversibel — der Fall, für den agentische Automatisierung gebaut ist.",
+      "loesung": "Agentisches System mit Autonomiestufen, Eskalationslogik und Freigabedesign.",
+      "beispiel": "Mehrstufige Vorgangsbearbeitung über mehrere Systeme mit wechselnden Datenlagen."
+    }
+  ],
+  "entscheidungsregeln": {
+    "hinweis": "Reihenfolge ist verbindlich — erste zutreffende Regel gewinnt (deterministisch, G1).",
+    "regeln": [
+      {
+        "id": "R01",
+        "wenn": {
+          "F4": [
+            "nein"
+          ]
+        },
+        "dann": "N0",
+        "grund": "daten"
+      },
+      {
+        "id": "R02",
+        "wenn": {
+          "F5": [
+            "nein"
+          ]
+        },
+        "dann": "N0",
+        "grund": "prozess"
+      },
+      {
+        "id": "R03",
+        "wenn": {
+          "F6": [
+            "irreversibel"
+          ]
+        },
+        "dann": "N0",
+        "grund": "risiko"
+      },
+      {
+        "id": "R04",
+        "wenn": {
+          "F1": [
+            "auskunft"
+          ]
+        },
+        "dann": "N2"
+      },
+      {
+        "id": "R05",
+        "wenn": {
+          "F2": [
+            "immer"
+          ],
+          "F3": [
+            "kaum"
+          ]
+        },
+        "dann": "N1"
+      },
+      {
+        "id": "R06",
+        "wenn": {
+          "F2": [
+            "immer"
+          ],
+          "F3": [
+            "regelmaessig"
+          ]
+        },
+        "dann": "N3"
+      },
+      {
+        "id": "R07",
+        "wenn": {
+          "F2": [
+            "meist"
+          ],
+          "F3": [
+            "kaum",
+            "regelmaessig"
+          ]
+        },
+        "dann": "N4"
+      },
+      {
+        "id": "R08",
+        "wenn_oder": [
+          {
+            "F3": [
+              "unvorhersehbar"
+            ]
+          },
+          {
+            "F2": [
+              "selten"
+            ]
+          }
+        ],
+        "dann": "N5"
+      },
+      {
+        "id": "R09",
+        "fallback": true,
+        "dann": "N4",
+        "hinweis": "Grenzfall — Einordnung im Gespräch verifizieren."
+      }
+    ],
+    "vorlaeufig_bei_weiss_nicht_in": [
+      "F2",
+      "F3",
+      "F4"
+    ],
+    "zusatzbefunde": [
+      {
+        "wenn": {
+          "F4": [
+            "teilweise"
+          ]
+        },
+        "befund": "Stammdaten nur teilweise konsistent — vor dem Produktivstart prüfen (Top-20-Kunden-Test)."
+      },
+      {
+        "wenn": {
+          "F5": [
+            "teilweise"
+          ]
+        },
+        "befund": "Prozess nur teilweise dokumentiert — informelle Regeln vor der Automatisierung erfassen."
+      },
+      {
+        "wenn": {
+          "F4": [
+            "weiss_nicht"
+          ]
+        },
+        "befund": "Stammdaten-Konsistenz unbekannt — Top-20-Kunden-Test als erste Maßnahme."
+      }
+    ]
+  },
+  "faktor_visual": {
+    "titel": "Die Größenordnung, um die es geht",
+    "skript_einmalig_eur": 2000,
+    "plattform_jahr_eur": 60000,
+    "text": "In etwa der Hälfte der Fälle ist die ehrliche Antwort: ein Skript für 2.000 Euro statt einer Plattform für 60.000.",
+    "quelle": "Buch 5, Kap. 6"
+  }
+}

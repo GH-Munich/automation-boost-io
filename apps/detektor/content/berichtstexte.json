@@ -1,0 +1,37 @@
+{
+  "meta": {
+    "datei": "berichtstexte.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "AWD_KONZEPT v1.0, Kap. 2.1 (G1–G6), 6 und 7",
+      "Buch 5, Kap. 4.0, 5 und 6",
+      "Buch 6, Kap. 6"
+    ],
+    "pflegehinweis": "Formulierungsänderungen erlaubt; inhaltliche Änderungen an Klauseln nur nach Kanzlei-Review."
+  },
+  "bloecke": {
+    "fairness_klausel": "Eine niedrige Einstufung ist kein Qualitätsurteil. Ein exzellenter Chatbot ist ein exzellenter Chatbot, ein exzellentes RPA-System ein exzellentes RPA-System. Die Einstufung beantwortet ausschließlich die Frage, ob ein agentischer Preis gerechtfertigt ist.",
+    "orientierungs_disclaimer": "Alle Preis- und Kostenangaben in diesem Bericht sind Größenordnungen (Korridore) auf Basis dokumentierter Referenzwerte und sichtbar ausgewiesener, änderbarer Annahmen. Sie dienen der Orientierung und Verhandlungsvorbereitung und ersetzen keine Einkaufskalkulation und kein Angebot.",
+    "eingabebasiertheit": "Bewertungsgrundlage dieses Berichts sind ausschließlich die vom Auftraggeber bestätigten Angaben und die von ihm bereitgestellten Dokumente. Der Bericht trifft keine eigenen Tatsachenbehauptungen über den Anbieter oder sein Produkt. Jede Achsenbewertung weist die zugrunde liegende Angabe im Wortlaut sowie die angewandte Regel des AWD-Prüfstandards aus.",
+    "weiss_nicht_befund": "{n} von {m} bewertungsrelevanten Angaben sind im Unternehmen derzeit nicht bekannt oder nicht gemessen. Diese Transparenzlücke ist ein eigenständiger Befund: Sie verhindert eine belastbare Bewertung des Systems — und in der Regel auch eine belastbare Steuerung im Betrieb.",
+    "q_verweigert": "Die Frage {q_id} wurde vom Anbieter nicht beantwortet. Eine unbeantwortete Nachweisfrage ist ein eigenständiger Befund und geht als solcher in die Bewertung ein.",
+    "reihenfolge_governance": "Governance-Anforderungen (Fragen Q10–Q12) gehören in die Ausschreibung — vor die erste Produktvorführung. Die meisten agentischen Fehlschläge gehen auf schwache Governance zurück, nicht auf schwache Modelle.",
+    "ueberdimensionierung": "Die benötigte Technologieklasse ({benoetigt}) liegt unter der angebotenen ({geliefert}). Auch ein echtes agentisches System kann damit der falsche Kauf sein: Für deterministische Vorgänge liegt der Kostenunterschied zur einfachen Lösung bei bis zu Faktor 1.000.",
+    "bafa_vermerk": {
+      "text": "Vertiefende Konzeptberatung ist über die BAFA-Förderung 'Unternehmerisches Know-how' bezuschussbar: 50 % (alte Bundesländer) bzw. 80 % (neue Bundesländer) auf maximal 3.500 € netto — effektiv 1.750 € bzw. 700 €. Wichtig: Antragstellung zwingend vor Beratungsbeginn; der Berater muss in der BAFA-Beraterbörse gelistet sein. Die Richtlinie endet am 31.12.2026.",
+      "gueltig_bis": "2026-12-31"
+    },
+    "beratungszitat": "Wir prüfen nicht, welchen Agenten Sie kaufen sollen. Wir prüfen zuerst, ob Sie einen brauchen. In etwa der Hälfte der Fälle ist die ehrliche Antwort: ein Skript für 2.000 Euro statt einer Plattform für 60.000.",
+    "argumentationskette": "Der Markt für KI-Agenten ist zu etwa 95 % mit Produkten besetzt, die keine Agenten sind. Die Preisaufschläge für das Etikett liegen beim Zehn- bis Fünfzigfachen. Piloten bilden 15–25 % der echten Kosten ab. Und 72 % der Unternehmen erreichen bei KI-Investitionen bestenfalls die Gewinnschwelle.",
+    "hash_fusszeile": "Prüfbericht {register_nr} · AWD-Prüfstandard {standard_version} · SHA-256: {hash} · Verifizierung: {verify_url}",
+    "beanstandung": "Beanstandungen und Stellungnahmen zu diesem Bericht: {kontakt}. Stellungnahmen des Anbieters werden dem Bericht als Anlage beigefügt. Inhaltliche Korrekturen erfolgen ausschließlich als neue Berichtsversion mit ausgewiesenen Änderungen.",
+    "ai_act_label": "Die Hinweise zum EU AI Act sind eine fachliche Orientierung und keine Rechtsberatung. Für verbindliche Aussagen empfehlen wir die Abstimmung mit einer spezialisierten Kanzlei."
+  },
+  "handlungsempfehlungen": {
+    "B1": "Der agentische Preisrahmen ist dem Grunde nach gerechtfertigt. Nächster Schritt: Governance-Prüfung (Audit-Trail, Rollback, Rollenmodell, Autonomiestufen) und vertragliche Fixierung der Messgrößen — insbesondere der Nicht-Interventionsrate.",
+    "B2": "Das System arbeitet auf Workflow-Niveau. Verhandeln Sie den Preis auf dieser Basis und lassen Sie sich die agentischen Anteile konkret zeigen — insbesondere Ausnahmebehandlung und Werkzeugwahl.",
+    "B3": "Es handelt sich um intelligente Automatisierung (IPA). Das kann die richtige Lösung sein — aber ohne agentischen Aufschlag. Referenz für die Verhandlung ist der Preis vergleichbarer konventioneller Lösungen.",
+    "B4": "Nach den bestätigten Angaben liegt umetikettierte Automatisierung vor. Empfehlung: ablehnen — oder als das kaufen, was es ist, zum entsprechenden Preis. Der ausgewiesene Korridor ist die Verhandlungsgrundlage."
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "meta": {
+    "datei": "preislogik.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 5, Kap. 1 und 7 (Kostenzeile, Faktor 10–50)",
+      "AWD_KONZEPT v1.0, Kap. 2.5"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "regeln": {
+    "P1": "Referenzklasse ist die tatsächlich gelieferte Klasse (aus Score-Band bzw. Bestands-/Bedarfsklassifikation), nicht die beworbene.",
+    "P2": "Fairer Jahreskorridor: (a) wo dokumentierte Marktpreise existieren (preise-support.json), diese als Anker; (b) sonst Vorgangskosten-Korridor × Jahresvolumen × Betriebs-/Margenfaktor.",
+    "P3": "Washing-Faktor = Angebotspreis p. a. ÷ Obergrenze des fairen Jahreskorridors.",
+    "P4": "Überdimensionierung: Liegt die benötigte Klasse (ordnung) unter der gelieferten, ergeht ein eigener Befund — auch ein echter Agent kann der falsche Kauf sein."
+  },
+  "kostenklassen": [
+    {
+      "id": "skript_rpa",
+      "ordnung": 1,
+      "name": "Skript / RPA",
+      "vorgangskosten_usd": {
+        "min": 0.0,
+        "max": 0.001
+      },
+      "anzeige": "< 0,001 USD",
+      "quelle": "Buch 5: 50-Zeilen-Skript unter 0,001 USD je Vorgang"
+    },
+    {
+      "id": "chatbot_rag",
+      "ordnung": 2,
+      "name": "Chatbot / RAG-Assistent",
+      "vorgangskosten_usd": {
+        "min": 0.005,
+        "max": 0.05
+      },
+      "anzeige": "~0,01 USD",
+      "quelle": "Buch 5: 'Niedrig (1 Modellaufruf)'; Korridor als Standard-Annahme AWD"
+    },
+    {
+      "id": "ipa",
+      "ordnung": 3,
+      "name": "Intelligente Automatisierung (IPA)",
+      "vorgangskosten_usd": {
+        "min": 0.01,
+        "max": 0.3
+      },
+      "anzeige": "0,01–0,30 USD",
+      "quelle": "Standard-Annahme AWD (zwischen Modellaufruf und Agent)"
+    },
+    {
+      "id": "workflow",
+      "ordnung": 4,
+      "name": "Agentischer Workflow",
+      "vorgangskosten_usd": {
+        "min": 0.05,
+        "max": 1.0
+      },
+      "anzeige": "0,05–1,00 USD",
+      "quelle": "Standard-Annahme AWD (Mischung deterministischer und agentischer Schritte)"
+    },
+    {
+      "id": "agent",
+      "ordnung": 5,
+      "name": "Echter Agent",
+      "vorgangskosten_usd": {
+        "min": 0.3,
+        "max": 8.0
+      },
+      "anzeige": "0,30–8,00 USD",
+      "quelle": "Buch 5: 8–15 interne API-Aufrufe je Aufgabe"
+    }
+  ],
+  "betriebsfaktor": {
+    "min": 3,
+    "max": 5,
+    "default": 4,
+    "editierbar": true,
+    "label": "Betriebs- und Margenfaktor",
+    "erklaerung": "Ein fairer Anbieterpreis liegt über den reinen Vorgangskosten: Betrieb, Support, Weiterentwicklung, Marge. Standard-Annahme AWD, sichtbar und änderbar."
+  },
+  "kurs": {
+    "usd_eur": 0.9,
+    "editierbar": true,
+    "label": "Annahme Umrechnungskurs USD → EUR"
+  },
+  "washing_faktor": {
+    "formel": "angebotspreis_jahr_eur / korridor_obergrenze_jahr_eur",
+    "ampel": [
+      {
+        "stufe": "gruen",
+        "bis": 2.0,
+        "text": "Verhandelbar — Preis im oder nahe am gerechtfertigten Korridor."
+      },
+      {
+        "stufe": "gelb",
+        "von": 2.0,
+        "bis": 10.0,
+        "text": "Deutlich überteuert — Preisverhandlung auf Basis der tatsächlichen Technologieklasse."
+      },
+      {
+        "stufe": "rot",
+        "ab": 10.0,
+        "text": "Klassisches Agent Washing — dokumentierte Aufschläge liegen beim Faktor 10 bis 50 (Gartner)."
+      }
+    ]
+  },
+  "ueberdimensionierung": {
+    "bedingung": "ordnung(benoetigte_klasse) < ordnung(gelieferte_klasse)",
+    "befund": "Die benötigte Technologieklasse liegt unter der angebotenen. Auch ein echtes agentisches System kann damit der falsche Kauf sein: Für deterministische Vorgänge liegt der Kostenunterschied zur einfachen Lösung bei bis zu Faktor 1.000.",
+    "quelle": "Buch 5, Kap. 1 und 6"
+  },
+  "beispiel_golden_test": {
+    "beschreibung": "Referenzfall für die Regel-Engine (M2-nahe Konstellation ohne Marktanker).",
+    "eingaben": {
+      "gelieferte_klasse": "chatbot_rag",
+      "volumen_jahr": 24000,
+      "betriebsfaktor": [
+        3,
+        5
+      ],
+      "kurs_usd_eur": 0.9,
+      "angebotspreis_jahr_eur": 60000
+    },
+    "erwartet": {
+      "korridor_usd_jahr": [
+        360.0,
+        6000.0
+      ],
+      "korridor_eur_jahr": [
+        324.0,
+        5400.0
+      ],
+      "washing_faktor": 11.1,
+      "ampel": "rot"
+    }
+  },
+  "disclaimer": "Alle Werte sind Größenordnungen (Korridore) mit sichtbaren Annahmen — Orientierung und Verhandlungsvorbereitung, keine Einkaufskalkulation (G6)."
+}

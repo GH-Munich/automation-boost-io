@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "datei": "minis/mini-ai-act.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 2, Kap. 3.5",
+      "Buch 3, Stufe 0",
+      "AWD_KONZEPT v1.0, Kap. 5"
+    ],
+    "pflegehinweis": "Rechtsstand prüfen bei jeder Regulierungsänderung; Kanzlei-Review vor Launch."
+  },
+  "id": "mini-ai-act",
+  "titel": "Der 2-Minuten-Detektor: Betrifft Sie der 2. August?",
+  "zeitangabe_min": 2,
+  "vorablaunch": true,
+  "kontext": "Am 2. August 2026 wird der EU AI Act allgemein anwendbar. Verschoben sind nur die Hochrisiko-Pflichten (Dezember 2027) — die Transparenzpflichten nach Art. 50 gelten. Zuständige Behörde in Deutschland: BSI. Sanktionsrahmen: bis 35 Mio. EUR oder 7 % des weltweiten Jahresumsatzes.",
+  "fragen": [
+    {
+      "id": "AA1",
+      "frage": "Setzen Sie einen Chatbot oder Voicebot mit Kunden- oder Bürgerkontakt ein?",
+      "optionen": [
+        "ja",
+        "geplant",
+        "nein"
+      ],
+      "pflicht_bei": [
+        "ja",
+        "geplant"
+      ],
+      "pflicht": "Das System muss sich als KI zu erkennen geben (Art. 50 — Transparenzpflicht)."
+    },
+    {
+      "id": "AA2",
+      "frage": "Veröffentlichen Sie KI-generierte Inhalte (Text, Bild, Audio, Video)?",
+      "optionen": [
+        "ja",
+        "geplant",
+        "nein"
+      ],
+      "pflicht_bei": [
+        "ja",
+        "geplant"
+      ],
+      "pflicht": "KI-generierte Inhalte müssen gekennzeichnet werden; Deepfakes sind verpflichtend zu markieren (Art. 50)."
+    },
+    {
+      "id": "AA3",
+      "frage": "Nutzen Mitarbeitende KI-Werkzeuge wie ChatGPT oder Copilot im Arbeitsalltag?",
+      "optionen": [
+        "ja",
+        "nein",
+        "weiss_nicht"
+      ],
+      "pflicht_bei": [
+        "ja",
+        "weiss_nicht"
+      ],
+      "pflicht": "Die KI-Kompetenzpflicht nach Art. 4 gilt bereits seit Februar 2025 — sie trifft nahezu alle Unternehmen, auch in Marketing, HR und Vertrieb."
+    },
+    {
+      "id": "AA4",
+      "frage": "Wurde das betroffene System vor dem 2. August 2026 in Betrieb genommen?",
+      "optionen": [
+        "ja",
+        "nein",
+        "teils"
+      ],
+      "pflicht_bei": [
+        "ja",
+        "teils"
+      ],
+      "pflicht": "Übergangsregel: Bestandssysteme erhalten sechs zusätzliche Monate (bis Februar 2027) für Transparenz- und Kennzeichnungspflichten."
+    }
+  ],
+  "ergebnis": {
+    "typ": "pflichtenliste",
+    "anzeige": "Ihre persönliche Pflichtenliste zum 2. August"
+  },
+  "cta": {
+    "label": "Reifegrad klären — der vollständige Check",
+    "ziel_tuer": "C",
+    "prefill": null
+  },
+  "mail": {
+    "pdf_report": true,
+    "double_opt_in": true
+  },
+  "consent_checkbox": "Anonymisierte Nutzung meiner Angaben für Marktauswertungen (jederzeit widerrufbar).",
+  "disclaimer_refs": [
+    "berichtstexte.ai_act_label"
+  ],
+  "label_prominent": "Orientierung, keine Rechtsberatung"
+}

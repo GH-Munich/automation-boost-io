@@ -1,0 +1,159 @@
+{
+  "meta": {
+    "datei": "schnelltest.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 6, Kap. 5"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "titel": "Der Schnelltest",
+  "untertitel": "Fünf Fragen zu Ihrem bestehenden oder geplanten System — ohne technische Vorkenntnisse.",
+  "zeitangabe_min": 2,
+  "fragen": [
+    {
+      "id": "S1",
+      "frage": "Was passiert, wenn eine Information fehlt?",
+      "optionen": [
+        {
+          "wert": "abbruch",
+          "text": "Abbruch oder Fehlermeldung",
+          "deutung": "Verhalten eines RPA-Systems",
+          "problematisch": false
+        },
+        {
+          "wert": "rueckfrage",
+          "text": "Rückfrage an einen Menschen",
+          "deutung": "Verhalten eines Assistenten",
+          "problematisch": false
+        },
+        {
+          "wert": "alternative",
+          "text": "Es sucht einen alternativen Weg",
+          "deutung": "Verhalten eines Agenten",
+          "problematisch": false
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht",
+          "deutung": "Das Verhalten des eigenen Systems ist nicht bekannt",
+          "problematisch": true
+        }
+      ]
+    },
+    {
+      "id": "S2",
+      "frage": "Läuft derselbe Vorgang immer gleich ab?",
+      "optionen": [
+        {
+          "wert": "ja",
+          "text": "Ja, immer gleich",
+          "deutung": "Deterministisch — Skript/RPA-Territorium",
+          "problematisch": false
+        },
+        {
+          "wert": "nein_erklaerbar",
+          "text": "Nein — und die Unterschiede sind erklärbar",
+          "deutung": "Agentisches Verhalten",
+          "problematisch": false
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht",
+          "deutung": "Das Systemverhalten ist nicht bekannt",
+          "problematisch": true
+        }
+      ]
+    },
+    {
+      "id": "S3",
+      "frage": "Wie viele Vorgänge laufen ohne jeden menschlichen Eingriff durch — gemessen?",
+      "optionen": [
+        {
+          "wert": "gemessen",
+          "text": "Es gibt eine gemessene Zahl",
+          "deutung": "Belastbare Grundlage vorhanden",
+          "problematisch": false
+        },
+        {
+          "wert": "geschaetzt",
+          "text": "Nur eine Schätzung oder Anbieterangabe",
+          "deutung": "Behauptung statt Messung",
+          "problematisch": true
+        },
+        {
+          "wert": "keine",
+          "text": "Keine Messung vorhanden",
+          "deutung": "Das Kernproblem — ohne Messung keine Steuerung",
+          "problematisch": true
+        }
+      ]
+    },
+    {
+      "id": "S4",
+      "frage": "Können Sie nachvollziehen, warum das System eine bestimmte Entscheidung getroffen hat?",
+      "optionen": [
+        {
+          "wert": "ja",
+          "text": "Ja — Entscheidungen sind rekonstruierbar",
+          "deutung": "Governance-Grundlage vorhanden",
+          "problematisch": false
+        },
+        {
+          "wert": "nein",
+          "text": "Nein",
+          "deutung": "Governance-Lücke — unabhängig von der Technologie",
+          "problematisch": true
+        },
+        {
+          "wert": "weiss_nicht",
+          "text": "Weiß ich nicht",
+          "deutung": "Nachvollziehbarkeit ungeklärt",
+          "problematisch": true
+        }
+      ]
+    },
+    {
+      "id": "S5",
+      "frage": "Was kostet ein einzelner Vorgang tatsächlich — alle Modellaufrufe eingerechnet?",
+      "optionen": [
+        {
+          "wert": "bekannt",
+          "text": "Die Zahl ist bekannt",
+          "deutung": "Kostentransparenz vorhanden",
+          "problematisch": false
+        },
+        {
+          "wert": "unbekannt",
+          "text": "Unbekannt",
+          "deutung": "Kostenrisiko — Verbrauch skaliert mit Aufgabenkomplexität",
+          "problematisch": true
+        }
+      ]
+    }
+  ],
+  "auswertung": {
+    "regel": "Anzahl problematischer Antworten zählen.",
+    "ergebnisse": [
+      {
+        "von": 3,
+        "bis": 5,
+        "stufe": "rot",
+        "text": "Drei oder mehr problematische Antworten: Vor jeder Anbieterauswahl muss eine Reifegradklärung stattfinden."
+      },
+      {
+        "von": 1,
+        "bis": 2,
+        "stufe": "gelb",
+        "text": "Ein bis zwei problematische Antworten: Die markierten Punkte gezielt klären, bevor Budget fließt."
+      },
+      {
+        "von": 0,
+        "bis": 0,
+        "stufe": "gruen",
+        "text": "Gute Ausgangslage — der nächste Schritt ist die vertiefende Prüfung mit dem Detektor."
+      }
+    ]
+  }
+}

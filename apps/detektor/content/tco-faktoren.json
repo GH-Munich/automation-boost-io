@@ -1,0 +1,168 @@
+{
+  "meta": {
+    "datei": "tco-faktoren.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 6, Kap. 2 (Kostenfallen) und Kap. 7"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "faktoren": [
+    {
+      "id": "T1",
+      "name": "Realistische TCO auf jedes Angebot",
+      "min": 0.3,
+      "max": 0.4,
+      "default": 0.35,
+      "typ": "aufschlag",
+      "quelle": "Buch 6: typische Unterschätzung der Gesamtbetriebskosten 40–60 %"
+    },
+    {
+      "id": "T2",
+      "name": "Pilot → Produktion",
+      "min": 3,
+      "max": 5,
+      "default": 4,
+      "typ": "multiplikator",
+      "quelle": "Gartner: Piloten decken nur 15–25 % der echten Rechnung ab"
+    },
+    {
+      "id": "T3",
+      "name": "Personalanteil am Gesamtbudget",
+      "min": 0.4,
+      "max": 0.6,
+      "default": 0.5,
+      "typ": "anteil",
+      "quelle": "Buch 6, Kap. 2.4"
+    },
+    {
+      "id": "T4",
+      "name": "Jährliche Wartung ab Tag 1",
+      "min": 0.15,
+      "max": 0.3,
+      "default": 0.2,
+      "typ": "anteil_pa",
+      "quelle": "Buch 6, Kap. 2.4"
+    },
+    {
+      "id": "T5",
+      "name": "Zeitpuffer",
+      "min": 0.25,
+      "max": 0.5,
+      "default": 0.25,
+      "typ": "aufschlag_zeit",
+      "quelle": "Buch 6, Kap. 2.4: mindestens 25 %"
+    }
+  ],
+  "frage_preistyp": {
+    "frage": "Was für ein Preis ist das?",
+    "optionen": [
+      {
+        "wert": "pilot",
+        "text": "Pilot- oder Einstiegspreis"
+      },
+      {
+        "wert": "produktiv",
+        "text": "Preis für den laufenden Produktivbetrieb"
+      }
+    ]
+  },
+  "rechenwege": {
+    "A_pilotpreis": {
+      "beschreibung": "Angebot ist Pilot-/Einstiegspreis.",
+      "schritte": [
+        {
+          "nr": 1,
+          "label": "Angebot des Anbieters",
+          "formel": "angebot"
+        },
+        {
+          "nr": 2,
+          "label": "Produktivbetrieb (×3 bis ×5)",
+          "formel": "angebot × T2",
+          "quelle": "T2"
+        },
+        {
+          "nr": 3,
+          "label": "davon Personal (Info-Zeile)",
+          "formel": "ergebnis × T3",
+          "quelle": "T3"
+        },
+        {
+          "nr": 4,
+          "label": "Wartung ab Jahr 1 (p. a.)",
+          "formel": "ergebnis × T4",
+          "quelle": "T4"
+        },
+        {
+          "nr": 5,
+          "label": "Zeitpuffer auf die Projektlaufzeit",
+          "formel": "laufzeit × (1 + T5)",
+          "quelle": "T5"
+        }
+      ]
+    },
+    "B_produktivpreis": {
+      "beschreibung": "Angebot ist bereits der Produktivpreis.",
+      "schritte": [
+        {
+          "nr": 1,
+          "label": "Angebot des Anbieters",
+          "formel": "angebot"
+        },
+        {
+          "nr": 2,
+          "label": "Realistische TCO (+30–40 %)",
+          "formel": "angebot × (1 + T1)",
+          "quelle": "T1"
+        },
+        {
+          "nr": 3,
+          "label": "davon Personal (Info-Zeile)",
+          "formel": "ergebnis × T3",
+          "quelle": "T3"
+        },
+        {
+          "nr": 4,
+          "label": "Wartung ab Jahr 1 (p. a.)",
+          "formel": "ergebnis × T4",
+          "quelle": "T4"
+        }
+      ]
+    }
+  },
+  "faustregel": "Nehmen Sie das Angebot des Anbieters. Multiplizieren Sie mit 3 bis 5 für den Produktivbetrieb. Rechnen Sie 40–60 % des Gesamtbudgets für Personal. Planen Sie 15–30 % jährliche Wartung ab Tag eins ein. Wenn Sie diese Zahl nicht tragen können, können Sie sich den Piloten nicht leisten.",
+  "kontextzahlen": [
+    {
+      "wert": "15–25 %",
+      "text": "Anteil der echten Kosten, den Piloten abbilden",
+      "quelle": "Gartner"
+    },
+    {
+      "wert": "72 %",
+      "text": "der Organisationen erreichen bei KI-Investitionen bestenfalls die Gewinnschwelle",
+      "quelle": "Gartner, Befragung unter 506 CIOs"
+    },
+    {
+      "wert": "42 %",
+      "text": "der Unternehmen gaben 2025 die meisten KI-Initiativen auf (2024: 17 %)",
+      "quelle": "Buch 6"
+    },
+    {
+      "wert": "7,2 Mio. USD",
+      "text": "durchschnittliche Abbruchkosten je Unternehmen",
+      "quelle": "Buch 6"
+    },
+    {
+      "wert": "+30–50 %",
+      "text": "typische Unterschätzung des Integrationsaufwands — häufigste Ursache: fragmentierte Stammdaten",
+      "quelle": "Buch 6, Kap. 2.3"
+    }
+  ],
+  "extremfall": {
+    "faktor": 717,
+    "text": "Dokumentierter Extremfall: von 1.500 USD monatlich im Proof of Concept auf über 1 Mio. USD monatlich in Produktion — ein Ausreißer, aber er markiert die Bandbreite.",
+    "quelle": "SoftwareSeni / Buch 6"
+  }
+}

@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "datei": "minis/mini-agent-check.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "achsen.json (A1–A6)",
+      "AWD_KONZEPT v1.0, Kap. 5"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "id": "mini-agent-check",
+  "titel": "Der 2-Minuten-Detektor: Ist das überhaupt ein Agent?",
+  "zeitangabe_min": 2,
+  "fragen": [
+    {
+      "ref": "achsen.A1"
+    },
+    {
+      "ref": "achsen.A2"
+    },
+    {
+      "ref": "achsen.A3"
+    },
+    {
+      "ref": "achsen.A4"
+    },
+    {
+      "ref": "achsen.A5"
+    },
+    {
+      "ref": "achsen.A6"
+    }
+  ],
+  "ergebnis": {
+    "typ": "score_band",
+    "quelle": "achsen.auswertung",
+    "anzeige": "Agentik-Score {score} von 12 — {einstufung}"
+  },
+  "cta": {
+    "label": "Vollständige Prüfung starten",
+    "ziel_tuer": "A",
+    "prefill": "Antworten werden als Achsen-Vorbelegung in den Hauptwizard übernommen."
+  },
+  "mail": {
+    "pdf_report": true,
+    "double_opt_in": true
+  },
+  "consent_checkbox": "Anonymisierte Nutzung meiner Angaben für Marktauswertungen (jederzeit widerrufbar).",
+  "disclaimer_refs": [
+    "berichtstexte.fairness_klausel"
+  ]
+}

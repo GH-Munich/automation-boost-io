@@ -1,0 +1,53 @@
+{
+  "meta": {
+    "datei": "minis/mini-bedarf.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "bedarf.json",
+      "AWD_KONZEPT v1.0, Kap. 5"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "id": "mini-bedarf",
+  "titel": "Der 2-Minuten-Detektor: Skript, Workflow oder Agent?",
+  "zeitangabe_min": 2,
+  "fragen": [
+    {
+      "ref": "bedarf.F1"
+    },
+    {
+      "ref": "bedarf.F2"
+    },
+    {
+      "ref": "bedarf.F3"
+    },
+    {
+      "ref": "bedarf.F4"
+    },
+    {
+      "ref": "bedarf.F5"
+    },
+    {
+      "ref": "bedarf.F6"
+    }
+  ],
+  "ergebnis": {
+    "typ": "bedarfsklasse",
+    "quelle": "bedarf.entscheidungsregeln",
+    "zusatz_visual": "bedarf.faktor_visual"
+  },
+  "cta": {
+    "label": "Anforderungsprofil erstellen",
+    "ziel_tuer": "C",
+    "prefill": "Antworten werden in den Bedarfs-Check (Tür C) übernommen."
+  },
+  "mail": {
+    "pdf_report": true,
+    "double_opt_in": true
+  },
+  "consent_checkbox": "Anonymisierte Nutzung meiner Angaben für Marktauswertungen (jederzeit widerrufbar).",
+  "disclaimer_refs": [
+    "berichtstexte.orientierungs_disclaimer"
+  ]
+}

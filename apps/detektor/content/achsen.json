@@ -1,0 +1,275 @@
+{
+  "meta": {
+    "datei": "achsen.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 5, Kap. 2 (Prüfkatalog)",
+      "AWD_KONZEPT v1.0, Kap. 2.2–2.3"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "achsen": [
+    {
+      "id": "A1",
+      "name": "Zielverfolgung",
+      "name_en": "Goal Pursuit",
+      "prueffrage": "Kann das System aus einer Zielbeschreibung eigenständig Teilziele ableiten?",
+      "wizard_frage": "Wenn Sie dem System nur das Ziel nennen — findet es den Weg dorthin selbst?",
+      "hinweis": null,
+      "stufen": [
+        {
+          "regel_id": "A1.0",
+          "punkte": 0,
+          "anker": "Es braucht eine Schritt-für-Schritt-Anweisung.",
+          "wizard_option": "Nein — es braucht eine genaue Schritt-für-Schritt-Anweisung."
+        },
+        {
+          "regel_id": "A1.1",
+          "punkte": 1,
+          "anker": "Es kann innerhalb eines vordefinierten Ablaufs Parameter füllen.",
+          "wizard_option": "Es folgt einem festen Ablauf und füllt darin Lücken selbst aus."
+        },
+        {
+          "regel_id": "A1.2",
+          "punkte": 2,
+          "anker": "Es setzt eigene Teilziele aus einer Aufgabenbeschreibung.",
+          "wizard_option": "Ja — es zerlegt die Aufgabe eigenständig in Teilschritte."
+        }
+      ],
+      "weiss_nicht": {
+        "regel_id": "A1.X",
+        "wizard_option": "Weiß ich nicht / wurde nicht gezeigt",
+        "befund": "Ob das System Ziele selbst zerlegen kann, ist nicht bekannt oder wurde nicht demonstriert."
+      },
+      "demo_test": {
+        "titel": "Demo-Test",
+        "text": "Geben Sie ein Ziel vor, das nicht in der Demo vorgesehen war. Ein echter Agent versucht einen Plan. Ein umetikettiertes System fragt nach oder scheitert."
+      }
+    },
+    {
+      "id": "A2",
+      "name": "Planung und Pfadwahl",
+      "name_en": "Planning",
+      "prueffrage": "Wählt das System den Lösungsweg selbst — und kann er zwischen zwei identischen Anfragen variieren?",
+      "wizard_frage": "Wie findet das System seinen Lösungsweg?",
+      "hinweis": null,
+      "stufen": [
+        {
+          "regel_id": "A2.0",
+          "punkte": 0,
+          "anker": "Fester Pfad, identischer Ablauf bei identischem Input.",
+          "wizard_option": "Der Weg ist fest vorgegeben — gleicher Fall, gleicher Ablauf."
+        },
+        {
+          "regel_id": "A2.1",
+          "punkte": 1,
+          "anker": "Verzweigungen innerhalb eines vorgegebenen Entscheidungsbaums.",
+          "wizard_option": "Es gibt Verzweigungen, aber alle sind vorher einprogrammiert."
+        },
+        {
+          "regel_id": "A2.2",
+          "punkte": 2,
+          "anker": "Nicht-deterministische Pfadwahl mit nachvollziehbarer Begründung.",
+          "wizard_option": "Es wählt den Weg selbst und kann ihn begründen — auch unterschiedlich bei gleicher Aufgabe."
+        }
+      ],
+      "weiss_nicht": {
+        "regel_id": "A2.X",
+        "wizard_option": "Weiß ich nicht / wurde nicht gezeigt",
+        "befund": "Die Art der Pfadwahl ist nicht bekannt; der Zwei-Durchläufe-Test wurde nicht durchgeführt."
+      },
+      "demo_test": {
+        "titel": "Demo-Test",
+        "text": "Stellen Sie dieselbe Aufgabe zweimal. Ein deterministisches System liefert exakt denselben Weg. Ein Agent kann variieren — und sollte erklären können, warum."
+      }
+    },
+    {
+      "id": "A3",
+      "name": "Dynamische Werkzeugnutzung",
+      "name_en": "Tool Use",
+      "prueffrage": "Entscheidet das System zur Laufzeit, welches Werkzeug es einsetzt?",
+      "wizard_frage": "Wer entscheidet, welches Werkzeug (Programm, Datenquelle, Aktion) eingesetzt wird?",
+      "hinweis": null,
+      "stufen": [
+        {
+          "regel_id": "A3.0",
+          "punkte": 0,
+          "anker": "Keine Werkzeugnutzung oder fest verdrahtete Integration.",
+          "wizard_option": "Es gibt keine Werkzeuge bzw. alles ist fest verdrahtet."
+        },
+        {
+          "regel_id": "A3.1",
+          "punkte": 1,
+          "anker": "Werkzeuge vorhanden, aber Zuordnung fest programmiert.",
+          "wizard_option": "Werkzeuge sind vorhanden, aber die Zuordnung ist fest programmiert."
+        },
+        {
+          "regel_id": "A3.2",
+          "punkte": 2,
+          "anker": "Werkzeugauswahl zur Laufzeit auf Basis der Aufgabenlage.",
+          "wizard_option": "Das System wählt zur Laufzeit selbst, was es einsetzt."
+        }
+      ],
+      "weiss_nicht": {
+        "regel_id": "A3.X",
+        "wizard_option": "Weiß ich nicht / wurde nicht gezeigt",
+        "befund": "Ein Werkzeugprotokoll wurde nicht vorgelegt. Fehlt dieses Protokoll, fehlt meist auch die Fähigkeit (Buch 5)."
+      },
+      "demo_test": {
+        "titel": "Demo-Test",
+        "text": "Fragen Sie nach dem Protokoll: welches Werkzeug wurde wann und warum aufgerufen? Fehlt dieses Protokoll, fehlt meist auch die Fähigkeit."
+      }
+    },
+    {
+      "id": "A4",
+      "name": "Ausnahmebehandlung und Fehlererholung",
+      "name_en": "Exception Handling",
+      "prueffrage": "Was passiert bei unerwartetem Zustand, fehlenden Daten oder Werkzeugausfall?",
+      "wizard_frage": "Was passiert bei etwas Unerwartetem — fehlende Daten, ein Zielsystem antwortet nicht?",
+      "hinweis": "Trennschärfste Achse: Jede Demo funktioniert. Der Unterschied zeigt sich bei unvollständigen Daten und Werkzeugausfällen.",
+      "stufen": [
+        {
+          "regel_id": "A4.0",
+          "punkte": 0,
+          "anker": "Abbruch mit Fehlermeldung.",
+          "wizard_option": "Abbruch mit Fehlermeldung."
+        },
+        {
+          "regel_id": "A4.1",
+          "punkte": 1,
+          "anker": "Rückfrage an den Menschen.",
+          "wizard_option": "Es fragt einen Menschen und wartet."
+        },
+        {
+          "regel_id": "A4.2",
+          "punkte": 2,
+          "anker": "Erkennung, alternative Strategie, Wiederaufnahme — Eskalation nur bei echter Grenze.",
+          "wizard_option": "Es erkennt das Problem, versucht einen anderen Weg und macht weiter — Eskalation nur an echter Grenze."
+        }
+      ],
+      "weiss_nicht": {
+        "regel_id": "A4.X",
+        "wizard_option": "Weiß ich nicht / wurde nicht gezeigt",
+        "befund": "Das Verhalten bei unvollständigen Daten oder Systemausfall wurde nicht demonstriert — ausgerechnet auf der trennschärfsten Achse."
+      },
+      "demo_test": {
+        "titel": "Demo-Test",
+        "text": "Bitten Sie um eine Vorführung mit absichtlich unvollständigen Daten oder einem abgeschalteten Zielsystem. Anbieter, die das ablehnen, geben damit bereits die Antwort."
+      }
+    },
+    {
+      "id": "A5",
+      "name": "Persistentes Gedächtnis",
+      "name_en": "Persistent Memory",
+      "prueffrage": "Behält das System Kontext und Gelerntes über Sitzungen hinweg?",
+      "wizard_frage": "Erinnert sich das System über den einzelnen Vorgang hinaus?",
+      "hinweis": null,
+      "stufen": [
+        {
+          "regel_id": "A5.0",
+          "punkte": 0,
+          "anker": "Zustandslos.",
+          "wizard_option": "Nein — jeder Vorgang beginnt bei null."
+        },
+        {
+          "regel_id": "A5.1",
+          "punkte": 1,
+          "anker": "Sitzungsbezogener Kontext.",
+          "wizard_option": "Nur innerhalb einer Sitzung."
+        },
+        {
+          "regel_id": "A5.2",
+          "punkte": 2,
+          "anker": "Persistentes Gedächtnis mit Wiederverwendung über Vorgänge hinweg.",
+          "wizard_option": "Ja — es nutzt Kontext und Gelerntes über Vorgänge und Sitzungen hinweg."
+        }
+      ],
+      "weiss_nicht": {
+        "regel_id": "A5.X",
+        "wizard_option": "Weiß ich nicht / wurde nicht gezeigt",
+        "befund": "Ob Kontext über Sitzungen erhalten bleibt, ist nicht bekannt."
+      },
+      "demo_test": {
+        "titel": "Demo-Test",
+        "text": "Lassen Sie einen begonnenen Vorgang am Folgetag fortsetzen. Ein System mit persistentem Gedächtnis knüpft an; ein sitzungsbezogenes beginnt von vorn."
+      }
+    },
+    {
+      "id": "A6",
+      "name": "Operative Eigenständigkeit",
+      "name_en": "Operational Autonomy",
+      "prueffrage": "Wie viele Vorgänge laufen ohne menschlichen Eingriff durch — belegt, nicht behauptet?",
+      "wizard_frage": "Wie viele Vorgänge laufen komplett ohne menschliches Zutun durch — und ist das gemessen?",
+      "hinweis": "Die Presto-Achse. Entscheidende Nachfrage: 'Wie hoch ist die Nicht-Interventionsrate bei Ihren Bestandskunden — und wie ist sie gemessen?'",
+      "stufen": [
+        {
+          "regel_id": "A6.0",
+          "punkte": 0,
+          "anker": "Jeder Schritt benötigt Bestätigung.",
+          "wizard_option": "Jeder Schritt braucht eine Bestätigung."
+        },
+        {
+          "regel_id": "A6.1",
+          "punkte": 1,
+          "anker": "Ganze Vorgänge laufen durch, Freigabe am Ende.",
+          "wizard_option": "Vorgänge laufen durch, am Ende gibt ein Mensch frei."
+        },
+        {
+          "regel_id": "A6.2",
+          "punkte": 2,
+          "anker": "Definierte Vorgangsklassen laufen vollständig autonom mit Stichprobenkontrolle.",
+          "wizard_option": "Definierte Vorgangsklassen laufen vollständig autonom, Menschen prüfen Stichproben — und es gibt Messwerte."
+        }
+      ],
+      "weiss_nicht": {
+        "regel_id": "A6.X",
+        "wizard_option": "Weiß ich nicht / nicht gemessen",
+        "befund": "Die Nicht-Interventionsrate ist nicht bekannt oder nicht gemessen — nach Buch 6 der Kernbefund."
+      },
+      "demo_test": {
+        "titel": "Nachfrage",
+        "text": "Wie hoch ist die Nicht-Interventionsrate bei Ihren Bestandskunden — und wie wird sie gemessen? (Presto: beworben als vollautomatisch; über 70 % der Bestellungen erforderten menschliches Eingreifen, an Standorten 100 %.)"
+      }
+    }
+  ],
+  "auswertung": {
+    "regel": "Agentik-Score = Summe der Punkte A1–A6 (0–12). Bei 'Weiß nicht'-Antworten wird die Achse als 'nicht bewertbar' markiert; Score-Minimum rechnet sie mit 0, Score-Maximum mit 2 Punkten.",
+    "baender": [
+      {
+        "id": "B1",
+        "von": 10,
+        "bis": 12,
+        "einstufung": "Echter Agent",
+        "konsequenz": "Agentischer Preis gerechtfertigt; Governance-Prüfung erforderlich.",
+        "kostenklasse": "agent"
+      },
+      {
+        "id": "B2",
+        "von": 7,
+        "bis": 9,
+        "einstufung": "Agentischer Workflow",
+        "konsequenz": "Brauchbar — Preisverhandlung auf Workflow-Niveau.",
+        "kostenklasse": "workflow"
+      },
+      {
+        "id": "B3",
+        "von": 4,
+        "bis": 6,
+        "einstufung": "Intelligente Automatisierung (IPA)",
+        "konsequenz": "Kein agentischer Aufschlag zahlen.",
+        "kostenklasse": "ipa"
+      },
+      {
+        "id": "B4",
+        "von": 0,
+        "bis": 3,
+        "einstufung": "Chatbot oder RPA mit neuem Etikett",
+        "konsequenz": "Agent Washing — ablehnen oder als das kaufen, was es ist.",
+        "kostenklasse": "chatbot_rag",
+        "kostenklasse_wenn_muster_M3": "skript_rpa"
+      }
+    ],
+    "weiss_nicht_regel": "Einstufung nur, wenn Score-Minimum und Score-Maximum im selben Band liegen. Sonst Ausweis als 'vorläufig — Band X bis Y' plus Transparenzlücken-Befund (G5)."
+  }
+}

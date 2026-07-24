@@ -1,0 +1,484 @@
+{
+  "meta": {
+    "datei": "muster.json",
+    "standard_version": "1.0",
+    "stand": "2026-07-24",
+    "quellen": [
+      "Buch 5, Kap. 4.5 (Kategorie E)",
+      "Buch 6, Kap. 1 (Fallmuster)",
+      "AWD_KONZEPT v1.0, Kap. 2.8 und 4"
+    ],
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+  },
+  "grundsatz": "Erkennung ist immer Vermutung mit Bestätigungspflicht. Kein ML — reine Signalwortregeln. Fallback: generischer Pfad.",
+  "bestaetigungstext": "Dieses Angebot entspricht dem Muster '{muster_name}'. Passt das?",
+  "klassifikationsfrage": {
+    "frage": "Was soll das System hauptsächlich tun?",
+    "optionen": [
+      {
+        "wert": "M1",
+        "text": "Anrufe annehmen und am Telefon bearbeiten"
+      },
+      {
+        "wert": "M2",
+        "text": "Support- und Kundenanfragen beantworten, Tickets lösen"
+      },
+      {
+        "wert": "M3",
+        "text": "Unser vorhandener RPA-/Bot-Anbieter bietet ein KI-Upgrade an"
+      },
+      {
+        "wert": "M4",
+        "text": "Fragen aus unserem Unternehmenswissen beantworten"
+      },
+      {
+        "wert": "M5",
+        "text": "Leads recherchieren, anschreiben und Termine buchen"
+      },
+      {
+        "wert": "M6",
+        "text": "Wir kaufen eine Plattform, ein Partner konfiguriert sie"
+      },
+      {
+        "wert": "generisch",
+        "text": "Etwas anderes"
+      }
+    ]
+  },
+  "muster": [
+    {
+      "id": "M1",
+      "name": "Voice-Agent",
+      "track_status": "mvp",
+      "verkaufsbehauptung": "Unser KI-Agent nimmt Anrufe vollautomatisch entgegen und entlastet Ihr Team um 80 %.",
+      "was_meist_vorliegt": "Spracherkennung plus Dialogskript — im schlimmsten Fall plus verborgener Mensch im Hintergrund.",
+      "warum_anfaellig": "Der Kunde hört ein Gespräch und schließt auf Autonomie. Ob im Hintergrund ein Modell entscheidet, ein Skript abläuft oder ein Mensch mithört, ist am Telefon nicht unterscheidbar.",
+      "signale": [
+        "anrufannahme",
+        "voicebot",
+        "voice agent",
+        "telefonie",
+        "spracherkennung",
+        "drive-through",
+        "anrufe",
+        "telefonassistent",
+        "callbot"
+      ],
+      "achsen_fokus": [
+        "A6"
+      ],
+      "zusatzfragen": [
+        {
+          "id": "M1.F1",
+          "text": "Wie hoch ist die Nicht-Interventionsrate bei Ihren Bestandskunden — gemessen, nicht geschätzt?"
+        },
+        {
+          "id": "M1.F2",
+          "text": "Wer entwickelt und betreibt die Spracherkennung?",
+          "tag": "Die Presto-Frage"
+        },
+        {
+          "id": "M1.F3",
+          "text": "Wie viele Ihrer Mitarbeitenden sind an der Bearbeitung unserer Anrufe beteiligt?"
+        }
+      ],
+      "rechner": {
+        "id": "voice_einsparung",
+        "titel": "Personaleinsparung: Erwartung vs. Realität",
+        "eingaben": [
+          {
+            "id": "lizenz_monat_eur",
+            "label": "Lizenz/Plattform pro Monat",
+            "default": 2500
+          },
+          {
+            "id": "einsparung_erwartet_vzae",
+            "label": "Versprochene Einsparung (Vollzeitstellen)",
+            "default": 1.5
+          },
+          {
+            "id": "einsparung_real_vzae",
+            "label": "Realistische Einsparung (Vollzeitstellen)",
+            "default": 0.2,
+            "quelle": "Buch 6: bei ~85 % Nicht-Interventionsrate und Nachbearbeitung"
+          },
+          {
+            "id": "nachbearbeitung_vzae",
+            "label": "Nachbearbeitung Fehlerfälle (Vollzeitstellen)",
+            "default": 0.4
+          },
+          {
+            "id": "personalkosten_vzae_jahr_eur",
+            "label": "Vollkosten je Stelle und Jahr",
+            "default": 60000
+          }
+        ],
+        "formeln": {
+          "netto_erwartet": "lizenz_monat_eur*12 - einsparung_erwartet_vzae*personalkosten_vzae_jahr_eur",
+          "netto_real": "lizenz_monat_eur*12 - (einsparung_real_vzae - nachbearbeitung_vzae)*personalkosten_vzae_jahr_eur"
+        },
+        "hinweis": "Illustration nach Buch 6 (Fallmuster 1); Ergebnis hängt von den sichtbaren Annahmen ab."
+      },
+      "praezedenzfall": {
+        "titel": "Presto Automation (SEC, 14. Januar 2025)",
+        "text": "Erste Durchsetzungsmaßnahme gegen ein börsennotiertes operatives Unternehmen wegen AI Washing. Vermarktet als Lösung, die menschliche Bestellannahme überflüssig macht. Feststellungen: Über 70 % der Bestellungen über die hauseigene Version erforderten menschliches Eingreifen, an bestimmten Standorten 100 %; die Spracherkennung gehörte einem Dritten und wurde von diesem betrieben — nicht offengelegt.",
+        "lehre": "Behauptung gegen Messung abgleichen: Fragen Sie nach der Nicht-Interventionsrate. Fragen Sie, wer die Technologie tatsächlich betreibt."
+      },
+      "berichtsbaustein": "presto_belegkasten"
+    },
+    {
+      "id": "M2",
+      "name": "Support-Agent",
+      "track_status": "mvp",
+      "verkaufsbehauptung": "90 % Automatisierungsquote, null Halluzinationen.",
+      "was_meist_vorliegt": "Reale, öffentlich dokumentierte Resolution-Rates liegen bei 42–50 % (Intercom-Fallstudien). Wirtschaftlich bedeutsamstes Fallmuster.",
+      "warum_anfaellig": "Jeder Anbieter definiert 'Resolution' anders — und die Definition steht im Vertrag, nicht in der Broschüre. Häufig zählt als gelöst, wenn der Kunde die Konversation verlässt, ohne nachzufragen — einschließlich derer, die aufgegeben haben.",
+      "signale": [
+        "resolution",
+        "automatisierungsquote",
+        "deflection",
+        "tickets",
+        "support",
+        "kundenservice",
+        "helpdesk",
+        "first response",
+        "csat",
+        "pro resolution",
+        "pro konversation"
+      ],
+      "achsen_fokus": [
+        "A6"
+      ],
+      "zusatzfragen": [
+        {
+          "id": "M2.F1",
+          "text": "Wie definiert Ihr Vertrag eine 'Resolution'? Zeigen Sie mir die Klausel."
+        },
+        {
+          "id": "M2.F2",
+          "text": "Zählt eine Konversation als gelöst, wenn der Kunde ohne Nachfrage abbricht?"
+        },
+        {
+          "id": "M2.F3",
+          "text": "Welche reale Resolution-Rate erreichen Bestandskunden in unserer Branche?"
+        },
+        {
+          "id": "M2.F4",
+          "text": "Was kostet ein Helpdesk-Arbeitsplatz zusätzlich — und brauchen wir ihn?"
+        }
+      ],
+      "rechner": {
+        "id": "resolution",
+        "titel": "Resolution-Rechner: die echte Monatsrechnung",
+        "eingaben": [
+          {
+            "id": "tickets_monat",
+            "label": "Tickets pro Monat",
+            "default": 3000
+          },
+          {
+            "id": "resolution_rate",
+            "label": "Realistische Resolution-Rate",
+            "default": 0.46,
+            "min": 0.3,
+            "max": 0.9,
+            "typ": "slider",
+            "quelle": "Intercom-Fallstudien: 42–50 %"
+          },
+          {
+            "id": "preis_je_resolution_usd",
+            "label": "Preis je Resolution (USD)",
+            "default": 0.99,
+            "quelle": "preise-support.json"
+          },
+          {
+            "id": "seats",
+            "label": "Helpdesk-Arbeitsplätze (Anzahl)",
+            "default": 0
+          },
+          {
+            "id": "seat_preis_usd",
+            "label": "Preis je Arbeitsplatz/Monat (USD)",
+            "default": 75,
+            "quelle": "Buch 6: 55–175+ USD bei reinen KI-Anbietern"
+          },
+          {
+            "id": "addons_monat_usd",
+            "label": "Add-ons pro Monat (USD)",
+            "default": 0
+          },
+          {
+            "id": "implementierung_usd",
+            "label": "Implementierung einmalig (USD)",
+            "default": 0
+          }
+        ],
+        "formeln": {
+          "monatskosten": "tickets_monat*resolution_rate*preis_je_resolution_usd + seats*seat_preis_usd + addons_monat_usd + implementierung_usd/12",
+          "monatskosten_marketing": "tickets_monat*rate_marketing*preis_je_resolution_usd + seats*seat_preis_usd + addons_monat_usd + implementierung_usd/12"
+        },
+        "rate_marketing_default": 0.9,
+        "abrechnungs_hinweis": "Eine Gebühr von '1 USD pro Interaktion' kostet mehr als '1 USD pro Resolution', wenn der Agent 60 % der Konversationen löst — weil man die 40 % Fehlschläge mitbezahlt.",
+        "beispiel": "Bei 3.000 Tickets, 46 % Resolution und 0,99 USD: 1.366 USD nur für die KI — plus Seats, plus Add-ons. Die Marketingzahl '90 %' hätte 2.673 USD suggeriert und damit den Business Case umgekehrt."
+      },
+      "praezedenzfall": {
+        "titel": "Die Overage-Klausel (Zendesk, Januar 2026)",
+        "text": "Automatische Überschreitungsabrechnung ohne Vorankündigung: Wer das zugesagte monatliche Resolution-Volumen überschreitet, wird automatisch zum Stückpreis belastet — ohne Deckelung, ohne Kulanzfrist.",
+        "lehre": "Volumengrenzen, Overage-Preise und Deckelungen vor Unterschrift schriftlich fixieren."
+      },
+      "berichtsbaustein": "preisuebersicht_support"
+    },
+    {
+      "id": "M3",
+      "name": "Agenten-Upgrade vom RPA-Bestandsanbieter",
+      "track_status": "stufe2",
+      "verkaufsbehauptung": "Wir haben unsere Bots agentisch aufgerüstet — jetzt entscheiden sie selbst.",
+      "was_meist_vorliegt": "RPA mit OCR-Dokumentenextraktion und einem vorgeschalteten Modellaufruf zur Klassifikation. Ein RPA-Bot mit OCR ist kein Agent.",
+      "warum_anfaellig": "Der Bestandsanbieter hat einen Vertrauensvorschuss; die Erweiterung wirkt wie eine logische Fortentwicklung — und ist tatsächlich eine Verbesserung, nur eben keine agentische.",
+      "signale": [
+        "rpa",
+        "bot",
+        "ocr",
+        "prozessautomatisierung",
+        "aufgerüstet",
+        "intelligente automatisierung",
+        "bestandssystem",
+        "upgrade"
+      ],
+      "achsen_fokus": [
+        "A1",
+        "A3"
+      ],
+      "zusatzfragen": [
+        {
+          "id": "M3.F1",
+          "text": "Zeigen Sie mir zwei Ausführungen derselben Aufgabe — wählt das System unterschiedliche Wege?"
+        },
+        {
+          "id": "M3.F2",
+          "text": "Was passiert, wenn das Zielsystem nicht antwortet? Abbruch oder alternative Strategie?"
+        }
+      ],
+      "rechner": {
+        "id": "aufschlag_konventionell",
+        "titel": "Aufschlag gegenüber der konventionellen Lösung",
+        "eingaben": [
+          {
+            "id": "angebot_jahr_eur",
+            "label": "Angebotspreis pro Jahr",
+            "default": 0
+          },
+          {
+            "id": "konventionell_jahr_eur",
+            "label": "Preis der bisherigen/konventionellen Lösung pro Jahr",
+            "default": 0
+          }
+        ],
+        "formeln": {
+          "aufschlagsfaktor": "angebot_jahr_eur / konventionell_jahr_eur"
+        },
+        "einordnung": "Dokumentierte agentische Aufschläge liegen beim Faktor 10 bis 50 gegenüber der gleichwertigen konventionellen Lösung."
+      },
+      "faire_einordnung": "Es gibt seriöse Hybridanbieter: UiPath kombiniert Agenten, Roboter, Werkzeuge und Menschen und hat die agentische Schicht echt aufgesetzt — für Bestandskunden mit Bot-Estate oft die pragmatischste Route. Der Unterschied liegt darin, ob der Anbieter die Grenze selbst benennt oder verwischt.",
+      "praezedenzfall": null,
+      "berichtsbaustein": "hybrid_einordnung"
+    },
+    {
+      "id": "M4",
+      "name": "RAG-Assistent im Agentenmantel",
+      "track_status": "mvp",
+      "verkaufsbehauptung": "Ihr autonomer Wissensagent — er kennt Ihr gesamtes Unternehmenswissen und arbeitet selbstständig.",
+      "was_meist_vorliegt": "Retrieval-Augmented Generation: Vektordatenbank, Embedding, Modellaufruf. Ein Chatbot, der FAQ mittels RAG beantwortet, ist kein Agent.",
+      "warum_anfaellig": "RAG-Assistenten sind oft exzellente Produkte mit realem Nutzen. Das Problem ist ausschließlich der Preis und die Erwartungshaltung — die Enttäuschung führt zum Projektabbruch.",
+      "signale": [
+        "wissensdatenbank",
+        "unternehmenswissen",
+        "dokumente",
+        "wissensassistent",
+        "semantische suche",
+        "rag",
+        "faq",
+        "intranet",
+        "knowledge"
+      ],
+      "achsen_fokus": [
+        "A1",
+        "A6"
+      ],
+      "kernfrage": "Führt das System eigenständig Aktionen in unseren Systemen aus — oder liefert es Antworten, die ein Mensch umsetzt?",
+      "zusatzfragen": [
+        {
+          "id": "M4.F1",
+          "text": "Führt das System eigenständig Aktionen in unseren Systemen aus — oder liefert es Antworten, die ein Mensch umsetzt?"
+        }
+      ],
+      "rechner": {
+        "id": "rag_diskrepanz",
+        "titel": "Ehrlich verkauft vs. als Agent verkauft",
+        "referenz": {
+          "ehrlich": {
+            "einrichtung_eur": [
+              8000,
+              25000
+            ],
+            "laufend_monat_eur": [
+              300,
+              1500
+            ],
+            "erwartung": "Findet Antworten schneller",
+            "enttaeuschung": "gering"
+          },
+          "agentenmantel": {
+            "einrichtung_eur": [
+              60000,
+              150000
+            ],
+            "laufend_monat_eur": [
+              3000,
+              8000
+            ],
+            "erwartung": "Bearbeitet Vorgänge selbstständig",
+            "enttaeuschung": "hoch — führt zum Projektabbruch"
+          }
+        },
+        "eingaben": [
+          {
+            "id": "angebot_einrichtung_eur",
+            "label": "Angebot: Einrichtung",
+            "default": 0
+          },
+          {
+            "id": "angebot_laufend_monat_eur",
+            "label": "Angebot: laufend pro Monat",
+            "default": 0
+          }
+        ],
+        "einordnung": "Die Kernkomponenten (Vektordatenbank, LLM-API, Zugriffskontrolle) sind bei jedem großen Cloud-Anbieter verfügbar. Die Technologie ist nicht trivial, aber auch nicht exotisch — ein sechsstelliger Preis ist dafür selten gerechtfertigt."
+      },
+      "praezedenzfall": null,
+      "berichtsbaustein": "exzellentes_produkt_falscher_preis"
+    },
+    {
+      "id": "M5",
+      "name": "Vertriebs-/SDR-Agent",
+      "track_status": "stufe2",
+      "verkaufsbehauptung": "Autonome Leadbearbeitung — der Agent recherchiert, qualifiziert, schreibt an und bucht Termine.",
+      "was_meist_vorliegt": "Ein Sequenz-Tool mit LLM-gestützter Personalisierung: Die 'Recherche' ist ein Datenanbieter-Abruf, die 'Qualifizierung' ein Regelwerk, die 'Personalisierung' ein Prompt.",
+      "warum_anfaellig": "Segment mit der höchsten Washing-Dichte und dem höchsten Reputationsrisiko: Halluzinierte Entscheiderdaten in einer Kaltakquise-Mail sind kein Qualitätsproblem, sondern ein DSGVO- und Markenproblem.",
+      "signale": [
+        "leads",
+        "outbound",
+        "sdr",
+        "sequenzen",
+        "personalisierung",
+        "kaltakquise",
+        "termine buchen",
+        "prospecting",
+        "pipeline"
+      ],
+      "achsen_fokus": [
+        "A2",
+        "A5"
+      ],
+      "zusatzfragen": [
+        {
+          "id": "M5.F1",
+          "text": "Welche Aussagen im Ergebnis sind quellenbelegt — und was passiert, wenn keine Quelle existiert?"
+        }
+      ],
+      "prueftest": {
+        "id": "test_100",
+        "titel": "Der 100-Firmen-Test",
+        "aufbau": "Testlauf über 100 Unternehmen, darunter 20 absichtlich schwierige oder unvollständige Fälle.",
+        "metriken": [
+          {
+            "name": "Korrekte Firmenerkennung",
+            "zielwert": ">= 90 %"
+          },
+          {
+            "name": "Belegte Datenquelle je Kernfeld",
+            "zielwert": "vollständig"
+          },
+          {
+            "name": "Erfundene Entscheiderdaten",
+            "zielwert": "0"
+          },
+          {
+            "name": "Eskalationsflag bei Unsicherheit",
+            "zielwert": "vorhanden und klar"
+          }
+        ],
+        "hinweis": "Dieser Prüftest ist zugleich die Vorstufe des geplanten deutschsprachigen Referenz-Benchmarks (Buch 3, Ebene 4)."
+      },
+      "rechner": null,
+      "praezedenzfall": null,
+      "berichtsbaustein": "dsgvo_reputationsrisiko"
+    },
+    {
+      "id": "M6",
+      "name": "Plattform-Fehlkonfiguration",
+      "track_status": "stufe2",
+      "verkaufsbehauptung": "— (Sonderfall: niemand täuscht.)",
+      "was_meist_vorliegt": "Die Plattform (z. B. Copilot Studio, Agentforce) ist echt agentikfähig; der Implementierungspartner baut aber einen festverdrahteten Entscheidungsbaum mit einem Modellaufruf. Ergebnis: agentischer Preis, RPA-Funktionalität — und niemand hat gelogen.",
+      "warum_anfaellig": "Echte agentische Fähigkeit erfordert Aufwand, den ein Festpreisprojekt oft nicht hergibt. Der Partner liefert, was im Budget realisierbar war.",
+      "signale": [
+        "copilot studio",
+        "agentforce",
+        "implementierungspartner",
+        "workshop",
+        "konfiguration",
+        "customizing",
+        "festpreis",
+        "einführung"
+      ],
+      "achsen_fokus": [
+        "A2",
+        "A3"
+      ],
+      "kernaussage": "Bei konfigurierbaren Plattformen ist 'echter Agent?' keine Produktfrage, sondern eine Implementierungsfrage. Dasselbe Copilot Studio kann 4 oder 10 Punkte erreichen.",
+      "zusatzfragen": [
+        {
+          "id": "M6.F1",
+          "text": "Welche der sechs Achsen erfüllt die geplante Konfiguration?"
+        },
+        {
+          "id": "M6.F2",
+          "text": "Ist die Werkzeugauswahl programmiert oder zur Laufzeit entschieden?"
+        },
+        {
+          "id": "M6.F3",
+          "text": "Können Sie ein Ausführungsprotokoll aus einem vergleichbaren Projekt zeigen?"
+        }
+      ],
+      "rechner": {
+        "id": "implementierungskosten",
+        "titel": "Implementierung als eigene Kostenzeile",
+        "referenz": {
+          "implementierung_usd": [
+            50000,
+            150000
+          ],
+          "laufende_beratung_monat_usd": [
+            10000,
+            25000
+          ],
+          "quelle": "Buch 6: typische Agentforce-Implementierungen"
+        },
+        "eingaben": [
+          {
+            "id": "implementierung_usd",
+            "label": "Implementierung einmalig (USD)",
+            "default": 0
+          },
+          {
+            "id": "beratung_monat_usd",
+            "label": "Laufende Beratung pro Monat (USD)",
+            "default": 0
+          }
+        ]
+      },
+      "praezedenzfall": null,
+      "berichtsbaustein": "implementierungsfrage"
+    }
+  ]
+}
