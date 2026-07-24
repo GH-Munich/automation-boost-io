@@ -4,11 +4,12 @@
     "standard_version": "1.0",
     "stand": "2026-07-24",
     "quellen": [
-      "AWD_KONZEPT v1.0, Kap. 9.2 (White-Label, Stufe 2)"
+      "AWD_KONZEPT v1.0, Kap. 9.2 (White-Label, Stufe 2)",
+      "AWD Designentscheidung 2026-07-24: CI 'Neutral Slate' (Grau/Weiß + zurückhaltender Slate-Akzent)"
     ],
-    "pflegehinweis": "Strukturdefinition ab MVP; Mandantenpflege ab Stufe 2."
+    "pflegehinweis": "Strukturdefinition ab MVP; Mandantenpflege ab Stufe 2. Farben werden zur Laufzeit gelesen — keine Farbwerte im Code."
   },
-  "hinweis": "MVP nutzt ausschließlich den Default-Mandanten. Farbwerte sind Platzhalter bis zur Definition des automation-boost-Designsystems.",
+  "hinweis": "MVP nutzt ausschließlich den Default-Mandanten. Das Designsystem 'Neutral Slate' ist die eigenständige visuelle Identität von automation-boost: bewusst gewählte kühle Neutraltöne (leichter Blau-Schiefer-Bias) auf Weiß, ein zurückhaltender Slate-Akzent nur für Auswahl/Interaktion, gedämpfte Ampel-Semantik getrennt vom Akzent.",
   "default": {
     "mandant_id": "awd",
     "name": "Der Agent-Washing-Detektor",
@@ -16,12 +17,77 @@
     "url": "https://detektor.automation-boost.io",
     "logo_url": null,
     "farben": {
-      "primaer": "TODO",
-      "sekundaer": "TODO",
-      "akzent": "TODO"
+      "primaer": "#3f5e78",
+      "sekundaer": "#1a2431",
+      "akzent": "#557596"
     },
     "fusszeile": "Der Agent-Washing-Detektor · ein Angebot von automation-boost.io",
-    "white_label": false
+    "white_label": false,
+    "design_system": {
+      "name": "Neutral Slate",
+      "charakter": "Prüf-/Messinstrument: sachlich, vertrauenswürdig, reproduzierbar. Zahlen (Score, Washing-Faktor) monospaced und tabellarisch, um Messung und Determinismus (G1) zu betonen.",
+      "radius": {
+        "xs": "6px",
+        "sm": "9px",
+        "md": "14px"
+      },
+      "schrift": {
+        "sans": "system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif",
+        "mono": "ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace",
+        "hinweis": "MVP nutzt Systemschriften (keine externen Font-CDNs). Eine eingebundene Marken-Schrift kann in Stufe 2 ergänzt werden."
+      },
+      "themes": {
+        "light": {
+          "bg": "#f6f8fa",
+          "surface": "#ffffff",
+          "surface_2": "#eef1f5",
+          "surface_3": "#e6eaf0",
+          "border": "#dde3ea",
+          "border_strong": "#c6cdd8",
+          "text": "#1a2431",
+          "text_2": "#4b586a",
+          "text_3": "#808c9d",
+          "accent": "#3f5e78",
+          "accent_2": "#557596",
+          "accent_weak": "#e7eef5",
+          "on_accent": "#ffffff"
+        },
+        "dark": {
+          "bg": "#0f141a",
+          "surface": "#171d26",
+          "surface_2": "#1d2530",
+          "surface_3": "#243040",
+          "border": "#2a333f",
+          "border_strong": "#3a4756",
+          "text": "#e8edf3",
+          "text_2": "#a7b2c1",
+          "text_3": "#6f7c8d",
+          "accent": "#7ea6cc",
+          "accent_2": "#6b93ba",
+          "accent_weak": "#1c2a39",
+          "on_accent": "#0f141a"
+        }
+      },
+      "ampel": {
+        "hinweis": "Semantische Signalebene, getrennt vom Marken-Akzent. Schlüssel entsprechen den Ampelstufen der Engine (gruen/gelb/rot).",
+        "light": {
+          "gruen": "#3d7a5b",
+          "gruen_weak": "#e6efe9",
+          "gelb": "#a9792a",
+          "gelb_weak": "#f3ecdd",
+          "rot": "#9e463f",
+          "rot_weak": "#f2e2e0"
+        },
+        "dark": {
+          "gruen": "#6cb794",
+          "gruen_weak": "#16241d",
+          "gelb": "#d3ac63",
+          "gelb_weak": "#2a2214",
+          "rot": "#d38178",
+          "rot_weak": "#2c1a18"
+        }
+      }
+    }
   },
   "mandanten_schema": {
     "mandant_id": "string",
@@ -34,6 +100,7 @@
     },
     "fusszeile": "string",
     "white_label": "bool",
-    "kontakt_beanstandung": "string"
+    "kontakt_beanstandung": "string",
+    "design_system": "object|null (optionaler Mandanten-Override; Struktur wie default.design_system, sonst gilt der Default)"
   }
 }
