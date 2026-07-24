@@ -32,6 +32,11 @@
       "erwartet": { "generisch": true }
     },
     {
+      "name": "Wortgrenzen — 'Roboter' und 'Fragen' lösen kein M3/M4 aus",
+      "input": { "freitext": "Wir haben viele Fragen zu Ihrem Roboter." },
+      "erwartet": { "generisch": true }
+    },
+    {
       "name": "Direktwahl (Klassifikation) — M2",
       "input": { "klassifikation": "M2" },
       "erwartet": { "generisch": false, "topMuster": "M2", "quelle": "klassifikation" }

@@ -221,10 +221,14 @@ export function calculateTco(input: TcoInput, tco: TcoContent): TcoResult {
     if (schritt.quelle) benutzteFaktoren.add(schritt.quelle);
 
     const hatErgebnis = schritt.formel.includes("ergebnis");
-    // "Basis"-Stufe (Formel ohne "ergebnis") setzt den ergebnis-Bezug fort.
-    if (!hatErgebnis) ergebnis = wert;
-    // Endwert = letzte monetäre Basis-Stufe (weder "ergebnis" noch "laufzeit").
-    if (!hatErgebnis && !brauchtLaufzeit) endwert = wert;
+    // Nur monetäre Basis-Stufen (Formel ohne "ergebnis" UND ohne "laufzeit")
+    // schreiben den ergebnis-Bezug und den Endwert fort. Info-Zeilen (nutzen
+    // "ergebnis") und die Zeitpuffer-Stufe (nutzt "laufzeit") tun es nicht —
+    // so bleibt der ergebnis-Bezug auch bei künftigen Content-Änderungen stabil.
+    if (!hatErgebnis && !brauchtLaufzeit) {
+      ergebnis = wert;
+      endwert = wert;
+    }
   }
 
   const begruendung: BegruendungsZeile[] = stufen

@@ -69,6 +69,54 @@
       }
     },
     {
+      "name": "Grenzfall — Washing-Faktor genau 2,0 → grün (untere Grenze inklusiv)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 10800
+      },
+      "erwartet": {
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 2.0,
+        "ampel": "gruen",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Grenzfall — Washing-Faktor genau 10,0 → gelb (obere Gelb-Grenze inklusiv)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 54000
+      },
+      "erwartet": {
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 10.0,
+        "ampel": "gelb",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Grenzfall — Washing-Faktor 10,1 → rot (über der Grenze)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 54540
+      },
+      "erwartet": {
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "washingFaktor": 10.1,
+        "ampel": "rot",
+        "ueberdimensionierung": false
+      }
+    },
+    {
       "name": "Vorgaben aus preislogik.json — betriebsfaktor & kurs weggelassen",
       "input": {
         "gelieferteKlasse": "chatbot_rag",

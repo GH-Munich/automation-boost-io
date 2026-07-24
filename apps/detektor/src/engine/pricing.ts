@@ -98,10 +98,18 @@ export function calculatePriceCorridor(
   const korridorEur = { min: runde(eurMin, 2), max: runde(eurMax, 2) };
 
   // Washing-Faktor = Angebotspreis / Korridor-Obergrenze (EUR).
-  const washingRoh =
-    eurMax > 0 ? input.angebotspreisJahrEur / eurMax : Infinity;
-  const washingFaktor = runde(washingRoh, 1);
-  const { stufe, text } = ampelFuer(washingRoh, preislogik.washing_faktor.ampel);
+  // Der Faktor wird aus dem ANGEZEIGTEN (auf 2 NK gerundeten) Korridorwert
+  // berechnet und die Ampel auf demselben gerundeten Faktor entschieden — so
+  // widersprechen gezeigte Zahl, Begründungsspur und Urteil nie an den Grenzen
+  // (A1). Grenzsemantik B1: grün ≤ 2,0 · gelb ≤ 10,0 · rot > 10,0.
+  const washingFaktor =
+    korridorEur.max > 0
+      ? runde(input.angebotspreisJahrEur / korridorEur.max, 1)
+      : Infinity;
+  const { stufe, text } = ampelFuer(
+    washingFaktor,
+    preislogik.washing_faktor.ampel,
+  );
 
   // Überdimensionierung (P4): benötigte Klasse liegt unter der gelieferten.
   let ueberdimensionierung: PriceResult["ueberdimensionierung"] = null;

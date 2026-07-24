@@ -34,6 +34,21 @@ function normalisiere(text: string): string {
     .replace(/ß/g, "ss");
 }
 
+function escapeRegExp(s: string): string {
+  return s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Trifft ein Signal an Wortgrenzen, damit es nicht als Teil eines längeren
+ * Worts anschlägt (verhindert „bot" in „Roboter/Voicebot", „rag" in „Fragen").
+ * Bindestriche und Leerzeichen im Signal bleiben literal. Beide Seiten sind
+ * bereits normalisiert (Umlaut-Faltung, Kleinschreibung).
+ */
+function enthaeltSignal(textNorm: string, signalNorm: string): boolean {
+  const re = new RegExp(`(?<![a-z0-9])${escapeRegExp(signalNorm)}(?![a-z0-9])`);
+  return re.test(textNorm);
+}
+
 function bestaetigungstext(vorlage: string, name: string): string {
   return vorlage.replace("{muster_name}", name);
 }
@@ -107,7 +122,7 @@ export function detectMuster(
   const treffer: MusterTreffer[] = [];
   for (const muster of musterContent.muster) {
     const gefunden = muster.signale.filter((sig) =>
-      text.includes(normalisiere(sig)),
+      enthaeltSignal(text, normalisiere(sig)),
     );
     if (gefunden.length > 0) {
       treffer.push(toTreffer(muster, gefunden, vorlage));
