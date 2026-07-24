@@ -23,5 +23,5 @@ services:
 networks:
   traefik:
     external: true
-    # TODO: exakter Netzwerkname aus Befehl 2 (docker network von ki-boost-io).
-    name: PLATZHALTER_TRAEFIK_NETZWERK
+    # Gemeinsames Traefik-Netz auf gha-live (ki-boost haengt ebenfalls dort).
+    name: live-frontend
