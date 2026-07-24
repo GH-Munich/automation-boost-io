@@ -150,7 +150,7 @@ Kein Leaderboard. Kein Preisvergleichsportal. Kein Anbieterverzeichnis mit Listi
 
 ## 12. Aktueller Stand
 
-**Abgeschlossen:** M0 (Konzept), M1 (16 Content-JSONs, validiert), M2 (Regel-Engine + Golden-Test-Suite), M3 (Frontend). Audit + Welle 1/2 umgesetzt (Protokoll unter `docs/audits/`).
+**Abgeschlossen:** M0 (Konzept), M1 (16 Content-JSONs, validiert), M2 (Regel-Engine + Golden-Test-Suite), M3 (Frontend). Audit + Welle 1/2 umgesetzt (Protokoll unter `docs/audits/`). **Live-Gang:** die App läuft produktiv unter https://awd.automation-boost.io (gha-live, hinter dem bestehenden Traefik, eigenes Compose-Projekt `automation-boost`, vollständig isoliert von `gha-ki-kosmos`) — Details in `docs/AWD_DEPLOYMENT.md`.
 
 Das Frontend deckt alle Prüfstandard-Teile datengetrieben ab: Türen A/B/C, Schnelltest, Mustererkennung, die 12 Fragen, der Phrasen-Decoder, das AI-Act-Mini, die fünf Lead-Minis und der zusammengeführte **Prüfbericht** (Score + Preis + Begründungsspur + wörtliche Compliance-Klauseln + Protokoll). Alle acht Engine-Funktionen sind in der App sichtbar; kein fachlicher Wert ist hartkodiert.
 
