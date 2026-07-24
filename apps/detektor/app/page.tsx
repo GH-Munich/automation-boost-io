@@ -112,6 +112,14 @@ export default function StartPage() {
         </Link>
       </div>
 
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12.5px] text-ink-3">
+        <span className="font-mono text-[11px] uppercase tracking-[.1em]">Weitere 2-Minuten-Checks:</span>
+        <Link href="/mini/agent-check" className="text-accent no-underline hover:underline">Ist das ein Agent?</Link>
+        <Link href="/mini/bedarf" className="text-accent no-underline hover:underline">Skript, Workflow oder Agent?</Link>
+        <Link href="/mini/tco" className="text-accent no-underline hover:underline">Pilot vs. Produktion</Link>
+        <Link href="/mini/bafa" className="text-accent no-underline hover:underline">Zahlt der Staat mit?</Link>
+      </div>
+
       <p className="mt-10 max-w-[62ch] text-[12.5px] leading-relaxed text-ink-3">
         Grundsatz: Der Detektor trifft keine eigenen Tatsachenbehauptungen über
         Anbieter. Bewertet werden ausschließlich Ihre bestätigten Eingaben — mit

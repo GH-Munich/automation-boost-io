@@ -31,9 +31,16 @@ const eur0 = new Intl.NumberFormat("de-DE", {
   maximumFractionDigits: 0,
 });
 
-export function BedarfWizard({ bedarf }: { bedarf: BedarfContent }) {
-  const fragen = bedarf.fragen as unknown as Frage[];
-  const f7 = fragen.find((f) => f.id === "F7");
+export function BedarfWizard({
+  bedarf,
+  frageIds,
+}: {
+  bedarf: BedarfContent;
+  frageIds?: string[];
+}) {
+  const alle = bedarf.fragen as unknown as Frage[];
+  const fragen = frageIds ? alle.filter((f) => frageIds.includes(f.id)) : alle;
+  const f7 = alle.find((f) => f.id === "F7");
 
   const makeInitial = (): Record<string, string | number> =>
     f7?.default !== undefined ? { F7: f7.default } : {};
