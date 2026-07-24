@@ -1,5 +1,12 @@
 import Link from "next/link";
 
+/**
+ * Lead-Capture (Mail, Double-Opt-in, Einwilligung) ist Stufe M5. Bis dahin wird
+ * die Einwilligungs-Checkbox nicht gezeigt — sie wäre folgenlos und damit
+ * irreführend (Audit A4). Bei M5 auf true setzen.
+ */
+const LEAD_CAPTURE_AKTIV = false;
+
 export function MiniOutro({
   ctaLabel,
   ctaHref,
@@ -30,10 +37,12 @@ export function MiniOutro({
         </span>
       )}
 
-      <label className="flex items-start gap-2.5 text-[12px] leading-relaxed text-ink-2">
-        <input type="checkbox" className="mt-0.5 h-4 w-4 flex-none accent-[var(--accent)]" />
-        {consent}
-      </label>
+      {LEAD_CAPTURE_AKTIV && (
+        <label className="flex items-start gap-2.5 text-[12px] leading-relaxed text-ink-2">
+          <input type="checkbox" className="mt-0.5 h-4 w-4 flex-none accent-[var(--accent)]" />
+          {consent}
+        </label>
+      )}
       <p className="font-mono text-[10.5px] text-ink-3">
         PDF-Report per Mail (Double-Opt-in) folgt in Stufe M5.
       </p>
