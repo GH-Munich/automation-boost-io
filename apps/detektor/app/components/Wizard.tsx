@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 
 import { calculateScore } from "@engine/scoring";
-import type { AchseId, AchsenContent, Band, ScoreInput } from "@engine/types";
+import type { AchseId, AchsenContent, Band, ScoreInput, ScoreResult } from "@engine/types";
 
 /**
  * Achsen-Wizard (Tür A, Kernpfad). Eine Frage pro Karte, Antippen, „Weiß ich
@@ -14,7 +14,13 @@ import type { AchseId, AchsenContent, Band, ScoreInput } from "@engine/types";
  * „Weiß nicht" (.X) behandelt. So zeigt die Bandbreite (G5) von Anfang an eine
  * ehrliche Spanne, die sich mit jeder Antwort verengt.
  */
-export function Wizard({ achsen }: { achsen: AchsenContent }) {
+export function Wizard({
+  achsen,
+  onContinue,
+}: {
+  achsen: AchsenContent;
+  onContinue?: (result: ScoreResult) => void;
+}) {
   const axes = achsen.achsen;
   const baender = achsen.auswertung.baender;
 
@@ -66,6 +72,7 @@ export function Wizard({ achsen }: { achsen: AchsenContent }) {
         bandFor={bandFor}
         onBack={() => setShowResult(false)}
         onReset={reset}
+        onContinue={onContinue}
       />
     );
   }
@@ -245,13 +252,15 @@ function ResultView({
   bandFor,
   onBack,
   onReset,
+  onContinue,
 }: {
   achsen: AchsenContent;
-  result: ReturnType<typeof calculateScore>;
+  result: ScoreResult;
   scoreLabel: string;
   bandFor: (score: number) => Band | undefined;
   onBack: () => void;
   onReset: () => void;
+  onContinue?: (result: ScoreResult) => void;
 }) {
   const axisName = (id: AchseId) => achsen.achsen.find((a) => a.id === id)?.name ?? id;
   const bandMin = bandFor(result.scoreMin);
@@ -332,7 +341,19 @@ function ResultView({
         </ul>
       </section>
 
-      <div className="flex items-center gap-2.5">
+      <div className="flex flex-wrap items-center gap-2.5">
+        {onContinue && (
+          <button
+            type="button"
+            onClick={() => onContinue(result)}
+            className="inline-flex items-center gap-2 rounded-sm border border-accent bg-accent px-4 py-2.5 text-[14px] font-semibold text-accent-on transition-colors hover:bg-accent-2"
+          >
+            Weiter zum Preis-Check
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </button>
+        )}
         <button
           type="button"
           onClick={onBack}
