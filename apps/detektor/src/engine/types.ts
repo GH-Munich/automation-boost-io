@@ -310,6 +310,8 @@ export interface BerichtstexteContent extends RawContentFile {
   bloecke: BerichtstexteBloecke;
   /** Bandbezogene Handlungsempfehlungen B1–B4. */
   handlungsempfehlungen: Record<string, string>;
+  /** Optionale Enabler-Einleitungssätze B1–B4 (Kanzlei-Review vor Launch offen). */
+  handlungsempfehlung_enabler?: Record<string, string>;
 }
 
 /* ---------------------------------------------------------------------------

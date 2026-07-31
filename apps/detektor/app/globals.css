@@ -36,3 +36,35 @@
   .tnum { font-variant-numeric: tabular-nums; }
   .balance { text-wrap: balance; }
 }
+
+/* Druck: den Prüfbericht als sauberes Dokument ausgeben (Management-Summary
+   zum Mitnehmen). Navigation und Bedien-Buttons entfallen, Ampel-/Akzentfarben
+   bleiben erhalten, Karten brechen nicht mitten um. */
+.print-only { display: none; }
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  html,
+  body {
+    background: #fff !important;
+  }
+  main {
+    padding: 0 !important;
+  }
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+  .shadow-sm {
+    box-shadow: none !important;
+  }
+  section,
+  li {
+    break-inside: avoid;
+  }
+  @page {
+    margin: 16mm 14mm;
+  }
+}

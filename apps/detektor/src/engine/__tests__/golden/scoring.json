@@ -6,7 +6,7 @@
       "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.2", "A4": "A4.2", "A5": "A5.2", "A6": "A6.2" },
       "erwartet": {
         "scoreMin": 12, "scoreMax": 12, "band": "B1",
-        "einstufung": "Echter Agent", "vorlaeufig": false, "nichtBewertbar": []
+        "einstufung": "Echtes KI-System (Agent)", "vorlaeufig": false, "nichtBewertbar": []
       }
     },
     {
@@ -14,7 +14,7 @@
       "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.1", "A4": "A4.1", "A5": "A5.1", "A6": "A6.1" },
       "erwartet": {
         "scoreMin": 8, "scoreMax": 8, "band": "B2",
-        "einstufung": "Agentischer Workflow", "vorlaeufig": false, "nichtBewertbar": []
+        "einstufung": "Teilweise selbstständig (Workflow)", "vorlaeufig": false, "nichtBewertbar": []
       }
     },
     {
@@ -22,7 +22,7 @@
       "input": { "A1": "A1.1", "A2": "A2.1", "A3": "A3.1", "A4": "A4.1", "A5": "A5.1", "A6": "A6.0" },
       "erwartet": {
         "scoreMin": 5, "scoreMax": 5, "band": "B3",
-        "einstufung": "Intelligente Automatisierung (IPA)", "vorlaeufig": false, "nichtBewertbar": []
+        "einstufung": "Intelligente Automatisierung — kein echter Agent", "vorlaeufig": false, "nichtBewertbar": []
       }
     },
     {
@@ -30,7 +30,7 @@
       "input": { "A1": "A1.0", "A2": "A2.0", "A3": "A3.0", "A4": "A4.0", "A5": "A5.0", "A6": "A6.0" },
       "erwartet": {
         "scoreMin": 0, "scoreMax": 0, "band": "B4",
-        "einstufung": "Chatbot oder RPA mit neuem Etikett", "vorlaeufig": false, "nichtBewertbar": []
+        "einstufung": "Standard-Automatisierung mit KI-Etikett", "vorlaeufig": false, "nichtBewertbar": []
       }
     },
     {
@@ -38,7 +38,7 @@
       "input": { "A1": "A1.2", "A2": "A2.2", "A3": "A3.0", "A4": "A4.0", "A5": "A5.0", "A6": "A6.X" },
       "erwartet": {
         "scoreMin": 4, "scoreMax": 6, "band": "B3",
-        "einstufung": "Intelligente Automatisierung (IPA)", "vorlaeufig": false, "nichtBewertbar": ["A6"]
+        "einstufung": "Intelligente Automatisierung — kein echter Agent", "vorlaeufig": false, "nichtBewertbar": ["A6"]
       }
     },
     {

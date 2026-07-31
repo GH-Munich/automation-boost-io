@@ -13,7 +13,7 @@ import type { RawContentFile } from "../types.js";
 describe("loadContent — echter Content", () => {
   it("lädt alle Pflichtdateien und liefert eine einheitliche Standard-Version", () => {
     const content = loadContent();
-    expect(content.standardVersion).toBe("1.0");
+    expect(content.standardVersion).toBe("1.1");
     expect(content.achsen.achsen).toHaveLength(6);
     expect(content.bedarf.entscheidungsregeln.regeln.length).toBeGreaterThan(0);
     expect(content.preislogik.kostenklassen.length).toBeGreaterThan(0);

@@ -1,14 +1,14 @@
 {
   "meta": {
     "datei": "berichtstexte.json",
-    "standard_version": "1.0",
+    "standard_version": "1.1",
     "stand": "2026-07-24",
     "quellen": [
       "AWD_KONZEPT v1.0, Kap. 2.1 (G1–G6), 6 und 7",
       "Buch 5, Kap. 4.0, 5 und 6",
       "Buch 6, Kap. 6"
     ],
-    "pflegehinweis": "Formulierungsänderungen erlaubt; inhaltliche Änderungen an Klauseln nur nach Kanzlei-Review."
+    "pflegehinweis": "Formulierungsänderungen erlaubt; inhaltliche Änderungen an Klauseln nur nach Kanzlei-Review. handlungsempfehlung_enabler (ab 1.1): Enabler-Einleitungssätze, KANZLEI-REVIEW vor Launch offen."
   },
   "bloecke": {
     "fairness_klausel": "Eine niedrige Einstufung ist kein Qualitätsurteil. Ein exzellenter Chatbot ist ein exzellenter Chatbot, ein exzellentes RPA-System ein exzellentes RPA-System. Die Einstufung beantwortet ausschließlich die Frage, ob ein agentischer Preis gerechtfertigt ist.",
@@ -33,5 +33,11 @@
     "B2": "Das System arbeitet auf Workflow-Niveau. Verhandeln Sie den Preis auf dieser Basis und lassen Sie sich die agentischen Anteile konkret zeigen — insbesondere Ausnahmebehandlung und Werkzeugwahl.",
     "B3": "Es handelt sich um intelligente Automatisierung (IPA). Das kann die richtige Lösung sein — aber ohne agentischen Aufschlag. Referenz für die Verhandlung ist der Preis vergleichbarer konventioneller Lösungen.",
     "B4": "Nach den bestätigten Angaben liegt umetikettierte Automatisierung vor. Empfehlung: ablehnen — oder als das kaufen, was es ist, zum entsprechenden Preis. Der ausgewiesene Korridor ist die Verhandlungsgrundlage."
+  },
+  "handlungsempfehlung_enabler": {
+    "B1": "Gute Basis — jetzt sauber in den Betrieb starten.",
+    "B2": "Der Weg stimmt — verhandeln Sie auf der richtigen Grundlage.",
+    "B3": "Eine sinnvolle Lösung — nur ohne KI-Aufpreis.",
+    "B4": "Ihr Ziel bleibt erreichbar — nur mit der passenden, schlankeren Lösung."
   }
 }

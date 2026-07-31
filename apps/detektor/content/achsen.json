@@ -1,7 +1,7 @@
 {
   "meta": {
     "datei": "achsen.json",
-    "standard_version": "1.0",
+    "standard_version": "1.1",
     "stand": "2026-07-24",
     "quellen": [
       "Buch 5, Kap. 2 (Prüfkatalog)",
@@ -240,7 +240,7 @@
         "id": "B1",
         "von": 10,
         "bis": 12,
-        "einstufung": "Echter Agent",
+        "einstufung": "Echtes KI-System (Agent)",
         "konsequenz": "Agentischer Preis gerechtfertigt; Governance-Prüfung erforderlich.",
         "kostenklasse": "agent"
       },
@@ -248,7 +248,7 @@
         "id": "B2",
         "von": 7,
         "bis": 9,
-        "einstufung": "Agentischer Workflow",
+        "einstufung": "Teilweise selbstständig (Workflow)",
         "konsequenz": "Brauchbar — Preisverhandlung auf Workflow-Niveau.",
         "kostenklasse": "workflow"
       },
@@ -256,7 +256,7 @@
         "id": "B3",
         "von": 4,
         "bis": 6,
-        "einstufung": "Intelligente Automatisierung (IPA)",
+        "einstufung": "Intelligente Automatisierung — kein echter Agent",
         "konsequenz": "Kein agentischer Aufschlag zahlen.",
         "kostenklasse": "ipa"
       },
@@ -264,7 +264,7 @@
         "id": "B4",
         "von": 0,
         "bis": 3,
-        "einstufung": "Chatbot oder RPA mit neuem Etikett",
+        "einstufung": "Standard-Automatisierung mit KI-Etikett",
         "konsequenz": "Agent Washing — ablehnen oder als das kaufen, was es ist.",
         "kostenklasse": "chatbot_rag",
         "kostenklasse_wenn_muster_M3": "skript_rpa"

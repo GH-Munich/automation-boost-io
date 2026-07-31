@@ -85,16 +85,22 @@ export function Bericht({
       : `${score.scoreMin}–${score.scoreMax}`;
   const axisName = (id: AchseId) => achsen.achsen.find((a) => a.id === id)?.name ?? id;
   const empfehlung = score.band ? berichtstexte.handlungsempfehlungen[score.band] : null;
+  const enablerSatz = score.band ? berichtstexte.handlungsempfehlung_enabler?.[score.band] : null;
   const ampelLabel =
     preislogik.washing_faktor.ampel.find((a) => a.stufe === price.ampel)?.label ?? "";
+  const vorlaeufigSpanne = `Band ${bandFor(score.scoreMin)?.id} bis ${bandFor(score.scoreMax)?.id}`;
 
   return (
     <div className="grid gap-5">
+      <p className="print-only font-mono text-[13px] font-semibold uppercase tracking-[.14em] text-ink">
+        Der Agent-Washing-Detektor · automation-boost.io
+      </p>
+
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Tür {tuer} · Prüfbericht · AWD-Prüfstandard {standardVersion}
+          Meine Einschätzung für Sie · Tür {tuer} · Prüfstandard {standardVersion}
         </p>
-        <div className="flex items-center gap-2.5">
+        <div className="no-print flex items-center gap-2.5">
           <button
             type="button"
             onClick={onBack}
@@ -112,14 +118,45 @@ export function Bericht({
         </div>
       </div>
 
-      {/* Management-Summary */}
+      {/* Verdikt — die Empfehlung auf einen Blick, aus den kanzleigeprüften Texten */}
+      <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-8">
+        <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Mein Rat für Sie</p>
+        <div className="mt-3 flex flex-wrap items-center gap-3">
+          <span
+            className={`inline-flex items-center gap-2 rounded-md px-3.5 py-2 text-[15px] font-semibold ${AMPEL[price.ampel]}`}
+          >
+            <span className="h-2.5 w-2.5 rounded-full bg-current" aria-hidden="true" />
+            {ampelLabel}
+          </span>
+          {score.band ? (
+            <span className="text-[14px] text-ink-2">
+              <b className="text-ink">{score.band}</b> — {score.einstufung}
+            </span>
+          ) : (
+            <span className="text-[14px] text-ink-2">Vorläufig — {vorlaeufigSpanne}</span>
+          )}
+        </div>
+        {enablerSatz && (
+          <p className="mt-4 max-w-[74ch] text-[15px] leading-relaxed text-ink">{enablerSatz}</p>
+        )}
+        {empfehlung ? (
+          <p className={`max-w-[74ch] leading-relaxed ${enablerSatz ? "mt-2 text-[14px] text-ink-2" : "mt-4 text-[15px] text-ink"}`}>{empfehlung}</p>
+        ) : (
+          <p className="mt-4 max-w-[74ch] text-[14px] leading-relaxed text-ink-2">
+            Die Einstufung ist vorläufig ({vorlaeufigSpanne}). Eine bandbezogene
+            Handlungsempfehlung folgt, sobald die offenen Angaben geklärt sind.
+          </p>
+        )}
+      </section>
+
+      {/* Das Wichtigste auf einen Blick */}
       <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-8">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Management-Summary
+          Das Wichtigste auf einen Blick
         </p>
         <div className="mt-4 grid gap-6 sm:grid-cols-2">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Agentik-Score</p>
+            <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Wie viel echte KI drinsteckt</p>
             <div className="mt-1 flex items-baseline gap-2">
               <b className="font-mono text-[40px] font-semibold leading-none tracking-[-.02em] tnum">{scoreLabel}</b>
               <span className="font-mono text-[18px] text-ink-3">/ {maxScore}</span>
@@ -135,12 +172,12 @@ export function Bericht({
             )}
           </div>
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Preis-Einordnung</p>
+            <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Ist der Preis fair?</p>
             <div className="mt-1 font-mono tnum">
               <b className="text-[22px] font-semibold">
                 {eur.format(price.korridorEur.min)} – {eur.format(price.korridorEur.max)}
               </b>
-              <span className="ml-1 text-[12px] text-ink-3">fairer Jahreskorridor</span>
+              <span className="ml-1 text-[12px] text-ink-3">fairer Preisrahmen pro Jahr</span>
             </div>
             <div className="mt-2 flex items-center gap-3">
               <span className="font-mono text-[24px] font-semibold tnum">{faktor(price.washingFaktor)}×</span>
@@ -149,6 +186,9 @@ export function Bericht({
                 {ampelLabel}
               </span>
             </div>
+            <p className="mt-1.5 text-[12px] text-ink-3">
+              Preis-Aufschlag: rund das {faktor(price.washingFaktor)}-Fache des fairen Preises.
+            </p>
           </div>
         </div>
 
@@ -157,23 +197,10 @@ export function Bericht({
         )}
       </section>
 
-      {/* Handlungsempfehlung */}
-      <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
-        <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Handlungsempfehlung</p>
-        {empfehlung ? (
-          <p className="mt-3 max-w-[74ch] text-[14px] leading-relaxed text-ink-2">{empfehlung}</p>
-        ) : (
-          <p className="mt-3 max-w-[74ch] text-[14px] leading-relaxed text-ink-2">
-            Die Einstufung ist vorläufig (Band {bandFor(score.scoreMin)?.id} bis {bandFor(score.scoreMax)?.id}).
-            Eine bandbezogene Handlungsempfehlung folgt, sobald die offenen Angaben geklärt sind.
-          </p>
-        )}
-      </section>
-
-      {/* Transparenzlücke */}
+      {/* Was noch offen ist */}
       {score.nichtBewertbar.length > 0 && (
         <section className="rounded-md border border-line bg-surface-2 p-6 shadow-sm sm:p-7">
-          <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Transparenzlücke</p>
+          <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Was noch offen ist</p>
           <p className="mt-3 max-w-[74ch] text-[13.5px] leading-relaxed text-ink-2">
             {fuelle(berichtstexte.bloecke.weiss_nicht_befund, {
               n: String(score.nichtBewertbar.length),
@@ -186,10 +213,10 @@ export function Bericht({
         </section>
       )}
 
-      {/* Begründungsspur */}
+      {/* Wie ich zu dieser Einschätzung komme */}
       <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Begründungsspur je Achse
+          Wie ich zu dieser Einschätzung komme
         </p>
         <ul className="mt-3 divide-y divide-line">
           {score.begruendung.map((b) => (
@@ -211,7 +238,7 @@ export function Bericht({
             </li>
           ))}
         </ul>
-        <p className="mt-4 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Preislogik</p>
+        <p className="mt-4 font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">So ist der Preis gerechnet</p>
         <ul className="mt-2 divide-y divide-line">
           {price.begruendung.map((b, i) => (
             <li key={i} className="flex items-start gap-4 py-2.5">
@@ -227,9 +254,9 @@ export function Bericht({
 
       <ComplianceNote berichtstexte={berichtstexte} />
 
-      {/* Angewandte Regeln + Fußzeile */}
+      {/* Zugrunde gelegte Prüfregeln + Fußzeile */}
       <section className="rounded-md border border-line bg-surface-2 p-6 sm:p-7">
-        <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Angewandte Regeln</p>
+        <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Zugrunde gelegte Prüfregeln</p>
         <p className="mt-2 font-mono text-[12px] leading-relaxed text-ink-2">
           {protokoll.regelIds.join(" · ")}
         </p>

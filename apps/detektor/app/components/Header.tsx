@@ -6,7 +6,7 @@ import { ThemeToggle } from "./ThemeToggle";
 export function Header() {
   const standardVersion = getContent().standardVersion;
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-surface/80 backdrop-blur-md">
+    <header className="no-print sticky top-0 z-20 border-b border-line bg-surface/80 backdrop-blur-md">
       <div className="mx-auto flex max-w-wrap items-center gap-4 px-4 py-3 sm:px-8">
         <Link href="/" className="mr-auto flex items-center gap-3 no-underline">
           <span className="grid h-[34px] w-[34px] flex-none place-items-center rounded-sm border border-line-strong bg-surface-2 text-accent" aria-hidden="true">

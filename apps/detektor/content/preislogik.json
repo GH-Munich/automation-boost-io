@@ -1,7 +1,7 @@
 {
   "meta": {
     "datei": "preislogik.json",
-    "standard_version": "1.0",
+    "standard_version": "1.1",
     "stand": "2026-07-24",
     "quellen": [
       "Buch 5, Kap. 1 und 7 (Kostenzeile, Faktor 10–50)",
@@ -91,18 +91,18 @@
       {
         "stufe": "gruen",
         "bis": 2.0,
-        "label": "Verhandelbar",
+        "label": "Preis in Ordnung",
         "text": "Verhandelbar — Preis im oder nahe am gerechtfertigten Korridor."
       },
       {
         "stufe": "gelb",
         "bis": 10.0,
-        "label": "Deutlich überteuert",
+        "label": "Deutlich zu teuer",
         "text": "Deutlich überteuert — Preisverhandlung auf Basis der tatsächlichen Technologieklasse."
       },
       {
         "stufe": "rot",
-        "label": "Agent Washing",
+        "label": "Klares Warnsignal beim Preis",
         "text": "Klassisches Agent Washing — dokumentierte Aufschläge liegen beim Faktor 10 bis 50 (Gartner)."
       }
     ]
