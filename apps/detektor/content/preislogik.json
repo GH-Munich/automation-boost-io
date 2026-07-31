@@ -134,6 +134,40 @@
     "warum_fairer_preis_niedrig_wirkt": "Unser Rahmen zeigt, was die Sache im Kern kostet: Technik plus ehrlicher Aufschlag für Einrichtung, Betrieb und Marge. Er ist bewusst nüchtern, damit Sie eine harte Verhandlungsbasis haben. Er behauptet nicht, dass jeder teurere Anbieter Sie betrügt. Er beantwortet eine Frage: Passt der Preis zu dem, was technisch wirklich geliefert wird — ein simples Skript oder ein echter Agent?",
     "was_der_korridor_zeigt": "Sie sehen zwei Zahlen: die reinen Technik-Rohkosten und den realistischen Gesamtrahmen inklusive Einrichtung und Betrieb. Die erste entlarvt, wenn ein simples Skript zum Agentenpreis verkauft wird. Die zweite ist der faire Maßstab für Ihr Angebot. Rot wird es erst, wenn der Preis diesen Gesamtrahmen um ein Vielfaches sprengt, ohne dass mehr geliefert wird."
   },
+  "maske": {
+    "personas": [
+      { "id": "angebote", "name": "Große Angebote & Ausschreibungen erstellen", "volumen": 100, "noetig_klasse": "workflow", "komplexitaet": "komplex" },
+      { "id": "marketing", "name": "Marketing-Content produzieren (Texte, Posts, Bilder)", "volumen": 500, "noetig_klasse": "workflow", "komplexitaet": "komplex" },
+      { "id": "vertraege", "name": "Verträge auf Knackpunkte prüfen", "volumen": 2500, "noetig_klasse": "workflow", "komplexitaet": "komplex" },
+      { "id": "bewerbungen", "name": "Bewerbungen vorsortieren", "volumen": 2500, "noetig_klasse": "chatbot_rag", "komplexitaet": "mittel" },
+      { "id": "termine", "name": "Termine vereinbaren & koordinieren", "volumen": 10000, "noetig_klasse": "ipa", "komplexitaet": "einfach" },
+      { "id": "reklamationen", "name": "Reklamationen & Retouren bearbeiten", "volumen": 10000, "noetig_klasse": "workflow", "komplexitaet": "mittel" },
+      { "id": "callcenter", "name": "Callcenter: allgemeine Kundenfragen", "volumen": 30000, "noetig_klasse": "chatbot_rag", "komplexitaet": "mittel" },
+      { "id": "wareneingang", "name": "Wareneingang / Lieferscheine erfassen", "volumen": 30000, "noetig_klasse": "ipa", "komplexitaet": "einfach" },
+      { "id": "mails", "name": "Kundenmails triagieren & beantworten", "volumen": 60000, "noetig_klasse": "chatbot_rag", "komplexitaet": "mittel" },
+      { "id": "social", "name": "Social-Media-Kommentare moderieren", "volumen": 60000, "noetig_klasse": "ipa", "komplexitaet": "einfach" },
+      { "id": "rechnungen", "name": "Rechnungen & Belege verbuchen", "volumen": 100000, "noetig_klasse": "skript_rpa", "komplexitaet": "einfach" }
+    ],
+    "volumen_stufen": [
+      { "wert": 100, "label": "≈ große Angebote" },
+      { "wert": 500, "label": "≈ Marketing-Content" },
+      { "wert": 2500, "label": "≈ Bewerbungen / Verträge" },
+      { "wert": 10000, "label": "≈ Termine / Reklamationen" },
+      { "wert": 30000, "label": "≈ Callcenter / Wareneingang" },
+      { "wert": 60000, "label": "≈ Kundenmails / Social Media" },
+      { "wert": 100000, "label": "≈ Rechnungen verbuchen" }
+    ],
+    "komplexitaet": [
+      { "grad": "einfach", "label": "Einfach", "erklaerung": "Immer gleicher, regelbarer Ablauf — unteres Ende des Kosten-Korridors der Klasse." },
+      { "grad": "mittel", "label": "Mittel", "erklaerung": "Wechselnde Fälle mit etwas Kontext — mittleres Drittel des Korridors." },
+      { "grad": "komplex", "label": "Komplex", "erklaerung": "Viel Kontext, mehrere Schritte, Ermessen — oberes Ende des Korridors." }
+    ],
+    "aufwand": [
+      { "stufe": "schlank", "betriebsfaktor": 3, "label": "Schlank", "erklaerung": "Sparsames Modell, wenig Drumherum." },
+      { "stufe": "standard", "betriebsfaktor": 4, "label": "Standard", "erklaerung": "Übliches Modell mit normalem Betrieb und Support." },
+      { "stufe": "aufwendig", "betriebsfaktor": 5, "label": "Aufwendig", "erklaerung": "Starkes Modell, hoher Betriebs- und Pflegeaufwand." }
+    ]
+  },
   "anzeige": {
     "faktor_nachkommastellen": 1,
     "preis_nachkommastellen": 0

@@ -18,6 +18,9 @@ export type StandardVersion = string;
 
 export type Ampel = "gruen" | "gelb" | "rot";
 
+/** Komplexitätsgrad eines Vorgangs (③): wählt das Teilband des Klassen-Korridors. */
+export type Komplexitaet = "einfach" | "mittel" | "komplex";
+
 /** Ein beliebiges geparstes JSON-Dokument mit Pflicht-Meta-Block. */
 export interface RawContentFile {
   meta: {
@@ -195,6 +198,25 @@ export interface PreislogikContent extends RawContentFile {
   ueberdimensionierung: { bedingung: string; befund: string; quelle: string };
   /** App-taugliche Erklärtexte (Klartext) zu den Preis-Annahmen. */
   erklaerungen?: Record<string, string>;
+  /** Presets der intuitiven Preis-Maske (Nr. 4, Teil 2): Personas, Volumen-Stufen,
+   *  Komplexitäts- und Aufwand-Labels. Reine Eingabe-Schicht, kein Rechenwert. */
+  maske?: {
+    personas: {
+      id: string;
+      name: string;
+      volumen: number;
+      noetig_klasse: string;
+      komplexitaet: Komplexitaet;
+    }[];
+    volumen_stufen: { wert: number; label: string }[];
+    komplexitaet: { grad: Komplexitaet; label: string; erklaerung: string }[];
+    aufwand: {
+      stufe: string;
+      betriebsfaktor: number;
+      label: string;
+      erklaerung: string;
+    }[];
+  };
   /** Anzeige-Präzision (datengetrieben statt im Code fixiert). */
   anzeige?: { faktor_nachkommastellen: number; preis_nachkommastellen: number };
   beispiel_golden_test: unknown;
@@ -507,6 +529,8 @@ export interface PriceInput {
   kursUsdEur?: number;
   /** Optional; loest den Ueberdimensionierungs-Check aus (P4). */
   benoetigteKlasse?: string;
+  /** Optional; Komplexitätsgrad (③) — wählt das Kosten-Teilband der Klasse. */
+  komplexitaet?: Komplexitaet;
 }
 
 export interface PriceResult {

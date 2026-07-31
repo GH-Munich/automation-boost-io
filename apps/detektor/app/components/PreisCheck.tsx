@@ -7,6 +7,7 @@ import { calculateTco } from "@engine/tco";
 import type {
   Ampel,
   BerichtstexteContent,
+  Komplexitaet,
   PreislogikContent,
   PriceInput,
   Preistyp,
@@ -43,16 +44,35 @@ export function PreisCheck({
   onBericht?: (input: PriceInput) => void;
   tuer?: string;
 }) {
+  const maske = preislogik.maske;
+  const aufwandStufen = maske?.aufwand ?? [];
+  const stepWerte = (maske?.volumen_stufen ?? []).map((s) => s.wert);
+  const naechsteStufe = (v: number): number =>
+    stepWerte.length
+      ? stepWerte.reduce((b, w) => (Math.abs(w - v) < Math.abs(b - v) ? w : b), stepWerte[0]!)
+      : v;
+  const stdAufwandIdx = Math.max(
+    0,
+    aufwandStufen.findIndex(
+      (a) => a.betriebsfaktor === preislogik.betriebsfaktor.default,
+    ),
+  );
+
   const [klasse, setKlasse] = useState(deliveredDefault);
+  const [benoetigt, setBenoetigt] = useState(deliveredDefault);
   const [m3, setM3] = useState(false);
-  const [volumen, setVolumen] = useState(defaults.volumenJahr);
+  const [volumen, setVolumen] = useState(() => naechsteStufe(defaults.volumenJahr));
+  const [komplexitaet, setKomplexitaet] = useState<Komplexitaet>("mittel");
+  const [aufwandIdx, setAufwandIdx] = useState(stdAufwandIdx);
   const [angebot, setAngebot] = useState(defaults.angebotJahr);
   const [preistyp, setPreistyp] = useState<Preistyp>("produktiv");
-
-  // Sichtbare, änderbare Annahmen (G6) — Vorgaben aus preislogik.json.
-  const [faktorMin, setFaktorMin] = useState(preislogik.betriebsfaktor.min);
-  const [faktorMax, setFaktorMax] = useState(preislogik.betriebsfaktor.max);
   const [kurs, setKurs] = useState(preislogik.kurs.usd_eur);
+
+  // Betriebsfaktor kommt aus dem Aufwand-Regler (④); Kurs bleibt Feinjustage (G6).
+  const bf =
+    aufwandStufen[aufwandIdx]?.betriebsfaktor ?? preislogik.betriebsfaktor.default;
+  const stufeLabel =
+    maske?.volumen_stufen.find((s) => s.wert === volumen)?.label ?? "";
   // Projektlaufzeit in Monaten (nur Pilotpreis, Zeitpuffer-Stufe T5); 0 = offen.
   const [laufzeit, setLaufzeit] = useState(0);
 
@@ -84,12 +104,16 @@ export function PreisCheck({
           gelieferteKlasse: klasse,
           volumenJahr: volumen,
           angebotspreisJahrEur: angebot,
-          betriebsfaktor: { min: faktorMin, max: faktorMax },
+          betriebsfaktor: { min: bf, max: bf },
           kursUsdEur: kurs,
+          komplexitaet,
+          ...(benoetigt && benoetigt !== klasse
+            ? { benoetigteKlasse: benoetigt }
+            : {}),
         },
         preislogik,
       ),
-    [klasse, volumen, angebot, faktorMin, faktorMax, kurs, preislogik],
+    [klasse, benoetigt, volumen, komplexitaet, angebot, bf, kurs, preislogik],
   );
 
   const tcoRes = useMemo(
@@ -125,86 +149,178 @@ export function PreisCheck({
       <div className="grid gap-5 lg:grid-cols-[1fr_1.1fr]">
         {/* Eingaben */}
         <section className="h-fit rounded-md border border-line bg-surface p-6 shadow-sm">
-          <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Annahmen</p>
-          <p className="mt-1 text-[12.5px] leading-relaxed text-ink-2">
-            Größenordnungen mit sichtbaren, änderbaren Annahmen — Orientierung, keine
-            Einkaufskalkulation.
-          </p>
+          {/* Typischer Fall (Personas) */}
+          {maske && maske.personas.length > 0 && (
+            <div>
+              <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
+                Typischer Fall
+              </p>
+              <p className="mt-1 text-[12px] leading-relaxed text-ink-3">
+                Wählen Sie den Fall, der am ehesten passt — das füllt Volumen, „nötig" und
+                Komplexität vor.
+              </p>
+              <div className="mt-3 flex flex-wrap gap-2">
+                {maske.personas.map((p) => {
+                  const aktiv =
+                    p.volumen === volumen &&
+                    p.komplexitaet === komplexitaet &&
+                    p.noetig_klasse === benoetigt;
+                  return (
+                    <button
+                      key={p.id}
+                      type="button"
+                      onClick={() => {
+                        setVolumen(p.volumen);
+                        setKomplexitaet(p.komplexitaet);
+                        setBenoetigt(p.noetig_klasse);
+                      }}
+                      className={`rounded-full border px-3 py-1.5 text-[12.5px] transition-colors ${
+                        aktiv
+                          ? "border-accent bg-accent-weak text-accent"
+                          : "border-line text-ink-2 hover:bg-surface-2"
+                      }`}
+                    >
+                      {p.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
 
-          <div className="mt-5 flex flex-col gap-5">
-            <Field label="Tatsächlich gelieferte Klasse" hint="aus dem Agenten-Reifegrad übernommen — hier prüf- und änderbar">
-              {vorlaeufig && (
-                <span className="mb-1.5 block text-[12px] text-ink-3">
-                  Score war vorläufig — Klasse bitte prüfen.
+          {/* Lösungsart-Leiter: geliefert vs. nötig */}
+          <div className="mt-6">
+            <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
+              Was wird geliefert — was ist nötig?
+            </p>
+            <p className="mt-1 text-[12px] leading-relaxed text-ink-3">
+              Klicken Sie die tatsächlich gelieferte Stufe an. „Nötig" ergibt sich aus dem
+              gewählten Fall.
+            </p>
+            {vorlaeufig && (
+              <span className="mt-2 block text-[12px] text-ink-3">
+                Reifegrad war vorläufig — gelieferte Stufe bitte prüfen.
+              </span>
+            )}
+            <div className="mt-3 flex flex-col gap-1.5">
+              {[...preislogik.kostenklassen]
+                .sort((a, b) => b.ordnung - a.ordnung)
+                .map((k) => {
+                  const istGeliefert = k.id === klasse;
+                  const istNoetig = k.id === benoetigt;
+                  return (
+                    <button
+                      key={k.id}
+                      type="button"
+                      onClick={() => setKlasse(k.id)}
+                      className={`flex items-center gap-2 rounded-sm border px-3 py-2 text-left transition-colors ${
+                        istGeliefert
+                          ? "border-accent bg-accent-weak"
+                          : "border-line hover:bg-surface-2"
+                      }`}
+                    >
+                      <span
+                        className={`flex-1 text-[13px] ${
+                          istGeliefert ? "font-semibold text-accent" : "text-ink-2"
+                        }`}
+                      >
+                        {k.name}
+                      </span>
+                      <span className="font-mono text-[10.5px] text-ink-3">{k.anzeige}</span>
+                      {istGeliefert && (
+                        <span className="rounded-full bg-accent-weak px-2 py-0.5 text-[10px] font-semibold text-accent">
+                          geliefert
+                        </span>
+                      )}
+                      {istNoetig && (
+                        <span className="rounded-full bg-ok-weak px-2 py-0.5 text-[10px] font-semibold text-ok">
+                          nötig
+                        </span>
+                      )}
+                    </button>
+                  );
+                })}
+            </div>
+            {m3Klasse && (
+              <label className="mt-2.5 flex items-start gap-2.5 text-[12.5px] leading-relaxed text-ink-2">
+                <input
+                  type="checkbox"
+                  checked={m3}
+                  onChange={(e) => {
+                    setM3(e.target.checked);
+                    if (e.target.checked) setKlasse(m3Klasse);
+                  }}
+                  className="mt-0.5"
+                />
+                <span>
+                  Angebot ist ein KI-Upgrade eines RPA-Bestandsanbieters (Muster M3). Nach dem
+                  Prüfstandard ist die Referenzklasse dann die konventionelle Lösung.
                 </span>
-              )}
-              <select
-                value={klasse}
-                onChange={(e) => setKlasse(e.target.value)}
-                className="w-full rounded-sm border border-line-strong bg-surface px-3 py-2.5 text-[14px] text-ink"
-              >
-                {preislogik.kostenklassen.map((k) => (
-                  <option key={k.id} value={k.id}>
-                    {k.name} · {k.anzeige}
-                  </option>
-                ))}
-              </select>
-              {m3Klasse && (
-                <label className="mt-2.5 flex items-start gap-2.5 text-[12.5px] leading-relaxed text-ink-2">
-                  <input
-                    type="checkbox"
-                    checked={m3}
-                    onChange={(e) => {
-                      setM3(e.target.checked);
-                      if (e.target.checked) setKlasse(m3Klasse);
-                    }}
-                    className="mt-0.5"
-                  />
-                  <span>
-                    Angebot ist ein KI-Upgrade eines RPA-Bestandsanbieters (Muster M3). Nach dem
-                    Prüfstandard ist die Referenzklasse dann die konventionelle Lösung.
+              </label>
+            )}
+          </div>
+
+          {/* Regler: Volumen · Komplexität · Aufwand + Angebotspreis */}
+          <div className="mt-6 flex flex-col gap-5 border-t border-line pt-5">
+            {maske && maske.volumen_stufen.length > 0 && (
+              <div>
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="text-[13px] font-medium text-ink">Wie oft im Jahr?</span>
+                  <span className="font-mono text-[12.5px] text-ink-2 tnum">
+                    {volumen.toLocaleString("de-DE")}
+                    {stufeLabel && <span className="text-ink-3"> · {stufeLabel}</span>}
                   </span>
-                </label>
-              )}
-            </Field>
+                </div>
+                <input
+                  type="range"
+                  min={0}
+                  max={maske.volumen_stufen.length - 1}
+                  step={1}
+                  value={Math.max(0, stepWerte.indexOf(volumen))}
+                  onChange={(e) => setVolumen(stepWerte[Number(e.target.value)] ?? volumen)}
+                  className="mt-2 w-full"
+                  aria-label="Wie oft im Jahr?"
+                />
+              </div>
+            )}
 
-            <Field label="Jahresvolumen (Vorgänge)" hint="Vorgabe aus Ihrem Bedarf (Monatsvolumen × 12) — änderbar">
-              <NumberInput value={volumen} onChange={setVolumen} step={100} min={1} />
-            </Field>
+            {maske && maske.komplexitaet.length > 0 && (
+              <Segmented
+                label="Wie kompliziert ist ein Vorgang?"
+                hint={maske.komplexitaet.find((k) => k.grad === komplexitaet)?.erklaerung}
+                options={maske.komplexitaet.map((k) => ({ value: k.grad, label: k.label }))}
+                value={komplexitaet}
+                onChange={(v) => setKomplexitaet(v as Komplexitaet)}
+              />
+            )}
 
-            <Field label="Angebotspreis pro Jahr" hint="Vorgabe: typischer Plattformpreis pro Jahr — änderbar">
+            {aufwandStufen.length > 0 && (
+              <Segmented
+                label="Wie aufwendig sind Betrieb & Modell?"
+                hint={aufwandStufen[aufwandIdx]?.erklaerung}
+                options={aufwandStufen.map((a, i) => ({ value: String(i), label: a.label }))}
+                value={String(aufwandIdx)}
+                onChange={(v) => setAufwandIdx(Number(v))}
+              />
+            )}
+
+            <Field label="Angebotspreis pro Jahr" hint="Der Jahrespreis aus dem Angebot — hier eintragen.">
               <NumberInput value={angebot} onChange={setAngebot} step={1000} suffix="€" />
             </Field>
           </div>
 
+          {/* Feinjustage / Annahmen (G6) */}
           <div className="mt-5 flex flex-col gap-4 border-t border-line pt-4">
             <div className="flex items-center justify-between py-0.5 text-[12.5px] text-ink-2">
-              <span>Vorgangskosten {klasse}</span>
+              <span>Vorgangskosten (gewählte Stufe)</span>
               <span className="font-mono text-ink">
                 {price.annahmen.vorgangskostenUsd.min}–{price.annahmen.vorgangskostenUsd.max} USD
               </span>
             </div>
-
-            {preislogik.betriebsfaktor.editierbar ? (
-              <Field
-                label={preislogik.betriebsfaktor.label}
-                hint={preislogik.betriebsfaktor.erklaerung}
-              >
-                <span className="flex items-center gap-2">
-                  <NumberInput value={faktorMin} onChange={setFaktorMin} step={1} min={1} />
-                  <span className="font-mono text-[13px] text-ink-3">bis</span>
-                  <NumberInput value={faktorMax} onChange={setFaktorMax} step={1} min={1} />
-                </span>
-              </Field>
-            ) : (
-              <div className="flex items-center justify-between py-0.5 text-[12.5px] text-ink-2">
-                <span>{preislogik.betriebsfaktor.label}</span>
-                <span className="font-mono text-ink">
-                  {price.annahmen.betriebsfaktor.min}–{price.annahmen.betriebsfaktor.max}
-                </span>
-              </div>
-            )}
-
+            <div className="flex items-center justify-between py-0.5 text-[12.5px] text-ink-2">
+              <span>{preislogik.betriebsfaktor.label} (aus Aufwand)</span>
+              <span className="font-mono text-ink">{bf}</span>
+            </div>
             {preislogik.kurs.editierbar ? (
               <Field label={preislogik.kurs.label} hint="USD → EUR — Standard-Annahme AWD, sichtbar und änderbar.">
                 <NumberInput value={kurs} onChange={setKurs} step={0.05} min={0} decimals />
@@ -395,8 +511,12 @@ export function PreisCheck({
                 gelieferteKlasse: klasse,
                 volumenJahr: volumen,
                 angebotspreisJahrEur: angebot,
-                betriebsfaktor: { min: faktorMin, max: faktorMax },
+                betriebsfaktor: { min: bf, max: bf },
                 kursUsdEur: kurs,
+                komplexitaet,
+                ...(benoetigt && benoetigt !== klasse
+                  ? { benoetigteKlasse: benoetigt }
+                  : {}),
               })
             }
             className="inline-flex items-center gap-2 rounded-sm border border-accent bg-accent px-4 py-2.5 text-[14px] font-semibold text-accent-on transition-colors hover:bg-accent-2"
@@ -464,5 +584,47 @@ function NumberInput({
       />
       {suffix && <span className="pointer-events-none absolute right-3 font-mono text-[13px] text-ink-3">{suffix}</span>}
     </span>
+  );
+}
+
+function Segmented({
+  label,
+  hint,
+  options,
+  value,
+  onChange,
+}: {
+  label: string;
+  hint?: string | undefined;
+  options: { value: string; label: string }[];
+  value: string;
+  onChange: (v: string) => void;
+}) {
+  return (
+    <div>
+      <span className="text-[13px] font-medium text-ink">{label}</span>
+      <div
+        className="mt-2 inline-flex w-full items-stretch gap-0.5 rounded-full border border-line bg-surface-2 p-0.5"
+        role="group"
+        aria-label={label}
+      >
+        {options.map((o) => (
+          <button
+            key={o.value}
+            type="button"
+            onClick={() => onChange(o.value)}
+            aria-pressed={value === o.value}
+            className={`flex-1 rounded-full px-3 py-1.5 text-[12.5px] font-medium transition-colors ${
+              value === o.value
+                ? "bg-surface text-ink shadow-sm"
+                : "text-ink-2 hover:text-ink"
+            }`}
+          >
+            {o.label}
+          </button>
+        ))}
+      </div>
+      {hint && <span className="mt-1 block text-[11.5px] leading-relaxed text-ink-3">{hint}</span>}
+    </div>
   );
 }

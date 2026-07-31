@@ -194,6 +194,48 @@
         "ampel": "gruen",
         "ueberdimensionierung": false
       }
+    },
+    {
+      "name": "Komplexität mittel (geometrisches Mitteldrittel) — chatbot_rag, 30.000, standard(4), Angebot 24.000 € → 2,8 → gelb (Technik 9,6)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 30000,
+        "betriebsfaktor": { "min": 4, "max": 4 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 24000,
+        "komplexitaet": "mittel"
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 1292.66, "max": 2784.95 },
+        "korridorEur": { "min": 1163.39, "max": 2506.46 },
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 7163.39, "max": 8506.46 },
+        "washingFaktor": 2.8,
+        "washingFaktorTechnik": 9.6,
+        "ampel": "gelb",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Komplexität einfach (lineares Drittel, Klasse 1 min=0) — skript_rpa, 100.000, standard(4), Angebot 30.000 € → 9,6 → gelb",
+      "input": {
+        "gelieferteKlasse": "skript_rpa",
+        "volumenJahr": 100000,
+        "betriebsfaktor": { "min": 4, "max": 4 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 30000,
+        "komplexitaet": "einfach"
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 0.0, "max": 133.33 },
+        "korridorEur": { "min": 0.0, "max": 120.0 },
+        "sockelEur": 3000,
+        "korridorGesamtEur": { "min": 3000.0, "max": 3120.0 },
+        "washingFaktor": 9.6,
+        "washingFaktorTechnik": 250.0,
+        "ampel": "gelb",
+        "ueberdimensionierung": false
+      }
     }
   ]
 }

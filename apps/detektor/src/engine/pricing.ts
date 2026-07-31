@@ -17,6 +17,7 @@
 import type {
   Ampel,
   BegruendungsZeile,
+  Komplexitaet,
   Kostenklasse,
   PreislogikContent,
   PriceInput,
@@ -27,6 +28,30 @@ import type {
 function runde(x: number, n: number): number {
   const faktor = 10 ** n;
   return Math.round(x * faktor) / faktor;
+}
+
+/**
+ * Wählt das Kosten-Teilband nach Komplexität (③): ein Drittel des
+ * Klassen-Korridors. Geometrische Drittel (Ratio^(1/3)); bei min = 0
+ * (Klasse 1 „Skript/RPA") lineare Drittel, da geometrisch undefiniert.
+ * Reine Funktion — nutzt nur die vorhandenen Klassen-Grenzen, keine neuen Werte.
+ */
+function komplexitaetsBand(
+  kosten: { min: number; max: number },
+  grad: Komplexitaet,
+): { min: number; max: number } {
+  const { min, max } = kosten;
+  if (min <= 0) {
+    const drittel = (max - min) / 3;
+    if (grad === "einfach") return { min, max: min + drittel };
+    if (grad === "mittel")
+      return { min: min + drittel, max: min + 2 * drittel };
+    return { min: min + 2 * drittel, max };
+  }
+  const r = Math.pow(max / min, 1 / 3);
+  if (grad === "einfach") return { min, max: min * r };
+  if (grad === "mittel") return { min: min * r, max: min * r * r };
+  return { min: min * r * r, max };
 }
 
 /** Ordnet den Washing-Faktor einer Ampelstufe zu (Schwellen aus JSON). */
@@ -81,7 +106,10 @@ export function calculatePriceCorridor(
   preislogik: PreislogikContent,
 ): PriceResult {
   const geliefert = findeKostenklasse(preislogik, input.gelieferteKlasse);
-  const kosten = geliefert.vorgangskosten_usd;
+  // ③ Komplexität wählt (falls gesetzt) das Teilband des Klassen-Korridors.
+  const kosten = input.komplexitaet
+    ? komplexitaetsBand(geliefert.vorgangskosten_usd, input.komplexitaet)
+    : geliefert.vorgangskosten_usd;
 
   const betriebsfaktor = input.betriebsfaktor ?? {
     min: preislogik.betriebsfaktor.min,
