@@ -1,0 +1,97 @@
+{
+  "meta": {
+    "datei": "nutzen.json",
+    "standard_version": "1.1",
+    "stand": "2026-07-25",
+    "quellen": [
+      "AWD Kommunikations-Leitlinie 25.07.2026 (Nutzen-Schnellcheck, Roadmap-Nr. 2)"
+    ],
+    "pflegehinweis": "VORSCHLAGSWERTE — Freigabe Gottfried ausstehend: Default-Stundensatz, Zeitersparnis-Startwert und die Amortisations-Ampelschwellen (bis_monate). Nur Größenordnung/Indikation (G6), keine Einkaufskalkulation. Fachliche Wertänderungen per Standard-Versionssprung (G4)."
+  },
+  "titel": "Lohnt sich das?",
+  "untertitel": "In zwei Minuten eine grobe Größenordnung: Was bringt die Automatisierung — und wann ist sie zurückverdient?",
+  "eingaben": {
+    "vorgaenge_jahr": {
+      "label": "Betroffene Vorgänge pro Jahr",
+      "default": 5000,
+      "min": 0,
+      "max": 200000,
+      "schritt": 500,
+      "einheit": "Vorgänge",
+      "erklaerung": "Wie viele Fälle das System im Jahr übernimmt.",
+      "quelle": "Annahme des Auftraggebers (Größenordnung)"
+    },
+    "zeitersparnis_minuten": {
+      "label": "Zeitersparnis pro Vorgang",
+      "default": 10,
+      "min": 0,
+      "max": 120,
+      "schritt": 1,
+      "einheit": "Min.",
+      "erklaerung": "Wie viel schneller ein Fall erledigt ist.",
+      "quelle": "Annahme des Auftraggebers (Größenordnung)"
+    },
+    "nacharbeit_stunden_jahr": {
+      "label": "Vermiedene Nacharbeit pro Jahr",
+      "default": 0,
+      "min": 0,
+      "max": 5000,
+      "schritt": 10,
+      "einheit": "Std.",
+      "erklaerung": "Eingesparte Zeit durch weniger Fehler und Nacharbeit.",
+      "quelle": "Annahme des Auftraggebers (Größenordnung)"
+    },
+    "stundensatz_eur": {
+      "label": "Kosten pro Arbeitsstunde",
+      "default": 50,
+      "min": 0,
+      "max": 300,
+      "schritt": 5,
+      "einheit": "€",
+      "erklaerung": "Interner Stundensatz der betroffenen Tätigkeit.",
+      "quelle": "Vorschlag AWD (Durchschnitt), anpassbar"
+    },
+    "investition_eur": {
+      "label": "Investition pro Jahr",
+      "default": 30000,
+      "min": 0,
+      "max": 500000,
+      "schritt": 1000,
+      "einheit": "€",
+      "erklaerung": "Was das System kostet — aus dem Preis-Check übernommen oder frei eingegeben.",
+      "quelle": "aus dem Preis-Check bzw. Angebotspreis"
+    }
+  },
+  "amortisation": {
+    "erklaerung": "Grobe Amortisation = Investition ÷ jährlicher Nutzen, in Monaten. Nur Größenordnung.",
+    "ampel": [
+      {
+        "stufe": "gruen",
+        "bis_monate": 12,
+        "label": "Lohnt sich klar",
+        "text": "Lohnt sich klar — die Investition ist in überschaubarer Zeit zurückverdient."
+      },
+      {
+        "stufe": "gelb",
+        "bis_monate": 24,
+        "label": "Grenzwertig",
+        "text": "Grenzwertig — genauer hinschauen lohnt sich, bevor Sie entscheiden."
+      },
+      {
+        "stufe": "rot",
+        "label": "Noch fraglich",
+        "text": "In dieser Größenordnung noch fraglich — vielleicht ein kleinerer Zuschnitt oder ein anderer Anwendungsfall."
+      }
+    ]
+  },
+  "strategische_potenziale": {
+    "einleitung": "Dazu kommt oft der eigentliche Hebel — nicht in der Zahl oben, aber real:",
+    "punkte": [
+      "Mehr Zeit fürs Kerngeschäft — Ihre Leute frei für höherwertige Aufgaben.",
+      "Bessere Erreichbarkeit — mehr Angebote und mehr Aufträge.",
+      "Zufriedenere Kunden durch schnellere, verlässlichere Antworten."
+    ],
+    "gespraech": "Diese Hebel lassen sich nicht seriös in eine Zahl pressen — sie sind aber oft der größere Gewinn. Die heben wir gemeinsam im persönlichen Beratungsgespräch."
+  },
+  "disclaimer": "Erste Indikation, Größenordnung — kein Anspruch auf Vollständigkeit, keine Rechtsberatung. Verbindliche Aussage nur im persönlichen Beratungsgespräch bzw. Mandat."
+}

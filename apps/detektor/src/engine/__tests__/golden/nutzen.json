@@ -1,0 +1,30 @@
+{
+  "beschreibung": "Golden-Fälle für calculateNutzen (Nutzen-Schnellcheck, Roadmap-Nr. 2). Nur Größenordnung; deckt grün/gelb/rot, Nacharbeit und den Null-Nutzen-Fall ab.",
+  "faelle": [
+    {
+      "name": "Lohnt sich klar (grün)",
+      "input": { "vorgaengeJahr": 5000, "zeitersparnisMinuten": 10, "nacharbeitStundenJahr": 0, "stundensatzEur": 50, "investitionEur": 30000 },
+      "erwartet": { "eingesparteStundenJahr": 833.3, "jahresnutzenEur": 41665, "amortisationMonate": 8.6, "ampel": "gruen" }
+    },
+    {
+      "name": "Grenzwertig (gelb)",
+      "input": { "vorgaengeJahr": 2000, "zeitersparnisMinuten": 6, "nacharbeitStundenJahr": 0, "stundensatzEur": 45, "investitionEur": 15000 },
+      "erwartet": { "eingesparteStundenJahr": 200, "jahresnutzenEur": 9000, "amortisationMonate": 20, "ampel": "gelb" }
+    },
+    {
+      "name": "Noch fraglich (rot)",
+      "input": { "vorgaengeJahr": 1000, "zeitersparnisMinuten": 3, "nacharbeitStundenJahr": 0, "stundensatzEur": 40, "investitionEur": 30000 },
+      "erwartet": { "eingesparteStundenJahr": 50, "jahresnutzenEur": 2000, "amortisationMonate": 180, "ampel": "rot" }
+    },
+    {
+      "name": "Vermiedene Nacharbeit fließt ein (grün)",
+      "input": { "vorgaengeJahr": 3000, "zeitersparnisMinuten": 5, "nacharbeitStundenJahr": 200, "stundensatzEur": 50, "investitionEur": 20000 },
+      "erwartet": { "eingesparteStundenJahr": 450, "jahresnutzenEur": 22500, "amortisationMonate": 10.7, "ampel": "gruen" }
+    },
+    {
+      "name": "Kein bezifferbarer Nutzen -> keine Amortisation (rot)",
+      "input": { "vorgaengeJahr": 0, "zeitersparnisMinuten": 0, "nacharbeitStundenJahr": 0, "stundensatzEur": 50, "investitionEur": 30000 },
+      "erwartet": { "eingesparteStundenJahr": 0, "jahresnutzenEur": 0, "amortisationMonate": null, "ampel": "rot" }
+    }
+  ]
+}

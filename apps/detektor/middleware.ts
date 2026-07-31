@@ -17,9 +17,17 @@ export function middleware(request: NextRequest): NextResponse {
   crypto.getRandomValues(bytes);
   const nonce = btoa(String.fromCharCode(...bytes));
 
+  // Im Dev-Modus braucht das Next.js/React-Fast-Refresh-Runtime (HMR) 'unsafe-eval'.
+  // Nur dann wird es erlaubt; in Produktion bleibt die strikte, eval-freie CSP
+  // (nonce + strict-dynamic) — der eigentliche XSS-Schutz.
+  const scriptSrc =
+    process.env.NODE_ENV === "development"
+      ? `script-src 'self' 'nonce-${nonce}' 'strict-dynamic' 'unsafe-eval'`
+      : `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`;
+
   const csp = [
     `default-src 'self'`,
-    `script-src 'self' 'nonce-${nonce}' 'strict-dynamic'`,
+    scriptSrc,
     `style-src 'self' 'unsafe-inline'`,
     `img-src 'self' data:`,
     `font-src 'self'`,

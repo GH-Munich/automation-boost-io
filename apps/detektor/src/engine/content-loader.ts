@@ -17,6 +17,7 @@ import type {
   BerichtstexteContent,
   Content,
   MusterContent,
+  NutzenContent,
   PreislogikContent,
   RawContentFile,
   SchnelltestContent,
@@ -160,6 +161,7 @@ export function loadContent(contentDir: string = DEFAULT_CONTENT_DIR): Content {
     schnelltest: pflicht<SchnelltestContent>(index, "schnelltest.json"),
     muster: pflicht<MusterContent>(index, "muster.json"),
     berichtstexte: pflicht<BerichtstexteContent>(index, "berichtstexte.json"),
+    nutzen: pflicht<NutzenContent>(index, "nutzen.json"),
     raw: index,
   };
 }

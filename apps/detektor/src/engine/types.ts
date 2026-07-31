@@ -315,6 +315,74 @@ export interface BerichtstexteContent extends RawContentFile {
 }
 
 /* ---------------------------------------------------------------------------
+ * nutzen.json (Nutzen-Schnellcheck, Roadmap-Nr. 2)
+ * ------------------------------------------------------------------------- */
+
+/** Definition eines Reglers im Nutzen-Schnellcheck (für die UI). */
+export interface NutzenEingabe {
+  label: string;
+  default: number;
+  min: number;
+  max: number;
+  schritt: number;
+  einheit: string;
+  erklaerung: string;
+  quelle: string;
+}
+
+export interface NutzenContent extends RawContentFile {
+  titel: string;
+  untertitel: string;
+  eingaben: {
+    vorgaenge_jahr: NutzenEingabe;
+    zeitersparnis_minuten: NutzenEingabe;
+    nacharbeit_stunden_jahr: NutzenEingabe;
+    stundensatz_eur: NutzenEingabe;
+    investition_eur: NutzenEingabe;
+  };
+  amortisation: {
+    erklaerung?: string;
+    ampel: { stufe: Ampel; bis_monate?: number; label: string; text: string }[];
+  };
+  strategische_potenziale: {
+    einleitung: string;
+    punkte: string[];
+    gespraech: string;
+  };
+  disclaimer: string;
+}
+
+export interface NutzenInput {
+  /** Betroffene Vorgänge pro Jahr. */
+  vorgaengeJahr: number;
+  /** Zeitersparnis pro Vorgang in Minuten. */
+  zeitersparnisMinuten: number;
+  /** Vermiedene Nacharbeit in Stunden pro Jahr (Fehler-/Nacharbeitszeile). */
+  nacharbeitStundenJahr: number;
+  /** Interner Stundensatz der betroffenen Tätigkeit in EUR. */
+  stundensatzEur: number;
+  /** Relevante Investition p. a. in EUR (i. d. R. aus dem Preis-Check). */
+  investitionEur: number;
+}
+
+export interface NutzenResult {
+  eingesparteStundenJahr: number;
+  jahresnutzenEur: number;
+  /** Grobe Amortisation in Monaten; null, wenn kein bezifferbarer Nutzen. */
+  amortisationMonate: number | null;
+  ampel: Ampel;
+  ampelText: string;
+  annahmen: {
+    vorgaengeJahr: number;
+    zeitersparnisMinuten: number;
+    nacharbeitStundenJahr: number;
+    stundensatzEur: number;
+    investitionEur: number;
+  };
+  begruendung: BegruendungsZeile[];
+}
+
+/* ---------------------------------------------------------------------------
  * Aggregat aller geladenen Inhalte
  * ------------------------------------------------------------------------- */
 
@@ -328,6 +396,7 @@ export interface Content {
   schnelltest: SchnelltestContent;
   muster: MusterContent;
   berichtstexte: BerichtstexteContent;
+  nutzen: NutzenContent;
   /** Alle geladenen Rohdateien nach Basisname (inkl. "minis/…"). */
   raw: Record<string, RawContentFile>;
 }

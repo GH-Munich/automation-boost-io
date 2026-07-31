@@ -21,7 +21,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
     <html lang="de" suppressHydrationWarning>
       <body className="min-h-screen bg-page font-sans text-ink antialiased">
         <style dangerouslySetInnerHTML={{ __html: themeStyle() }} />
-        <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeInit }} />
+        <script nonce={nonce} suppressHydrationWarning dangerouslySetInnerHTML={{ __html: themeInit }} />
         <Header />
         <main>{children}</main>
       </body>
