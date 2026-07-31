@@ -19,7 +19,7 @@ export default function BestandPage() {
     <div className="mx-auto max-w-wrap px-4 py-8 sm:px-8 sm:py-10">
       <div className="mb-5 rounded-md border border-line bg-surface-2 p-5">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Tür B · Bestands-Check
+          Was Sie schon gekauft haben
         </p>
         <p className="mt-2 max-w-[68ch] text-[14px] leading-relaxed text-ink-2">
           Sie haben ein System bereits gekauft. Ordnen Sie es rückblickend anhand derselben

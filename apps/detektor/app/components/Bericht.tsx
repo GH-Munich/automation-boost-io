@@ -34,7 +34,6 @@ export function Bericht({
   standardVersion,
   scoreInput,
   priceInput,
-  tuer,
   onBack,
 }: {
   achsen: AchsenContent;
@@ -43,7 +42,6 @@ export function Bericht({
   standardVersion: string;
   scoreInput: ScoreInput;
   priceInput: PriceInput;
-  tuer: string;
   onBack: () => void;
 }) {
   const score = useMemo(() => calculateScore(scoreInput, achsen), [scoreInput, achsen]);
@@ -98,7 +96,7 @@ export function Bericht({
 
       <div className="flex flex-wrap items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Meine Einschätzung für Sie · Tür {tuer} · Prüfstandard {standardVersion}
+          Meine Einschätzung für Sie · Prüfstandard {standardVersion}
         </p>
         <div className="no-print flex items-center gap-2.5">
           <button

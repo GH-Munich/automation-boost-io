@@ -149,7 +149,7 @@ export function MusterCheck({ muster }: { muster: MusterContent }) {
           <h2 className="mt-2 text-[18px] font-semibold">Kein bekanntes Muster erkannt</h2>
           <p className="mt-2 max-w-[66ch] text-[13.5px] leading-relaxed text-ink-2">
             Dieses Angebot passt zu keinem der hinterlegten Muster. Das ist kein Nachteil —
-            gehen Sie den regulären Prüfpfad (Achsen-Prüfung, Bedarfs-Check, Preis-Check).
+            gehen Sie einfach die normale Prüfung Schritt für Schritt durch — ist das ein echter Agent, brauchen Sie das, ist der Preis fair.
           </p>
         </section>
       )}

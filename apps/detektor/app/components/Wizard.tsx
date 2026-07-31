@@ -111,7 +111,7 @@ export function Wizard({
       <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
         <div className="flex items-center justify-between gap-3">
           <span className="rounded-xs bg-accent-weak px-2.5 py-1 font-mono text-[11px] uppercase tracking-[.1em] text-accent">
-            Tür {tuer} · Achsen-Prüfung
+            Ist das ein echter Agent?
           </span>
           <span className="font-mono text-[12px] text-ink-3">≈ 12–15 Min.</span>
         </div>
@@ -309,7 +309,7 @@ function ResultView({
 
         <div className="mt-4 flex flex-wrap items-end gap-x-8 gap-y-4">
           <div>
-            <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Agentik-Score</p>
+            <p className="font-mono text-[11px] uppercase tracking-[.1em] text-ink-3">Agenten-Reifegrad</p>
             <div className="mt-1 flex items-baseline gap-2">
               <b className="font-mono text-[48px] font-semibold leading-none tracking-[-.02em] tnum">{scoreLabel}</b>
               <span className="font-mono text-[20px] text-ink-3">/ {maxScoreOf(achsen)}</span>

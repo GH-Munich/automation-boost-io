@@ -132,7 +132,7 @@ export function PreisCheck({
           </p>
 
           <div className="mt-5 flex flex-col gap-5">
-            <Field label="Tatsächlich gelieferte Klasse" hint="aus dem Agentik-Score übernommen — hier prüf- und änderbar">
+            <Field label="Tatsächlich gelieferte Klasse" hint="aus dem Agenten-Reifegrad übernommen — hier prüf- und änderbar">
               {vorlaeufig && (
                 <span className="mb-1.5 block text-[12px] text-ink-3">
                   Score war vorläufig — Klasse bitte prüfen.
@@ -168,7 +168,7 @@ export function PreisCheck({
               )}
             </Field>
 
-            <Field label="Jahresvolumen (Vorgänge)" hint="Vorgabe aus dem Bedarfs-Check (Monatsvolumen × 12) — änderbar">
+            <Field label="Jahresvolumen (Vorgänge)" hint="Vorgabe aus Ihrem Bedarf (Monatsvolumen × 12) — änderbar">
               <NumberInput value={volumen} onChange={setVolumen} step={100} min={1} />
             </Field>
 

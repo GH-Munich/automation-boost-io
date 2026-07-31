@@ -7,7 +7,7 @@
 > **veraltet** und darf nicht als Stand herangezogen werden.
 
 **Stand:** 31.07.2026 · **Branch:** `claude/awd-report-klartext-v1-1` ·
-**Letzter Commit:** `7584f10` (AB-037) · **Tests:** 86/86 grün · **Standard:** 1.1
+**Letzter Commit:** AB-038 (Klartext-Nachzug 2) · **Tests:** 86/86 grün · **Standard:** 1.1
 
 ---
 
@@ -37,6 +37,7 @@ Alle vier Commits sind gepusht und durch die 86 Golden-Tests + Typecheck abgesic
 | **AB-035** | **Nutzen-Schnellcheck** („Lohnt sich das?") — Schieberegler, Amortisation, zwei-Ebenen-Ergebnis; + Fix des Dev-CSP-Bugs (Fast-Refresh) | `/lohnt-sich`, `content/nutzen.json`, `src/engine/nutzen.ts`, `NutzenCheck.tsx` |
 | **AB-036** | **Gelingt-das-bei-uns-Check** — 8 Fragen in 2 Blöcken (G1–G5 „Anbieter & Lösung" / außen, G6–G8 „Sie selbst" / innen: Knowhow, Akzeptanz & Bauchgefühl, Ziele & Prozesse); Ampel nach Zahl offener Punkte | `/gelingt-check`, `content/gelingt.json`, `src/engine/gelingt.ts`, `GelingtCheck.tsx` |
 | **AB-037** | **Klartext-Nachzug 1** — Jargon-Überschriften im Preis-Check auf verständliche Sprache | `app/components/PreisCheck.tsx` |
+| **AB-038** | **Klartext-Nachzug 2** — restliche Jargon-Labels: Wizard-Kopf („Ist das ein echter Agent?"), „Agentik-Score" → „Agenten-Reifegrad", Bedarf-/Bestands-Kopf, Muster-Hinweis, Bericht-Kopf (+ tote `tuer`-Prop entfernt) | `Wizard.tsx`, `BedarfWizard.tsx`, `bestand/page.tsx`, `MusterCheck.tsx`, `PreisCheck.tsx`, `Bericht.tsx`, `Assessment.tsx` |
 
 **Muster für jeden neuen Baustein** (bewährt, bitte beibehalten):
 `content/<name>.json` (Werte + `meta.standard_version`) → `src/engine/<name>.ts` (reine
@@ -51,21 +52,13 @@ gegenlesen: `/lohnt-sich` und `/gelingt-check` — Formulierungen sind frei anpa
 
 ## 3. Was ist offen
 
-### 3a. Klartext-Nachzug — restliche Tools (rein sprachlich, low-risk)
-Der Preis-Check ist erledigt (AB-037). Noch mit sichtbarem Jargon (aus Grep vom 31.07.):
-
-| Datei : Zeile | Jargon | Vorschlag |
-|---|---|---|
-| `Wizard.tsx:114` | „Tür {tuer} · Achsen-Prüfung" | „Ist das ein echter Agent?" o. Ä. |
-| `Wizard.tsx:312` | „Agentik-Score" | „KI-Reifegrad" / „Agenten-Einstufung" |
-| `BedarfWizard.tsx:94` | „Tür C · Bedarfs-Check" | „Brauchen Sie das überhaupt?" |
-| `bestand/page.tsx:22` | „Tür B · Bestands-Check" | „Was Sie schon haben" |
-| `MusterCheck.tsx:152` | „regulären Prüfpfad (Achsen-Prüfung, Bedarfs-Check…)" | Klartext-Umschreibung |
-| `PreisCheck.tsx:135,171` | Feld-Hinweise „aus dem Agentik-Score", „aus dem Bedarfs-Check" | an neue Labels angleichen |
-| `Bericht.tsx:101` | „… · Tür {tuer} · Prüfstandard …" | „Tür"-Zusatz entfernen |
-
-Reine UI-Labels → frei änderbar, kein Standard-Sprung, keine Engine-Berührung.
-`Assessment.tsx:19-20` sind nur Code-Kommentare (kein UI, irrelevant).
+### 3a. Klartext-Nachzug — ERLEDIGT (AB-037 + AB-038)
+Alle sichtbaren Jargon-Labels sind auf Klartext gezogen: Preis-Check (AB-037) sowie
+Wizard-Kopf („Ist das ein echter Agent?"), „Agentik-Score" → „Agenten-Reifegrad",
+Bedarf-/Bestands-Kopf, Muster-Hinweis und Bericht-Kopf (AB-038, inkl. Entfernen der
+dann toten `tuer`-Prop aus `Bericht`/`Assessment`). Rein sprachlich, kein
+Standard-Sprung, keine Engine-Berührung. Verbliebene „Achsen-/Agentik-"-Begriffe
+stehen nur noch in Code-Kommentaren (`scoring.ts`, `Assessment.tsx`) — kein UI.
 
 ### 3b. Nr. 4 — Preis-Maske verfeinern (größer, braucht Freigabe)
 Geplant: **Lösungsart-Leiter** (Multiagent / Agent / automatisches Routing /

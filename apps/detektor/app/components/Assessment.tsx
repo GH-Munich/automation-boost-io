@@ -67,7 +67,6 @@ export function Assessment({
         standardVersion={standardVersion}
         scoreInput={scoreInput}
         priceInput={priceInput}
-        tuer={tuer}
         onBack={() => {
           setPhase("preis");
           nachOben();

@@ -91,7 +91,7 @@ export function BedarfWizard({
       <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
         <div className="flex items-center justify-between gap-3">
           <span className="rounded-xs bg-accent-weak px-2.5 py-1 font-mono text-[11px] uppercase tracking-[.1em] text-accent">
-            Tür C · Bedarfs-Check
+            Brauchen Sie das überhaupt?
           </span>
           <span className="font-mono text-[12px] text-ink-3">≈ 5 Min.</span>
         </div>
