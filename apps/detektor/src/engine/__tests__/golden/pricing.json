@@ -1,8 +1,8 @@
 {
-  "beschreibung": "Golden-Fälle für calculatePriceCorridor (Übergabe §2.3). Erster Fall ist der verifizierte Referenzfall aus preislogik.json (beispiel_golden_test).",
+  "beschreibung": "Golden-Fälle für calculatePriceCorridor (Übergabe §2.3), Standard 1.2 mit Fixkosten-Sockel (P5), Hybrid-Ausgabe (Technik vs. Gesamtrahmen) und Ampel ab Faktor 10 = rot. Erster Fall ist der verifizierte Referenzfall aus preislogik.json (beispiel_golden_test).",
   "faelle": [
     {
-      "name": "Referenzfall aus preislogik.json — chatbot_rag, 24.000 Vorgänge, Faktor 3–5, Kurs 0,90, Angebot 60.000 € → 11,1 → rot",
+      "name": "Referenzfall aus preislogik.json — chatbot_rag, 24.000, Faktor 3–5, Kurs 0,90, Angebot 60.000 € → Sockel 6.000, Gesamt 11.400 → 5,3 → gelb (Technik-Aufschlag 11,1)",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
         "volumenJahr": 24000,
@@ -13,13 +13,16 @@
       "erwartet": {
         "korridorUsd": { "min": 360.0, "max": 6000.0 },
         "korridorEur": { "min": 324.0, "max": 5400.0 },
-        "washingFaktor": 11.1,
-        "ampel": "rot",
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
+        "washingFaktor": 5.3,
+        "washingFaktorTechnik": 11.1,
+        "ampel": "gelb",
         "ueberdimensionierung": false
       }
     },
     {
-      "name": "Grün — Angebot nahe am Korridor (Washing-Faktor ≤ 2)",
+      "name": "Grün — Angebot im Gesamtrahmen (Aufschlag ≤ 2)",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
         "volumenJahr": 24000,
@@ -29,13 +32,16 @@
       },
       "erwartet": {
         "korridorEur": { "min": 324.0, "max": 5400.0 },
-        "washingFaktor": 1.7,
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
+        "washingFaktor": 0.8,
+        "washingFaktorTechnik": 1.7,
         "ampel": "gruen",
         "ueberdimensionierung": false
       }
     },
     {
-      "name": "Gelb — deutlich überteuert (Washing-Faktor > 2 bis 10)",
+      "name": "Gelb — deutlich überteuert (Aufschlag > 2 bis < 10 gegen Gesamtrahmen)",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
         "volumenJahr": 24000,
@@ -45,13 +51,16 @@
       },
       "erwartet": {
         "korridorEur": { "min": 324.0, "max": 5400.0 },
-        "washingFaktor": 5.0,
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
+        "washingFaktor": 2.4,
+        "washingFaktorTechnik": 5.0,
         "ampel": "gelb",
         "ueberdimensionierung": false
       }
     },
     {
-      "name": "Überdimensionierung — echter Agent geliefert, aber IPA benötigt (P4)",
+      "name": "Überdimensionierung — echter Agent geliefert, aber IPA benötigt (P4); Sockel 20.000",
       "input": {
         "gelieferteKlasse": "agent",
         "volumenJahr": 1000,
@@ -63,61 +72,73 @@
       "erwartet": {
         "korridorUsd": { "min": 900.0, "max": 40000.0 },
         "korridorEur": { "min": 810.0, "max": 36000.0 },
-        "washingFaktor": 1.4,
+        "sockelEur": 20000,
+        "korridorGesamtEur": { "min": 20810.0, "max": 56000.0 },
+        "washingFaktor": 0.9,
+        "washingFaktorTechnik": 1.4,
         "ampel": "gruen",
         "ueberdimensionierung": true
       }
     },
     {
-      "name": "Grenzfall — Washing-Faktor genau 2,0 → grün (untere Grenze inklusiv)",
+      "name": "Grenzfall — Aufschlag genau 2,0 → grün (untere Grenze inklusiv)",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
         "volumenJahr": 24000,
         "betriebsfaktor": { "min": 3, "max": 5 },
         "kursUsdEur": 0.9,
-        "angebotspreisJahrEur": 10800
+        "angebotspreisJahrEur": 22800
       },
       "erwartet": {
         "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
         "washingFaktor": 2.0,
+        "washingFaktorTechnik": 4.2,
         "ampel": "gruen",
         "ueberdimensionierung": false
       }
     },
     {
-      "name": "Grenzfall — Washing-Faktor genau 10,0 → gelb (obere Gelb-Grenze inklusiv)",
+      "name": "Grenzfall — Aufschlag genau 10,0 → rot (Faktor 10 zählt bereits als Washing)",
       "input": {
         "gelieferteKlasse": "chatbot_rag",
         "volumenJahr": 24000,
         "betriebsfaktor": { "min": 3, "max": 5 },
         "kursUsdEur": 0.9,
-        "angebotspreisJahrEur": 54000
+        "angebotspreisJahrEur": 114000
       },
       "erwartet": {
         "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
         "washingFaktor": 10.0,
-        "ampel": "gelb",
-        "ueberdimensionierung": false
-      }
-    },
-    {
-      "name": "Grenzfall — Washing-Faktor 10,1 → rot (über der Grenze)",
-      "input": {
-        "gelieferteKlasse": "chatbot_rag",
-        "volumenJahr": 24000,
-        "betriebsfaktor": { "min": 3, "max": 5 },
-        "kursUsdEur": 0.9,
-        "angebotspreisJahrEur": 54540
-      },
-      "erwartet": {
-        "korridorEur": { "min": 324.0, "max": 5400.0 },
-        "washingFaktor": 10.1,
+        "washingFaktorTechnik": 21.1,
         "ampel": "rot",
         "ueberdimensionierung": false
       }
     },
     {
-      "name": "M3-Sonderfall — Referenzklasse skript_rpa (statt chatbot_rag) schärft den Faktor",
+      "name": "Grenzfall — Aufschlag 10,1 → rot (über der Grenze)",
+      "input": {
+        "gelieferteKlasse": "chatbot_rag",
+        "volumenJahr": 24000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 115140
+      },
+      "erwartet": {
+        "korridorEur": { "min": 324.0, "max": 5400.0 },
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
+        "washingFaktor": 10.1,
+        "washingFaktorTechnik": 21.3,
+        "ampel": "rot",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "M3-Sonderfall — Referenzklasse skript_rpa (Sockel 3.000) schärft den Aufschlag",
       "input": {
         "gelieferteKlasse": "skript_rpa",
         "volumenJahr": 24000,
@@ -128,7 +149,10 @@
       "erwartet": {
         "korridorUsd": { "min": 0.0, "max": 120.0 },
         "korridorEur": { "min": 0.0, "max": 108.0 },
-        "washingFaktor": 555.6,
+        "sockelEur": 3000,
+        "korridorGesamtEur": { "min": 3000.0, "max": 3108.0 },
+        "washingFaktor": 19.3,
+        "washingFaktorTechnik": 555.6,
         "ampel": "rot",
         "ueberdimensionierung": false
       }
@@ -143,8 +167,31 @@
       "erwartet": {
         "korridorUsd": { "min": 360.0, "max": 6000.0 },
         "korridorEur": { "min": 324.0, "max": 5400.0 },
-        "washingFaktor": 11.1,
-        "ampel": "rot",
+        "sockelEur": 6000,
+        "korridorGesamtEur": { "min": 6324.0, "max": 11400.0 },
+        "washingFaktor": 5.3,
+        "washingFaktorTechnik": 11.1,
+        "ampel": "gelb",
+        "ueberdimensionierung": false
+      }
+    },
+    {
+      "name": "Multiagenten-System (Klasse 6, Sockel 30.000) — 5.000 Vorgänge, Angebot 90.000 €",
+      "input": {
+        "gelieferteKlasse": "multiagent",
+        "volumenJahr": 5000,
+        "betriebsfaktor": { "min": 3, "max": 5 },
+        "kursUsdEur": 0.9,
+        "angebotspreisJahrEur": 90000
+      },
+      "erwartet": {
+        "korridorUsd": { "min": 15000.0, "max": 750000.0 },
+        "korridorEur": { "min": 13500.0, "max": 675000.0 },
+        "sockelEur": 30000,
+        "korridorGesamtEur": { "min": 43500.0, "max": 705000.0 },
+        "washingFaktor": 0.1,
+        "washingFaktorTechnik": 0.1,
+        "ampel": "gruen",
         "ueberdimensionierung": false
       }
     }

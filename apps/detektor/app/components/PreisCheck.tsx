@@ -218,23 +218,40 @@ export function PreisCheck({
           </div>
         </section>
 
-        {/* Ergebnis: Korridor + Preis-Aufschlag */}
+        {/* Ergebnis: Hybrid — reine Technik-Rohkosten + realistischer Gesamtrahmen + Preis-Aufschlag */}
         <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
+          {/* Nebenzeile: reine Technik-Rohkosten (entlarvt Skript-zum-Agentenpreis) */}
           <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-            Fairer Preisrahmen pro Jahr
+            {preislogik.gesamtrahmen?.label_technik ?? "Reine Technik-Rohkosten"} pro Jahr
           </p>
-          <div className="mt-2 flex items-baseline gap-2 font-mono tnum">
-            <b className="text-[26px] font-semibold tracking-[-.01em]">{eur.format(price.korridorEur.min)}</b>
+          <div className="mt-1.5 flex flex-wrap items-baseline gap-x-2 gap-y-0.5 font-mono tnum">
+            <b className="text-[18px] font-semibold tracking-[-.01em] text-ink-2">{eur.format(price.korridorEur.min)}</b>
             <span className="text-ink-3">–</span>
-            <b className="text-[26px] font-semibold tracking-[-.01em]">{eur.format(price.korridorEur.max)}</b>
+            <b className="text-[18px] font-semibold tracking-[-.01em] text-ink-2">{eur.format(price.korridorEur.max)}</b>
+            <span className="ml-1 text-[11px] text-ink-3">
+              ({usd.format(price.korridorUsd.min)} – {usd.format(price.korridorUsd.max)})
+            </span>
           </div>
-          <p className="mt-1 font-mono text-[12px] text-ink-3">
-            {usd.format(price.korridorUsd.min)} – {usd.format(price.korridorUsd.max)} · pro Jahr
-          </p>
 
+          {/* Hauptzeile: realistischer Gesamtrahmen inkl. Fixkosten-Sockel */}
+          <div className="mt-5 border-t border-line pt-5">
+            <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
+              {preislogik.gesamtrahmen?.label_gesamt ?? "Realistischer Gesamtrahmen (inkl. Einrichtung & Betrieb)"}
+            </p>
+            <div className="mt-2 flex items-baseline gap-2 font-mono tnum">
+              <b className="text-[26px] font-semibold tracking-[-.01em]">{eur.format(price.korridorGesamtEur.min)}</b>
+              <span className="text-ink-3">–</span>
+              <b className="text-[26px] font-semibold tracking-[-.01em]">{eur.format(price.korridorGesamtEur.max)}</b>
+            </div>
+            <p className="mt-1 text-[12px] leading-relaxed text-ink-3">
+              enthält einen Fixkosten-Sockel von {eur.format(price.sockelEur)} (Einrichtung, Betrieb, Support, Wartung)
+            </p>
+          </div>
+
+          {/* Preis-Aufschlag gegen den Gesamtrahmen (Ampel-Basis) */}
           <div className="mt-6 border-t border-line pt-5">
             <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Preis-Aufschlag</p>
-            {angebot > 0 && price.korridorEur.max > 0 ? (
+            {angebot > 0 && price.korridorGesamtEur.max > 0 ? (
               <>
                 <div className="mt-2 flex flex-wrap items-center gap-4">
                   <div className="flex items-baseline gap-1.5">
@@ -252,8 +269,15 @@ export function PreisCheck({
                 </div>
                 <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">{price.ampelText}</p>
                 <p className="mt-5 font-mono text-[11.5px] leading-relaxed text-ink-3">
-                  {eur.format(angebot)} ÷ {eur.format(price.korridorEur.max)} (Korridor-Obergrenze) = {faktor(price.washingFaktor)}×
+                  {eur.format(angebot)} ÷ {eur.format(price.korridorGesamtEur.max)} (Gesamtrahmen-Obergrenze) = {faktor(price.washingFaktor)}×
                 </p>
+                {Number.isFinite(price.washingFaktorTechnik) && (
+                  <p className="mt-1.5 max-w-[46ch] text-[12px] leading-relaxed text-ink-3">
+                    Zum Vergleich: das{" "}
+                    <b className="font-semibold text-ink-2">{faktor(price.washingFaktorTechnik)}×</b> der reinen
+                    Technik-Rohkosten — so viel liegt der Preis über dem, was die Technik selbst verursacht.
+                  </p>
+                )}
               </>
             ) : (
               <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">

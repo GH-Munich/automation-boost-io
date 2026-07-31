@@ -150,6 +150,8 @@ export interface Kostenklasse {
   ordnung: number;
   name: string;
   vorgangskosten_usd: { min: number; max: number };
+  /** Fixkosten-Sockel je Klasse (EUR/Jahr, P5): Einrichtung, Betrieb, Support. */
+  sockel_eur: number;
   anzeige: string;
   quelle: string;
 }
@@ -167,6 +169,19 @@ export interface AmpelSchwelle {
 export interface PreislogikContent extends RawContentFile {
   regeln: Record<string, string>;
   kostenklassen: Kostenklasse[];
+  /** Metadaten zum Fixkosten-Sockel (Werte je Klasse in Kostenklasse.sockel_eur). */
+  sockel?: {
+    einheit: string;
+    label: string;
+    erklaerung: string;
+    editierbar: boolean;
+  };
+  /** Labels/Erklärung der Hybrid-Zweizeilen-Darstellung (Technik vs. Gesamt). */
+  gesamtrahmen?: {
+    label_technik: string;
+    label_gesamt: string;
+    erklaerung: string;
+  };
   betriebsfaktor: {
     min: number;
     max: number;
@@ -178,6 +193,8 @@ export interface PreislogikContent extends RawContentFile {
   kurs: { usd_eur: number; editierbar: boolean; label: string };
   washing_faktor: { formel: string; ampel: AmpelSchwelle[] };
   ueberdimensionierung: { bedingung: string; befund: string; quelle: string };
+  /** App-taugliche Erklärtexte (Klartext) zu den Preis-Annahmen. */
+  erklaerungen?: Record<string, string>;
   /** Anzeige-Präzision (datengetrieben statt im Code fixiert). */
   anzeige?: { faktor_nachkommastellen: number; preis_nachkommastellen: number };
   beispiel_golden_test: unknown;
@@ -496,7 +513,13 @@ export interface PriceResult {
   gelieferteKlasse: string;
   korridorUsd: { min: number; max: number };
   korridorEur: { min: number; max: number };
+  /** Fixkosten-Sockel der gelieferten Klasse (EUR/Jahr), P5. */
+  sockelEur: number;
+  /** Fairer Gesamtrahmen = Sockel + Nutzungskorridor (EUR/Jahr). */
+  korridorGesamtEur: { min: number; max: number };
   washingFaktor: number;
+  /** Aufschlag gegen die reinen Technik-Rohkosten (Klartext-Nebenwert). */
+  washingFaktorTechnik: number;
   ampel: Ampel;
   ampelText: string;
   ueberdimensionierung:

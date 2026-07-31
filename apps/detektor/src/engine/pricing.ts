@@ -44,11 +44,12 @@ function ampelFuer(
     );
   }
 
-  // grün: wf ≤ gruen.bis · gelb: gruen.bis < wf ≤ gelb.bis · rot: wf > gelb.bis
+  // grün: wf ≤ gruen.bis · gelb: gruen.bis < wf < gelb.bis · rot: wf ≥ gelb.bis
+  // Faktor 10 zählt bereits als Washing (Gartner 10–50) → rot ab 10,0 (B1).
   if (gruen.bis !== undefined && washingFaktor <= gruen.bis) {
     return { stufe: "gruen", text: gruen.text };
   }
-  if (gelb.bis !== undefined && washingFaktor <= gelb.bis) {
+  if (gelb.bis !== undefined && washingFaktor < gelb.bis) {
     return { stufe: "gelb", text: gelb.text };
   }
   return { stufe: "rot", text: rot.text };
@@ -97,12 +98,25 @@ export function calculatePriceCorridor(
   const korridorUsd = { min: runde(usdMin, 2), max: runde(usdMax, 2) };
   const korridorEur = { min: runde(eurMin, 2), max: runde(eurMax, 2) };
 
-  // Washing-Faktor = Angebotspreis / Korridor-Obergrenze (EUR).
+  // Fixkosten-Sockel je Klasse (P5): additiver Grundpreis für Einrichtung,
+  // Betrieb, Support und Wartung. Fairer Gesamtrahmen = Sockel + Nutzungskorridor.
+  const sockelEur = geliefert.sockel_eur;
+  const korridorGesamtEur = {
+    min: runde(korridorEur.min + sockelEur, 2),
+    max: runde(korridorEur.max + sockelEur, 2),
+  };
+
+  // Preis-Aufschlag = Angebotspreis / Gesamtrahmen-Obergrenze (P3, Ampel-Basis).
   // Der Faktor wird aus dem ANGEZEIGTEN (auf 2 NK gerundeten) Korridorwert
   // berechnet und die Ampel auf demselben gerundeten Faktor entschieden — so
   // widersprechen gezeigte Zahl, Begründungsspur und Urteil nie an den Grenzen
-  // (A1). Grenzsemantik B1: grün ≤ 2,0 · gelb ≤ 10,0 · rot > 10,0.
+  // (A1). Grenzsemantik B1: grün ≤ 2,0 · gelb < 10,0 · rot ≥ 10,0.
   const washingFaktor =
+    korridorGesamtEur.max > 0
+      ? runde(input.angebotspreisJahrEur / korridorGesamtEur.max, 1)
+      : Infinity;
+  // Zusätzlicher Klartext-Wert: Aufschlag gegen die reinen Technik-Rohkosten.
+  const washingFaktorTechnik =
     korridorEur.max > 0
       ? runde(input.angebotspreisJahrEur / korridorEur.max, 1)
       : Infinity;
@@ -133,13 +147,18 @@ export function calculatePriceCorridor(
     {
       regelId: "P2",
       eingabe: `${geliefert.anzeige} × ${input.volumenJahr} Vorgänge × Faktor ${betriebsfaktor.min}–${betriebsfaktor.max}, Kurs ${kurs}`,
-      hinweis: `Korridor: ${korridorEur.min}–${korridorEur.max} EUR/Jahr`,
+      hinweis: `Nutzungskorridor (Technik): ${korridorEur.min}–${korridorEur.max} EUR/Jahr`,
+    },
+    {
+      regelId: "P5",
+      eingabe: `+ Fixkosten-Sockel ${sockelEur} EUR`,
+      hinweis: `Fairer Gesamtrahmen: ${korridorGesamtEur.min}–${korridorGesamtEur.max} EUR/Jahr`,
     },
     {
       regelId: "P3",
-      eingabe: `${input.angebotspreisJahrEur} EUR ÷ ${korridorEur.max} EUR`,
+      eingabe: `${input.angebotspreisJahrEur} EUR ÷ ${korridorGesamtEur.max} EUR`,
       punkte: washingFaktor,
-      hinweis: `Washing-Faktor ${washingFaktor} → ${stufe}`,
+      hinweis: `Preis-Aufschlag ${washingFaktor}× → ${stufe} (vs. reine Technik: ${washingFaktorTechnik}×)`,
     },
   ];
   if (ueberdimensionierung) {
@@ -154,7 +173,10 @@ export function calculatePriceCorridor(
     gelieferteKlasse: geliefert.id,
     korridorUsd,
     korridorEur,
+    sockelEur,
+    korridorGesamtEur,
     washingFaktor,
+    washingFaktorTechnik,
     ampel: stufe,
     ampelText: text,
     ueberdimensionierung,

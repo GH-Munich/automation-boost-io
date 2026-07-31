@@ -7,7 +7,7 @@
 > **veraltet** und darf nicht als Stand herangezogen werden.
 
 **Stand:** 31.07.2026 · **Branch:** `claude/awd-report-klartext-v1-1` ·
-**Letzter Commit:** AB-038 (Klartext-Nachzug 2) · **Tests:** 86/86 grün · **Standard:** 1.1
+**Letzter Commit:** AB-039 (Preis-Maske Nr. 4 · Teil 1 — Standard 1.2) · **Tests:** 87/87 grün · **Standard:** 1.2
 
 ---
 
@@ -22,14 +22,14 @@
 | **Live** | `awd.automation-boost.io` — deployed auf Stand `282376f` (**M2/M3, noch OHNE die Klartext-Verbesserungen**) |
 | **Dev-Server** | `next dev` auf Port **3009** (in `apps/detektor`) |
 
-**Wichtig:** Die Verbesserungen AB-034…037 liegen **im Branch / PR**, sind **noch nicht
+**Wichtig:** Die Verbesserungen AB-034…039 liegen **im Branch / PR**, sind **noch nicht
 live**. Live = alte Fassung. Merge + Deploy passieren erst nach Freigabe, gemeinsam (§7).
 
 ---
 
 ## 2. Was ist fertig (dieser Arbeitsstrang „alles andere")
 
-Alle vier Commits sind gepusht und durch die 86 Golden-Tests + Typecheck abgesichert.
+Alle Commits sind durch die 87 Golden-Tests + Typecheck abgesichert (AB-034…037 gepusht, AB-038/039 lokal auf dem Branch).
 
 | Commit | Inhalt | Seite / Ort |
 |---|---|---|
@@ -38,6 +38,7 @@ Alle vier Commits sind gepusht und durch die 86 Golden-Tests + Typecheck abgesic
 | **AB-036** | **Gelingt-das-bei-uns-Check** — 8 Fragen in 2 Blöcken (G1–G5 „Anbieter & Lösung" / außen, G6–G8 „Sie selbst" / innen: Knowhow, Akzeptanz & Bauchgefühl, Ziele & Prozesse); Ampel nach Zahl offener Punkte | `/gelingt-check`, `content/gelingt.json`, `src/engine/gelingt.ts`, `GelingtCheck.tsx` |
 | **AB-037** | **Klartext-Nachzug 1** — Jargon-Überschriften im Preis-Check auf verständliche Sprache | `app/components/PreisCheck.tsx` |
 | **AB-038** | **Klartext-Nachzug 2** — restliche Jargon-Labels: Wizard-Kopf („Ist das ein echter Agent?"), „Agentik-Score" → „Agenten-Reifegrad", Bedarf-/Bestands-Kopf, Muster-Hinweis, Bericht-Kopf (+ tote `tuer`-Prop entfernt) | `Wizard.tsx`, `BedarfWizard.tsx`, `bestand/page.tsx`, `MusterCheck.tsx`, `PreisCheck.tsx`, `Bericht.tsx`, `Assessment.tsx` |
+| **AB-039** | **Preis-Maske Nr. 4 · Teil 1 (fachlicher Kern, Standard 1.1 → 1.2):** neue 6. Kostenklasse **Multiagenten-System** (1,00–30,00 USD), **Fixkosten-Sockel je Klasse** (P5), **Hybrid-Anzeige** (reine Technik-Rohkosten + realistischer Gesamtrahmen inkl. Sockel), **Ampel ab Faktor 10 = rot** (Gartner). Grundlage: Mehr-Augen-Preisprüfung (4 Fachperspektiven) 31.07. | `content/preislogik.json`, alle 18 content-JSONs (Version), `src/engine/pricing.ts` + `types.ts`, Golden-Tests (`pricing.json`/`pricing.test.ts`/`content-loader.test.ts`), `PreisCheck.tsx` |
 
 **Muster für jeden neuen Baustein** (bewährt, bitte beibehalten):
 `content/<name>.json` (Werte + `meta.standard_version`) → `src/engine/<name>.ts` (reine
@@ -60,15 +61,22 @@ dann toten `tuer`-Prop aus `Bericht`/`Assessment`). Rein sprachlich, kein
 Standard-Sprung, keine Engine-Berührung. Verbliebene „Achsen-/Agentik-"-Begriffe
 stehen nur noch in Code-Kommentaren (`scoring.ts`, `Assessment.tsx`) — kein UI.
 
-### 3b. Nr. 4 — Preis-Maske verfeinern (größer, braucht Freigabe)
-Geplant: **Lösungsart-Leiter** (Multiagent / Agent / automatisches Routing /
-deterministische Programmierung — „verkauft vs. nötig") + **Personas / typische
-Use-Cases** + **3 Schieberegler** (Volumen in 7 Stufen · Komplexität in 3 Graden ·
-Modell/Aufwand). 
-**Achtung:** berührt die **Kern-Preis-Engine** (`preislogik.json`, `pricing.ts`) und
-braucht **neue fachliche Standard-Werte** → **G4-Versionssprung** (1.1 → 1.2) und
-Freigabe von Gottfried. **Werte nicht erfinden** — als Vorschlagsliste vorlegen, wie bei
-Nutzen/Gelingt.
+### 3b. Nr. 4 — Preis-Maske · Teil 2 (intuitive Maske, offen)
+**Teil 1 (fachlicher Kern) ist erledigt (AB-039):** 6. Klasse Multiagent, Fixkosten-Sockel
+je Klasse, Hybrid-Anzeige (Technik-Rohkosten + realistischer Gesamtrahmen), Ampel ab
+Faktor 10 = rot; Standard-Sprung 1.1 → 1.2, 87/87 Tests grün. Die Sockel-Startwerte
+(Skript 3.000 · Chatbot 6.000 · Routing 8.000 · Workflow 12.000 · Agent 20.000 ·
+Multiagent 30.000 €/Jahr) sind reine Content-Werte und ohne Engine-Änderung nachjustierbar.
+App-fertige Erklärtexte liegen in `preislogik.json` → `erklaerungen`.
+
+**Offen (Teil 2, reine UI/Eingabe-Schicht, KEIN Standard-Sprung):** die intuitive Maske —
+**Lösungsart-Leiter** (drei Marker: verkauft / geliefert / nötig), **11 Personas**
+(7 Volumen-Anker + 4 Ersatzbank), **3 Schieberegler** (Volumen 7 Stufen 100–100.000 ·
+Komplexität 3 Grade = geometrische Drittel des Klassen-Korridors · Aufwand = Betriebsfaktor
+3/4/5). Werte/Personas sind mit Gottfried abgestimmt (Chat 31.07.); umzusetzen als Content
+(z. B. `preismaske.json`) + getestete reine Helfer + UI-Wiring. Mockup-Entwurf existiert.
+Die Engine akzeptiert dafür optional eine Komplexitäts-/Kosten-Teilband-Eingabe (dünn,
+Formel bleibt) — beim Bau ergänzen.
 
 ### 3c. Später (von Gottfried bewusst zurückgestellt — Server/externe Dienste)
 - **CTAs / nächste Schritte** an den Ergebnis-Stellen der Tools.

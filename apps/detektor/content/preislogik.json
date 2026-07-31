@@ -1,29 +1,29 @@
 {
   "meta": {
     "datei": "preislogik.json",
-    "standard_version": "1.1",
-    "stand": "2026-07-24",
+    "standard_version": "1.2",
+    "stand": "2026-07-31",
     "quellen": [
       "Buch 5, Kap. 1 und 7 (Kostenzeile, Faktor 10–50)",
-      "AWD_KONZEPT v1.0, Kap. 2.5"
+      "AWD_KONZEPT v1.0, Kap. 2.5",
+      "AWD Mehr-Augen-Preisprüfung 31.07.2026 (vier Fachperspektiven: Technik/Token, Marktpreis, KMU-Kaufmann, Engine-Konsistenz) — neue Multiagent-Klasse, Fixkosten-Sockel, Ampel-Grenze bei Faktor 10"
     ],
-    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4)."
+    "pflegehinweis": "Änderungen nur per Standard-Versionssprung (G4). Die Sockelwerte (kostenklassen[].sockel_eur) sind bewusst als Startwerte gesetzt und ohne Engine-Änderung nachjustierbar."
   },
   "regeln": {
     "P1": "Referenzklasse ist die tatsächlich gelieferte Klasse (aus Score-Band bzw. Bestands-/Bedarfsklassifikation), nicht die beworbene.",
-    "P2": "Fairer Jahreskorridor: (a) wo dokumentierte Marktpreise existieren (preise-support.json), diese als Anker; (b) sonst Vorgangskosten-Korridor × Jahresvolumen × Betriebs-/Margenfaktor.",
-    "P3": "Washing-Faktor = Angebotspreis p. a. ÷ Obergrenze des fairen Jahreskorridors.",
-    "P4": "Überdimensionierung: Liegt die benötigte Klasse (ordnung) unter der gelieferten, ergeht ein eigener Befund — auch ein echter Agent kann der falsche Kauf sein."
+    "P2": "Nutzungskorridor (reine Technik): wo dokumentierte Marktpreise existieren (preise-support.json), diese als Anker; sonst Vorgangskosten-Korridor × Jahresvolumen × Betriebs-/Margenfaktor × Kurs.",
+    "P3": "Preis-Aufschlag = Angebotspreis p. a. ÷ Obergrenze des fairen GESAMT-Rahmens (inkl. Sockel). Zusätzlich wird der Aufschlag gegenüber den reinen Technik-Rohkosten ausgewiesen (Klartext für die Abzocke-Erkennung).",
+    "P4": "Überdimensionierung: Liegt die benötigte Klasse (ordnung) unter der gelieferten, ergeht ein eigener Befund — auch ein echter Agent kann der falsche Kauf sein.",
+    "P5": "Fairer Gesamtrahmen = Fixkosten-Sockel der gelieferten Klasse + Nutzungskorridor. Der Sockel bildet einmalige Einrichtung, Integration, laufenden Betrieb, Support und Wartung ab — bei kleinem und mittlerem Volumen dominiert er den fairen Preis. Die Ampel bewertet den Aufschlag gegen diesen Gesamtrahmen, damit seriöse Angebote nicht fälschlich als Abzocke markiert werden."
   },
   "kostenklassen": [
     {
       "id": "skript_rpa",
       "ordnung": 1,
       "name": "Skript / RPA",
-      "vorgangskosten_usd": {
-        "min": 0.0,
-        "max": 0.001
-      },
+      "vorgangskosten_usd": { "min": 0.0, "max": 0.001 },
+      "sockel_eur": 3000,
       "anzeige": "< 0,001 USD",
       "quelle": "Buch 5: 50-Zeilen-Skript unter 0,001 USD je Vorgang"
     },
@@ -31,10 +31,8 @@
       "id": "chatbot_rag",
       "ordnung": 2,
       "name": "Chatbot / RAG-Assistent",
-      "vorgangskosten_usd": {
-        "min": 0.005,
-        "max": 0.05
-      },
+      "vorgangskosten_usd": { "min": 0.005, "max": 0.05 },
+      "sockel_eur": 6000,
       "anzeige": "~0,01 USD",
       "quelle": "Buch 5: 'Niedrig (1 Modellaufruf)'; Korridor als Standard-Annahme AWD"
     },
@@ -42,10 +40,8 @@
       "id": "ipa",
       "ordnung": 3,
       "name": "Intelligente Automatisierung (IPA)",
-      "vorgangskosten_usd": {
-        "min": 0.01,
-        "max": 0.3
-      },
+      "vorgangskosten_usd": { "min": 0.01, "max": 0.3 },
+      "sockel_eur": 8000,
       "anzeige": "0,01–0,30 USD",
       "quelle": "Standard-Annahme AWD (zwischen Modellaufruf und Agent)"
     },
@@ -53,10 +49,8 @@
       "id": "workflow",
       "ordnung": 4,
       "name": "Agentischer Workflow",
-      "vorgangskosten_usd": {
-        "min": 0.05,
-        "max": 1.0
-      },
+      "vorgangskosten_usd": { "min": 0.05, "max": 1.0 },
+      "sockel_eur": 12000,
       "anzeige": "0,05–1,00 USD",
       "quelle": "Standard-Annahme AWD (Mischung deterministischer und agentischer Schritte)"
     },
@@ -64,14 +58,32 @@
       "id": "agent",
       "ordnung": 5,
       "name": "Echter Agent",
-      "vorgangskosten_usd": {
-        "min": 0.3,
-        "max": 8.0
-      },
+      "vorgangskosten_usd": { "min": 0.3, "max": 8.0 },
+      "sockel_eur": 20000,
       "anzeige": "0,30–8,00 USD",
       "quelle": "Buch 5: 8–15 interne API-Aufrufe je Aufgabe"
+    },
+    {
+      "id": "multiagent",
+      "ordnung": 6,
+      "name": "Multiagenten-System",
+      "vorgangskosten_usd": { "min": 1.0, "max": 30.0 },
+      "sockel_eur": 30000,
+      "anzeige": "1,00–30,00 USD",
+      "quelle": "Standard-Annahme AWD: Orchestrator + mehrere koordinierte Sub-Agenten je Vorgang (~15-faches Tokenvolumen eines einfachen Chats); bestätigt in der Mehr-Augen-Prüfung 31.07.2026"
     }
   ],
+  "sockel": {
+    "einheit": "EUR pro Jahr",
+    "label": "Fixkosten-Sockel (Einrichtung, Betrieb, Support, Wartung)",
+    "erklaerung": "Additiver Grundpreis je Technologieklasse. Bildet die volumenunabhängigen Kosten ab, die auch ein fairer Anbieter hat: einmalige Einrichtung und Integration, laufender Betrieb, Support und Weiterentwicklung. Startwerte aus der Mehr-Augen-Preisprüfung; ohne Engine-Änderung pflegbar.",
+    "editierbar": true
+  },
+  "gesamtrahmen": {
+    "label_technik": "Reine Technik-Rohkosten",
+    "label_gesamt": "Realistischer Gesamtrahmen (inkl. Einrichtung & Betrieb)",
+    "erklaerung": "Der Preis-Check zeigt zwei Zeilen: die reinen Technik-Rohkosten (entlarvt, wenn ein simples Skript zum Agentenpreis verkauft wird) und den realistischen Gesamtrahmen inkl. Sockel. Die Ampel bewertet den Angebotspreis gegen den Gesamtrahmen."
+  },
   "betriebsfaktor": {
     "min": 3,
     "max": 5,
@@ -86,24 +98,25 @@
     "label": "Annahme Umrechnungskurs USD → EUR"
   },
   "washing_faktor": {
-    "formel": "angebotspreis_jahr_eur / korridor_obergrenze_jahr_eur",
+    "formel": "angebotspreis_jahr_eur / gesamtrahmen_obergrenze_jahr_eur",
+    "grenzsemantik": "grün bei Aufschlag ≤ 2,0 · gelb bei 2,0 < Aufschlag < 10,0 · rot ab Aufschlag 10,0. Faktor 10 zählt bereits als Washing (Gartner: dokumentierte Aufschläge Faktor 10–50).",
     "ampel": [
       {
         "stufe": "gruen",
         "bis": 2.0,
         "label": "Preis in Ordnung",
-        "text": "Verhandelbar — Preis im oder nahe am gerechtfertigten Korridor."
+        "text": "Verhandelbar — Preis im oder nahe am gerechtfertigten Gesamtrahmen."
       },
       {
         "stufe": "gelb",
         "bis": 10.0,
         "label": "Deutlich zu teuer",
-        "text": "Deutlich überteuert — Preisverhandlung auf Basis der tatsächlichen Technologieklasse."
+        "text": "Deutlich überteuert — Preisverhandlung auf Basis der tatsächlichen Technologieklasse und des realistischen Gesamtrahmens."
       },
       {
         "stufe": "rot",
         "label": "Klares Warnsignal beim Preis",
-        "text": "Klassisches Agent Washing — dokumentierte Aufschläge liegen beim Faktor 10 bis 50 (Gartner)."
+        "text": "Klassisches Agent Washing — der Preis liegt beim Zehnfachen des fairen Gesamtrahmens oder darüber (Gartner: Faktor 10 bis 50)."
       }
     ]
   },
@@ -112,34 +125,37 @@
     "befund": "Die benötigte Technologieklasse liegt unter der angebotenen. Auch ein echtes agentisches System kann damit der falsche Kauf sein: Für deterministische Vorgänge liegt der Kostenunterschied zur einfachen Lösung bei bis zu Faktor 1.000.",
     "quelle": "Buch 5, Kap. 1 und 6"
   },
+  "erklaerungen": {
+    "technik_guenstig": "Ein einzelner Chatbot- oder Frage-und-Antwort-Vorgang kostet an reiner Rechenleistung meist nur einen halben bis fünf Cent — je nachdem, wie viel Text hin- und hergeht und wie stark das Modell ist. Das ist der ehrliche Rohpreis der Technik. Alles darüber ist Betrieb, Betreuung und Marge: legitim, aber es sollte in einem nachvollziehbaren Verhältnis stehen — nicht beim Zehn- oder Fünfzigfachen liegen.",
+    "agent_teurer": "Ein echter Agent antwortet nicht einfach, er arbeitet in Schleifen: Für eine Aufgabe ruft er oft acht- bis fünfzehnmal intern nach, prüft Zwischenergebnisse und nutzt Werkzeuge. Deshalb kostet ein Vorgang schnell zwischen 30 Cent und mehreren Euro. Das ist kein Abzockpreis, sondern echte Technik-Arbeit — und genau darum steht ein Agent weiter oben auf der Leiter.",
+    "multiagent_teuerste": "Bei einem Multiagenten-System arbeiten mehrere KI-Agenten zusammen; ein Koordinator verteilt die Arbeit an spezialisierte Helfer. Das vervielfacht den Aufwand pro Vorgang — grob das Fünfzehnfache eines einfachen Chats — und reicht von rund einem Euro bis zu mehreren Dutzend Euro. Solche Preise sind fair, wenn wirklich ein Multiagenten-System geliefert wird. Der Haken ist nur: Wer diesen Preis verlangt, muss auch diese Technik liefern — und nicht ein simples Skript als solches verkaufen.",
+    "klassen_ueberlappen": "Ein besonders aufwendiger Fall einer günstigen Stufe kann so viel kosten wie ein einfacher Fall der nächsthöheren. Deshalb überschneiden sich die Preisspannen bewusst — das ist kein Fehler, sondern Realität. Für die Fairness-Ampel zählt nicht die Stufe allein, sondern ob der Preis im Rahmen dessen bleibt, was die gelieferte Technik wirklich verursacht.",
+    "warum_grundpreis": "Die reinen Rechenkosten sind oft nur Cent-Beträge pro Vorgang — aber niemand baut, betreibt und pflegt ein System zum Nulltarif. Auch ein absolut fairer Anbieter hat einmalige Einrichtung, die Anbindung an Ihre Systeme, laufenden Betrieb und Support. Deshalb rechnen wir je Technologieklasse einen realistischen Grundpreis mit ein. So vergleichen Sie Ihr Angebot mit dem, was gute Arbeit wirklich kostet — nicht mit einer theoretischen Null.",
+    "warum_fairer_preis_niedrig_wirkt": "Unser Rahmen zeigt, was die Sache im Kern kostet: Technik plus ehrlicher Aufschlag für Einrichtung, Betrieb und Marge. Er ist bewusst nüchtern, damit Sie eine harte Verhandlungsbasis haben. Er behauptet nicht, dass jeder teurere Anbieter Sie betrügt. Er beantwortet eine Frage: Passt der Preis zu dem, was technisch wirklich geliefert wird — ein simples Skript oder ein echter Agent?",
+    "was_der_korridor_zeigt": "Sie sehen zwei Zahlen: die reinen Technik-Rohkosten und den realistischen Gesamtrahmen inklusive Einrichtung und Betrieb. Die erste entlarvt, wenn ein simples Skript zum Agentenpreis verkauft wird. Die zweite ist der faire Maßstab für Ihr Angebot. Rot wird es erst, wenn der Preis diesen Gesamtrahmen um ein Vielfaches sprengt, ohne dass mehr geliefert wird."
+  },
   "anzeige": {
     "faktor_nachkommastellen": 1,
     "preis_nachkommastellen": 0
   },
   "beispiel_golden_test": {
-    "beschreibung": "Referenzfall für die Regel-Engine (M2-nahe Konstellation ohne Marktanker).",
+    "beschreibung": "Referenzfall für die Regel-Engine (M2-nahe Konstellation ohne Marktanker), Standard 1.2 mit Fixkosten-Sockel und Gesamtrahmen.",
     "eingaben": {
       "gelieferte_klasse": "chatbot_rag",
       "volumen_jahr": 24000,
-      "betriebsfaktor": [
-        3,
-        5
-      ],
+      "betriebsfaktor": [3, 5],
       "kurs_usd_eur": 0.9,
       "angebotspreis_jahr_eur": 60000
     },
     "erwartet": {
-      "korridor_usd_jahr": [
-        360.0,
-        6000.0
-      ],
-      "korridor_eur_jahr": [
-        324.0,
-        5400.0
-      ],
-      "washing_faktor": 11.1,
-      "ampel": "rot"
+      "korridor_usd_jahr": [360.0, 6000.0],
+      "korridor_eur_jahr": [324.0, 5400.0],
+      "sockel_eur": 6000,
+      "korridor_gesamt_eur_jahr": [6324.0, 11400.0],
+      "washing_faktor": 5.3,
+      "washing_faktor_technik": 11.1,
+      "ampel": "gelb"
     }
   },
-  "disclaimer": "Alle Werte sind Größenordnungen (Korridore) mit sichtbaren Annahmen — Orientierung und Verhandlungsvorbereitung, keine Einkaufskalkulation (G6)."
+  "disclaimer": "Alle Werte sind Größenordnungen (Korridore) mit sichtbaren Annahmen — Orientierung und Verhandlungsvorbereitung, keine Einkaufskalkulation (G6). Der Gesamtrahmen enthält einen pauschalen Fixkosten-Sockel je Klasse; im Einzelfall können Einrichtung und Betrieb abweichen."
 }
