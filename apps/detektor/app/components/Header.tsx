@@ -47,4 +47,5 @@ const NAV = [
   { href: "/fragen", label: "12 Fragen" },
   { href: "/schnelltest", label: "Schnelltest" },
   { href: "/lohnt-sich", label: "Lohnt sich?" },
+  { href: "/gelingt-check", label: "Gelingt das?" },
 ];

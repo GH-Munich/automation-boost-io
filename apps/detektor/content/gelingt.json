@@ -1,0 +1,118 @@
+{
+  "meta": {
+    "datei": "gelingt.json",
+    "standard_version": "1.1",
+    "stand": "2026-07-25",
+    "quellen": [
+      "AWD Kommunikations-Leitlinie 25.07.2026 (Gelingt-das-bei-uns-Check, Roadmap-Nr. 3, verschmilzt Risiko + Voraussetzungen)"
+    ],
+    "pflegehinweis": "VORSCHLAGSWERTE — Freigabe Gottfried ausstehend: Fragen, Optionen, problematisch-Zuordnung und Ampelschwellen. Nur Bereitschafts-Indikation (G6), keine Rechtsberatung. Fachliche Wertänderungen per Standard-Versionssprung (G4)."
+  },
+  "titel": "Gelingt das bei uns?",
+  "untertitel": "Acht kurze Fragen — nach außen (Anbieter & Lösung) und nach innen (Sie selbst). Ein ehrlicher Bereitschafts-Blick, ganz ohne Fachkenntnis.",
+  "zeitangabe_min": 3,
+  "bloecke": {
+    "aussen": "Der Anbieter & die Lösung",
+    "innen": "Sie selbst"
+  },
+  "fragen": [
+    {
+      "id": "G1",
+      "block": "aussen",
+      "frage": "Wie leicht könnten Sie den Anbieter später wieder wechseln?",
+      "optionen": [
+        { "wert": "gut", "text": "Leicht — offene Formate, meine Daten kann ich mitnehmen", "deutung": "Kein Lock-in", "problematisch": false },
+        { "wert": "teils", "text": "Mit Aufwand, aber machbar", "deutung": "Wechsel möglich, im Blick behalten", "problematisch": false },
+        { "wert": "offen", "text": "Kaum — ich wäre fest gebunden", "deutung": "Abhängigkeit / Lock-in", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Ausstieg ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G2",
+      "block": "aussen",
+      "frage": "Wo liegen Ihre Daten — und wer hat Zugriff?",
+      "optionen": [
+        { "wert": "gut", "text": "Bei uns oder in der EU, klar geregelt", "deutung": "Datenhoheit gewahrt", "problematisch": false },
+        { "wert": "teils", "text": "Beim Anbieter, aber vertraglich geregelt", "deutung": "Geregelt, im Blick behalten", "problematisch": false },
+        { "wert": "offen", "text": "Unklar oder außerhalb der EU", "deutung": "Datenhoheit fraglich", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Datenlage ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G3",
+      "block": "aussen",
+      "frage": "Was passiert, wenn der Anbieter ausfällt oder aufgibt?",
+      "optionen": [
+        { "wert": "gut", "text": "Wir hätten einen Plan / kämen an unsere Daten", "deutung": "Betreiberrisiko abgesichert", "problematisch": false },
+        { "wert": "teils", "text": "Wäre unangenehm, aber verkraftbar", "deutung": "Vertretbares Risiko", "problematisch": false },
+        { "wert": "offen", "text": "Dann stünde bei uns einiges still", "deutung": "Klumpenrisiko beim Betreiber", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Betreiberrisiko ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G4",
+      "block": "aussen",
+      "frage": "Kennen Sie die laufenden Kosten (Wartung, Updates, Verbrauch)?",
+      "optionen": [
+        { "wert": "gut", "text": "Ja, die sind transparent", "deutung": "Kostentransparenz vorhanden", "problematisch": false },
+        { "wert": "teils", "text": "Grob — die Größenordnung kenne ich", "deutung": "Grobe Transparenz", "problematisch": false },
+        { "wert": "offen", "text": "Nein — das ist mir nicht klar", "deutung": "Folgekosten-Risiko", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Folgekosten ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G5",
+      "block": "aussen",
+      "frage": "Verstehen Sie, was das System tut — und können Sie eingreifen?",
+      "optionen": [
+        { "wert": "gut", "text": "Ja — nachvollziehbar und steuerbar", "deutung": "Kontrolle vorhanden", "problematisch": false },
+        { "wert": "teils", "text": "In Grundzügen", "deutung": "Teilweise nachvollziehbar", "problematisch": false },
+        { "wert": "offen", "text": "Nein — für mich eine Blackbox", "deutung": "Kontroll-/Nachvollziehbarkeitslücke", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Steuerbarkeit ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G6",
+      "block": "innen",
+      "frage": "Haben Sie eigenes Knowhow oder Erfahrung, um das zu beurteilen und zu steuern?",
+      "optionen": [
+        { "wert": "gut", "text": "Ja — Mitarbeiter, Berater oder erste eigene KI-Projekte", "deutung": "Eigene Kompetenz vorhanden", "problematisch": false },
+        { "wert": "teils", "text": "Etwas — wir bauen es gerade auf", "deutung": "Kompetenz im Aufbau", "problematisch": false },
+        { "wert": "offen", "text": "Nein — für uns ist das Neuland", "deutung": "Knowhow-Lücke — Blind-Abhängigkeit droht", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Kompetenz ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G7",
+      "block": "innen",
+      "frage": "Ziehen Ihre Leute mit — oder gibt es Skepsis?",
+      "optionen": [
+        { "wert": "gut", "text": "Das Team ist offen und dabei", "deutung": "Akzeptanz vorhanden", "problematisch": false },
+        { "wert": "teils", "text": "Gemischt — einige offen, einige zurückhaltend", "deutung": "Akzeptanz im Werden", "problematisch": false },
+        { "wert": "offen", "text": "Eher Skepsis oder Widerstand", "deutung": "Akzeptanz-Risiko — der häufigste Grund fürs Scheitern", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht / haben wir nicht gefragt", "deutung": "Stimmung im Team ungeklärt", "problematisch": true }
+      ]
+    },
+    {
+      "id": "G8",
+      "block": "innen",
+      "frage": "Ist klar, was erreicht werden soll — und sind die Prozesse geordnet?",
+      "optionen": [
+        { "wert": "gut", "text": "Ja — klares Ziel und ein geordneter Prozess", "deutung": "Ziel & Prozess klar", "problematisch": false },
+        { "wert": "teils", "text": "Teilweise — Ziel steht, der Prozess ist im Fluss", "deutung": "Teilweise geordnet", "problematisch": false },
+        { "wert": "offen", "text": "Nein — Ziel oder Ablauf sind unklar", "deutung": "Ein unklarer Prozess wird durch KI nur schneller unklar", "problematisch": true },
+        { "wert": "weiss_nicht", "text": "Weiß ich nicht", "deutung": "Ziel/Prozess ungeklärt", "problematisch": true }
+      ]
+    }
+  ],
+  "auswertung": {
+    "regel": "Anzahl offener Punkte (problematische Antworten) zählen, getrennt nach außen und innen.",
+    "ergebnisse": [
+      { "von": 0, "bis": 1, "stufe": "gruen", "label": "Gute Voraussetzungen", "text": "Sie sind gut aufgestellt — Sie können mit Zuversicht starten. Der nächste sinnvolle Schritt: die konkrete Lösung und den Preis prüfen." },
+      { "von": 2, "bis": 4, "stufe": "gelb", "label": "Solide Basis, ein paar offene Punkte", "text": "Eine solide Ausgangslage mit ein paar offenen Punkten. Die markierten klären wir gemeinsam — dann steht dem Start nichts im Weg." },
+      { "von": 5, "bis": 8, "stufe": "rot", "label": "Wichtige Punkte zuerst klären", "text": "Einiges ist noch offen — kein Grund zu zögern, aber genau diese Punkte schauen wir uns zuerst gemeinsam an, damit Ihr KI-Start gelingt." }
+    ]
+  },
+  "gespraech": "Diese Einschätzung ist ein ehrlicher erster Blick — die offenen Punkte heben wir gemeinsam im persönlichen Gespräch, Schritt für Schritt.",
+  "disclaimer": "Erste Indikation, Bereitschafts-Blick — kein Anspruch auf Vollständigkeit, keine Rechtsberatung. Verbindliche Aussagen nur im persönlichen Beratungsgespräch bzw. Mandat."
+}

@@ -17,6 +17,7 @@ export { calculateScore } from "./scoring.js";
 export { classifyBedarf, findeKlasse } from "./bedarf.js";
 export { calculatePriceCorridor } from "./pricing.js";
 export { calculateNutzen } from "./nutzen.js";
+export { evaluateGelingt } from "./gelingt.js";
 export { calculateTco } from "./tco.js";
 export { detectMuster } from "./muster.js";
 export { evaluateFormel } from "./formel.js";

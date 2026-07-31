@@ -1,0 +1,30 @@
+{
+  "beschreibung": "Golden-Fälle für evaluateGelingt (Gelingt-das-bei-uns-Check). Deckt grün/gelb/rot, die Block-Trennung (außen/innen) und weiss_nicht ab. Ampel: 0–1 grün · 2–4 gelb · 5–8 rot.",
+  "faelle": [
+    {
+      "name": "Alles gut (grün, 0 offen)",
+      "input": { "G1": "gut", "G2": "gut", "G3": "gut", "G4": "gut", "G5": "gut", "G6": "gut", "G7": "gut", "G8": "gut" },
+      "erwartet": { "anzahlOffen": 0, "stufe": "gruen", "aussen": 0, "innen": 0 }
+    },
+    {
+      "name": "Ein offener Punkt außen (grün, 1 offen)",
+      "input": { "G1": "offen", "G2": "gut", "G3": "gut", "G4": "gut", "G5": "gut", "G6": "gut", "G7": "gut", "G8": "gut" },
+      "erwartet": { "anzahlOffen": 1, "stufe": "gruen", "aussen": 1, "innen": 0 }
+    },
+    {
+      "name": "Drei offen, außen + innen (gelb, 3 offen)",
+      "input": { "G1": "offen", "G2": "offen", "G3": "gut", "G4": "gut", "G5": "gut", "G6": "offen", "G7": "gut", "G8": "gut" },
+      "erwartet": { "anzahlOffen": 3, "stufe": "gelb", "aussen": 2, "innen": 1 }
+    },
+    {
+      "name": "Sechs offen (rot, 6 offen)",
+      "input": { "G1": "offen", "G2": "offen", "G3": "offen", "G4": "offen", "G5": "gut", "G6": "offen", "G7": "offen", "G8": "gut" },
+      "erwartet": { "anzahlOffen": 6, "stufe": "rot", "aussen": 4, "innen": 2 }
+    },
+    {
+      "name": "Weiss-nicht + innen offen (gelb, 2 offen, beide innen)",
+      "input": { "G1": "gut", "G2": "gut", "G3": "gut", "G4": "gut", "G5": "gut", "G6": "gut", "G7": "weiss_nicht", "G8": "offen" },
+      "erwartet": { "anzahlOffen": 2, "stufe": "gelb", "aussen": 0, "innen": 2 }
+    }
+  ]
+}

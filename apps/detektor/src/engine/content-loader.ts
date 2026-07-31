@@ -16,6 +16,7 @@ import type {
   BedarfContent,
   BerichtstexteContent,
   Content,
+  GelingtContent,
   MusterContent,
   NutzenContent,
   PreislogikContent,
@@ -162,6 +163,7 @@ export function loadContent(contentDir: string = DEFAULT_CONTENT_DIR): Content {
     muster: pflicht<MusterContent>(index, "muster.json"),
     berichtstexte: pflicht<BerichtstexteContent>(index, "berichtstexte.json"),
     nutzen: pflicht<NutzenContent>(index, "nutzen.json"),
+    gelingt: pflicht<GelingtContent>(index, "gelingt.json"),
     raw: index,
   };
 }

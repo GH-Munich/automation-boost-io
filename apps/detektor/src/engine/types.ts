@@ -397,6 +397,7 @@ export interface Content {
   muster: MusterContent;
   berichtstexte: BerichtstexteContent;
   nutzen: NutzenContent;
+  gelingt: GelingtContent;
   /** Alle geladenen Rohdateien nach Basisname (inkl. "minis/…"). */
   raw: Record<string, RawContentFile>;
 }
@@ -588,6 +589,66 @@ export interface SchnelltestResult {
   stufe: Ampel;
   text: string;
   problematischePunkte: SchnelltestProblem[];
+  begruendung: BegruendungsZeile[];
+}
+
+/* ---------------------------------------------------------------------------
+ * gelingt.json (Gelingt-das-bei-uns-Check, Roadmap-Nr. 3: Risiko + Reife)
+ * ------------------------------------------------------------------------- */
+
+export type GelingtBlock = "aussen" | "innen";
+
+export interface GelingtOption {
+  wert: string;
+  text: string;
+  deutung: string;
+  problematisch: boolean;
+}
+
+export interface GelingtFrage {
+  id: string;
+  block: GelingtBlock;
+  frage: string;
+  optionen: GelingtOption[];
+}
+
+export interface GelingtErgebnis {
+  von: number;
+  bis: number;
+  stufe: Ampel;
+  label: string;
+  text: string;
+}
+
+export interface GelingtContent extends RawContentFile {
+  titel: string;
+  untertitel: string;
+  zeitangabe_min: number;
+  bloecke: { aussen: string; innen: string };
+  fragen: GelingtFrage[];
+  auswertung: { regel?: string; ergebnisse: GelingtErgebnis[] };
+  gespraech: string;
+  disclaimer: string;
+}
+
+/** Antworten je Frage-ID als gewählter Options-Wert. */
+export type GelingtInput = Record<string, string>;
+
+export interface GelingtOffenerPunkt {
+  id: string;
+  block: GelingtBlock;
+  frage: string;
+  deutung: string;
+}
+
+export interface GelingtResult {
+  anzahlOffen: number;
+  gesamt: number;
+  stufe: Ampel;
+  label: string;
+  text: string;
+  offenAussen: GelingtOffenerPunkt[];
+  offenInnen: GelingtOffenerPunkt[];
   begruendung: BegruendungsZeile[];
 }
 
