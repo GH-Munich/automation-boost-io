@@ -111,14 +111,14 @@ export function PreisCheck({
     <div className="grid gap-5">
       <div className="flex items-center justify-between gap-3">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Tür {tuer} · Preis-Check
+          Ist der Preis fair?
         </p>
         <button
           type="button"
           onClick={onBack}
           className="rounded-sm border border-line-strong bg-surface px-3.5 py-2 text-[13px] font-medium transition-colors hover:bg-surface-2"
         >
-          ← Zurück zum Score
+          ← Zurück
         </button>
       </div>
 
@@ -218,10 +218,10 @@ export function PreisCheck({
           </div>
         </section>
 
-        {/* Ergebnis: Korridor + Washing-Faktor */}
+        {/* Ergebnis: Korridor + Preis-Aufschlag */}
         <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
           <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-            Fairer Jahreskorridor
+            Fairer Preisrahmen pro Jahr
           </p>
           <div className="mt-2 flex items-baseline gap-2 font-mono tnum">
             <b className="text-[26px] font-semibold tracking-[-.01em]">{eur.format(price.korridorEur.min)}</b>
@@ -233,7 +233,7 @@ export function PreisCheck({
           </p>
 
           <div className="mt-6 border-t border-line pt-5">
-            <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Washing-Faktor</p>
+            <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">Preis-Aufschlag</p>
             {angebot > 0 && price.korridorEur.max > 0 ? (
               <>
                 <div className="mt-2 flex flex-wrap items-center gap-4">
@@ -258,8 +258,8 @@ export function PreisCheck({
             ) : (
               <p className="mt-3 max-w-[46ch] text-[13.5px] leading-relaxed text-ink-2">
                 {angebot > 0
-                  ? "Für den Washing-Faktor bitte ein Jahresvolumen ab 1 Vorgang angeben."
-                  : "Angebotspreis eingeben — dann erscheint der Washing-Faktor."}
+                  ? "Für den Preis-Aufschlag bitte ein Jahresvolumen ab 1 Vorgang angeben."
+                  : "Angebotspreis eingeben — dann erscheint der Preis-Aufschlag."}
               </p>
             )}
           </div>
@@ -271,9 +271,9 @@ export function PreisCheck({
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-              Vom Angebot zur echten Rechnung
+              Was es über die Jahre wirklich kostet
             </p>
-            <p className="mt-1 text-[13px] text-ink-2">TCO-Realitätsrechnung (Buch 6, T1–T5).</p>
+            <p className="mt-1 text-[13px] text-ink-2">Was neben dem Angebotspreis über die ganze Laufzeit wirklich zusammenkommt.</p>
           </div>
           <div className="inline-flex items-stretch gap-0.5 rounded-full border border-line bg-surface-2 p-0.5" role="group" aria-label="Preistyp">
             {(["pilot", "produktiv"] as Preistyp[]).map((p) => (
@@ -339,7 +339,7 @@ export function PreisCheck({
       {/* Begründungsspur Preislogik (G2, Regeln P1–P4) */}
       <section className="rounded-md border border-line bg-surface p-6 shadow-sm sm:p-7">
         <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-          Begründung · Preislogik
+          So ist der Preis gerechnet
         </p>
         <ul className="mt-3 divide-y divide-line">
           {price.begruendung.map((b, i) => (
