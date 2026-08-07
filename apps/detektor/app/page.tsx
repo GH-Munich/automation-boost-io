@@ -38,7 +38,7 @@ export default function StartPage() {
   return (
     <div className="mx-auto max-w-wrap px-4 py-12 sm:px-8 sm:py-16">
       <p className="font-mono text-[11px] uppercase tracking-[.14em] text-ink-3">
-        AWD-Prüfstandard 1.0
+        AWD-Prüfstandard 1.2
       </p>
       <h1 className="balance mt-3 max-w-[18ch] text-[clamp(28px,5vw,44px)] font-bold leading-[1.05] tracking-[-.02em]">
         Ist das überhaupt ein Agent — und was darf es kosten?
