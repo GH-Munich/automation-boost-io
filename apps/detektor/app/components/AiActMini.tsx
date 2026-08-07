@@ -13,6 +13,8 @@ type AaFrage = {
 export type AiActConfig = {
   id: string;
   titel: string;
+  /** Solange true: Tool ist noch nicht öffentlich (Kanzlei-Review vor Launch). */
+  vorablaunch?: boolean;
   zeitangabe_min: number;
   kontext: string;
   fragen: AaFrage[];
