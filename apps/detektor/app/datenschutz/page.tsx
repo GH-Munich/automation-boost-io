@@ -63,10 +63,10 @@ export default function DatenschutzPage() {
           E-Mail: haeuserer(at)haeuserer.info
         </p>
 
-        {/* // OFFEN: Wording mandated by the operator (task O-538). Not verifiable in this repo:
+        {/* // OFFEN: Wording mandated by the operator (2026-10-02). Not verifiable in this repo:
             log fields (incl. "no user agent / referer"), the temporary blocking of conspicuous IPs and the
-            7-day deletion live in the server/Traefik configuration. Also open: whether a DPA (AVV) with
-            Hetzner exists for this server — deliberately not mentioned until confirmed. */}
+            7-day deletion live in the server/Traefik configuration. DPA (AVV) with Hetzner confirmed by the
+            operator (same as ki-boost.io privacy policy). */}
         <h2 className={h2}>Hosting und Server-Logs</h2>
         <p className={p}>
           Diese Anwendung läuft auf unserem eigenen Server bei der Hetzner Online GmbH in Deutschland. Bei jedem
@@ -75,6 +75,9 @@ export default function DatenschutzPage() {
           Herkunftsseite speichern wir nicht. Wir brauchen diese Daten, damit der Dienst stabil und sicher läuft.
           IP-Adressen, die auffällig viele fehlerhafte Aufrufe erzeugen, sperrt der Server vorübergehend. Nach sieben
           Tagen werden die Log-Dateien automatisch gelöscht. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO.
+        </p>
+        <p className={p}>
+          Mit Hetzner haben wir einen Vertrag über Auftragsverarbeitung (AVV) gemäß Art. 28 DSGVO geschlossen.
         </p>
 
         <h2 className={h2}>Ihre Eingaben bleiben in Ihrem Browser</h2>

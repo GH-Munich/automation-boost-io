@@ -6,8 +6,8 @@ import type { Metadata } from "next";
  *
  * Source: the Impressum of haeuserer.info (same operator, HÄUSERER CONSULTING),
  * taken over 1:1 as published on 2026-10-02 (website/index.html, view-impressum;
- * identical to https://haeuserer.info/impressum.html). Do not edit the wording
- * here without changing the source as well.
+ * identical to https://haeuserer.info/impressum.html). Deviation: outdated "§ 55 Abs. 2 RStV"
+ * replaced by "§ 18 Abs. 2 MStV" (operator decision 2026-10-02); haeuserer.info still to be updated.
  */
 
 export const metadata: Metadata = {
@@ -49,11 +49,9 @@ export default function ImpressumPage() {
         <h2 className={h2}>Gewerbeanmeldung</h2>
         <p className={p}>Gewerbeerlaubnis nach § 14 GewO erteilt am 07.10.2025 von LH München KVR III/211.</p>
 
-        {/* // OFFEN: "§ 55 Abs. 2 RStV" is taken over 1:1 from haeuserer.info; the RStV was replaced
-            by the Medienstaatsvertrag (now § 18 Abs. 2 MStV). Fix in both places after legal check. */}
         <h2 className={h2}>Journalistisch-redaktionelle Inhalte</h2>
         <p className={p}>
-          Redaktionell verantwortlich i.&nbsp;S.&nbsp;d. § 55 Abs. 2 RStV: Gottfried Häuserer, Otto-Engl-Platz 8a,
+          Redaktionell verantwortlich i.&nbsp;S.&nbsp;d. § 18 Abs. 2 MStV: Gottfried Häuserer, Otto-Engl-Platz 8a,
           81241 München
         </p>
 
