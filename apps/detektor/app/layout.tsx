@@ -3,6 +3,7 @@ import { headers } from "next/headers";
 import type { ReactNode } from "react";
 
 import "./globals.css";
+import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
 import { themeStyle } from "./lib/design";
 
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <script nonce={nonce} dangerouslySetInnerHTML={{ __html: themeInit }} />
         <Header />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
